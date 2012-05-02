@@ -1,4 +1,4 @@
-set rtp+=~/.vim/vundle.git/ 
+set rtp+=~/dotfiles/.vim/vundle.git/ 
 call vundle#rc()
 
 Bundle 'neocomplcache'
@@ -461,7 +461,7 @@ let g:rubycomplete_rails = 1
 " rails.vim
 " ========================
 let g:rails_level = 4
-let g:rails_devalut_database = 'mysql'
+let g:rails_defalut_database = 'mysql'
 
 
 " ========================

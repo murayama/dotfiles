@@ -1,0 +1,37 @@
+# コマンドキーのバインド変更
+escape ^t^t
+
+# 現在の背景色で消去
+defbce on
+# 太字には明るい色を使う
+attrcolor b ".I"
+# 256カラー
+termcapinfo xterm-256color 'is=\E[r\E[m\E[2J\E[H\E[?7h\E[?1;4;6l'
+term xterm-256color
+
+# ステータスライン
+hardstatus on
+hardstatus alwayslastline "%{= gk}[%m/%d %02c:%s] %{gW} %-w%{= wk}%n %t%{-}%+w %=%{gk}$USER@$HOSTNAME[$LANG] (%l) " 
+
+# キャプション
+#caption always "%{= bk} %?%F%{b kb}%? %?%h%:%t (screen #%n)%? %{-}"
+# 画面分割したときの色とか
+sorendition "= gk"
+
+# オートデタッチ
+autodetach on
+# 別画面サポート。Vimやless使うときに便利
+altscreen on
+# ヴィジュアルベル
+vbell off
+
+# スクロールバッファ
+defscrollback 4000
+
+# 分割ウインドウのリサイズ
+bind r eval 'echo "Resize window"' 'command -c resize'
+bind -c resize ^]  command
+bind -c resize j eval 'resize -v +1' 'command -c resize'
+bind -c resize k eval 'resize -v -1' 'command -c resize'
+bind -c resize h eval 'resize -h +1' 'command -c resize'
+bind -c resize l eval 'resize -h -1' 'command -c resize'

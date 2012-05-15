@@ -1,4 +1,4 @@
-set rtp+=~/dotfiles/.vim/vundle.git/ 
+set rtp+=~/dotfiles/.vim/vundle.git/
 call vundle#rc()
 
 Bundle 'neocomplcache'
@@ -68,7 +68,7 @@ set cmdheight=1				" コマンドラインの高さ
 set shortmess=t				" 'Press RETURN or enter command to continue' を表示しない
 set history=50				" 記憶するコマンド数
 set number				" 行番号を表示
-set showmode				" 
+set showmode				"
 set wildmenu				" コマンド入力中の補完候補をステータスラインに表示
 set wildignore=*.o,*.so		" 補完候補から除外するファイル
 set tabstop=2				" タブ幅
@@ -145,8 +145,8 @@ set foldlevel=5
 
 " autocmd! BufNewFile,BufRead *.php set ts=4 sw=4 fenc=euc-jp noexpandtab
 " autocmd! BufNewFile,BufRead *.php5 set ts=4 sw=4 fenc=euc-jp noexpandtab
-autocmd! BufNewFile,BufRead *.php set ts=4 sw=4 noexpandtab
-autocmd! BufNewFile,BufRead *.php5 set ts=4 sw=4 noexpandtab
+autocmd! BufNewFile,BufRead *.php set ts=2 sw=2 noexpandtab
+autocmd! BufNewFile,BufRead *.php5 set ts=2 sw=2 noexpandtab
 
 " ruby code fold
 let ruby_folding=1
@@ -156,6 +156,7 @@ au Syntax html set fdm=indent
 set foldlevel=5
 
 autocmd! BufNewFile,BufRead *.rb set ts=2 sw=2 fenc=utf-8 expandtab
+autocmd! BufNewFile,BufRead *.js set ts=2 sw=2 fenc=utf-8 expandtab
 
 "------------------------------
 " auto encoding
@@ -280,12 +281,20 @@ map <c-]> <c-w>g<c-]>
 
 "日時挿入
 imap <silent> <C-H> <C-R>=strftime("%Y-%m-%d %H:%M:%S")<CR>
-" inoremap {} {}<LEFT> 
-" inoremap [] []<LEFT> 
-" inoremap () ()<LEFT> 
-" inoremap "" ""<LEFT> 
-" inoremap '' ''<LEFT> 
+" inoremap {} {}<LEFT>
+" inoremap [] []<LEFT>
+" inoremap () ()<LEFT>
+" inoremap "" ""<LEFT>
+" inoremap '' ''<LEFT>
 
+" 保存時に行末のスペースを削除
+function! RTrim()
+	let s:cursor = getpos(".")
+	%s/\s\+$//e
+	call setpos(".",s:cursor)
+endfunction
+
+autocmd BufWritePre * call RTrim()
 
 "------------------------------
 " ========================

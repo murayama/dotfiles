@@ -3,20 +3,22 @@ call vundle#rc()
 
 Bundle 'neocomplcache'
 Bundle 'Align'
-Bundle 'The-NERD-tree'
+Bundle 'https://github.com/scrooloose/nerdtree.git'
 Bundle 'The-NERD-Commenter'
 Bundle 'snipMate'
 Bundle 'surround.vim'
 Bundle 'YankRing.vim'
-Bundle 'unite.vim'
 Bundle 'matchit.zip'
 Bundle 'https://github.com/thinca/vim-quickrun.git'
-Bundle 'ZenCoding.vim'
 Bundle 'https://github.com/thinca/vim-ref.git'
-Bundle 'https://github.com/basyura/unite-rails.git'
-Bundle 'https://github.com/h1mesuke/unite-outline.git'
 Bundle 'sudo.vim'
 Bundle 'AutoClose'
+Bundle 'camelcasemotion'
+
+" unite
+Bundle 'unite.vim'
+Bundle 'https://github.com/basyura/unite-rails.git'
+Bundle 'https://github.com/h1mesuke/unite-outline.git'
 
 " git
 Bundle 'git://github.com/motemen/git-vim.git'
@@ -35,6 +37,12 @@ Bundle 'javascript.vim'
 Bundle 'JavaScript-Indent'
 Bundle 'jQuery'
 Bundle 'https://github.com/kchmck/vim-coffee-script.git'
+
+" html css
+Bundle 'ZenCoding.vim'
+Bundle 'html5.vim'
+Bundle 'https://github.com/hail2u/vim-css3-syntax.git'
+Bundle 'css_color.vim'
 
 " colorscheme
 Bundle 'jellybeans.vim'
@@ -307,7 +315,7 @@ autocmd BufWritePre * call RTrim()
 " ========================
 nmap <silent> <F12> :NERDTreeToggle<CR>
 let NERDTreeWinSize=50
-" let NERDTreeMinimalUI=1
+let NERDTreeMinimalUI=1
 let NERDTreeDirArrows=0
 
 " ========================

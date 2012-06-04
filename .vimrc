@@ -302,7 +302,7 @@ function! RTrim()
 	call setpos(".",s:cursor)
 endfunction
 
-autocmd BufWritePre * call RTrim()
+" autocmd BufWritePre * call RTrim()
 
 "------------------------------
 " ========================
@@ -509,7 +509,7 @@ nnoremap <Leader>gp :<C-u>Git push
 "------------------------------------
 " 入力モードで開始する
 let g:unite_enable_start_insert=1
-" let g:unite_enable_split_vertically = 1 "縦分割で開く
+let g:unite_enable_split_vertically = 1 "縦分割で開く
 " let g:unite_winwidth = 40 "横幅40で開く
 " バッファ一覧
 nnoremap <silent> <Leader>. :<C-u>Unite buffer <CR>
@@ -520,7 +520,9 @@ nnoremap <silent> <Leader>ub :<C-u>Unite bookmark<CR>
 " 最近使用したファイル一覧
 nnoremap <silent> <Leader>um :<C-u>Unite file_mru<CR>
 " 全部乗せ
-nnoremap <silent> <Leader>ua :<C-u>Unite -buffer-name=files buffer file_mru bookmark file<CR>
+nnoremap <silent> <Leader>uu :<C-u>Unite -buffer-name=files buffer file_mru bookmark file<CR>
+
+nnoremap <silent> <Leader>ua :<C-u>UniteBookmarkAdd<CR>
 
 " rubyリファレンス
 nnoremap <silent> <Leader>ur :<C-u>Unite ref/refe<CR>
@@ -530,26 +532,28 @@ nnoremap <silent> <Leader>up :<C-u>Unite ref/phpmanual<CR>
 " レジスタ一覧
 " nnoremap <silent> ,ur :<C-u>Unite -buffer-name=register register<CR>
 
-" ウィンドウを分割して開く
-au FileType unite nnoremap <silent> <buffer> <expr> s unite#do_action('split')
-au FileType unite inoremap <silent> <buffer> <expr> s unite#do_action('split')
-" ウィンドウを縦に分割して開く
-au FileType unite nnoremap <silent> <buffer> <expr> v unite#do_action('vsplit')
-au FileType unite inoremap <silent> <buffer> <expr> v unite#do_action('vsplit')
-" ESCキーを2回押すと終了する
-au FileType unite nnoremap <silent> <buffer> <ESC><ESC> :q<CR>
-au FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>:q<CR>
+"uniteを開いている間のキーマッピング
+augroup vimrc
+  autocmd FileType unite call s:unite_my_settings()
+augroup END
+function! s:unite_my_settings()
+  "ESCでuniteを終了
+  nmap <buffer> <ESC> <Plug>(unite_exit)
+  "入力モードのときjjでノーマルモードに移動
+  imap <buffer> jj <Plug>(unite_insert_leave)
+  "入力モードのときctrl+wでバックスラッシュも削除
+  imap <buffer> <C-w> <Plug>(unite_delete_backward_path)
+  "sでsplit
+  nnoremap <silent><buffer><expr> s unite#smart_map('s', unite#do_action('split'))
+  inoremap <silent><buffer><expr> s unite#smart_map('s', unite#do_action('split'))
+  "vでvsplit
+  nnoremap <silent><buffer><expr> v unite#smart_map('v', unite#do_action('vsplit'))
+  inoremap <silent><buffer><expr> v unite#smart_map('v', unite#do_action('vsplit'))
+  "fでvimfiler
+  nnoremap <silent><buffer><expr> f unite#smart_map('f', unite#do_action('vimfiler'))
+  inoremap <silent><buffer><expr> f unite#smart_map('f', unite#do_action('vimfiler'))
+endfunction
 
-" " ウィンドウを分割して開く
-" au FileType unite nnoremap <silent> <buffer> <expr> <C-s> unite#do_action('split')
-" au FileType unite inoremap <silent> <buffer> <expr> <C-s> unite#do_action('split')
-" " ウィンドウを縦に分割して開く
-" au FileType unite nnoremap <silent> <buffer> <expr> <C-v> unite#do_action('vsplit')
-" au FileType unite inoremap <silent> <buffer> <expr> <C-v> unite#do_action('vsplit')
-
-" " ESCキーを2回押すと終了する
-" au FileType unite nnoremap <silent> <buffer> <ESC><ESC> q
-" au FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>q
 
 call unite#set_substitute_pattern('files', '^@@', '\=fnamemodify(expand("#"), ":p:h")."/*"', 2)
 call unite#set_substitute_pattern('files', '^@', '\=getcwd()."/*"', 1)

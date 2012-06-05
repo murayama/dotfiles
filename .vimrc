@@ -3,7 +3,6 @@ call vundle#rc()
 
 Bundle 'neocomplcache'
 Bundle 'Align'
-Bundle 'https://github.com/scrooloose/nerdtree.git'
 Bundle 'The-NERD-Commenter'
 Bundle 'snipMate'
 Bundle 'surround.vim'
@@ -19,6 +18,10 @@ Bundle 'camelcasemotion'
 Bundle 'unite.vim'
 Bundle 'https://github.com/basyura/unite-rails.git'
 Bundle 'https://github.com/h1mesuke/unite-outline.git'
+
+Bundle 'git://github.com/Shougo/vimfiler.git'
+Bundle 'git://github.com/Shougo/vimproc.git'
+Bundle 'git://github.com/Shougo/vimshell.git'
 
 " git
 Bundle 'git://github.com/motemen/git-vim.git'

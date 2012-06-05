@@ -42,4 +42,14 @@ vundleを有効にします
 
 を設定してから試してください。
 
-javascript.vimの改行コードがdosになっていてエラーがでるかもしれないので、その場合は、改行コードをunixにかえてください
+javascript.vimの改行コードがdosになっていてエラーがでるかもしれないので、その場合は、改行コードをunixにかえてください  
+
+vimprocをコンパイルします  
+
+```
+$ cd .vim/bundle/vimproc
+$ make -f make_unix.mak
+```
+
+成功したらvimproc/autoload/vimproc_unix.soができます。  
+macの場合は、make_mac.makを使ってコンパイルしてください。  

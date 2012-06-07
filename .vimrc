@@ -36,8 +36,8 @@ Bundle 'tpope/vim-rails'
 Bundle 'railstab.vim'
 
 " javascript
-Bundle 'javascript.vim'
-Bundle 'JavaScript-Indent'
+Bundle 'JavaScript-syntax'
+Bundle 'pangloss/vim-javascript'
 Bundle 'jQuery'
 Bundle 'https://github.com/kchmck/vim-coffee-script.git'
 
@@ -307,6 +307,8 @@ endfunction
 
 " autocmd BufWritePre * call RTrim()
 
+inoremap jj <Esc>
+
 "------------------------------
 " ========================
 " plug-ins
@@ -512,7 +514,7 @@ nnoremap <Leader>gp :<C-u>Git push
 "------------------------------------
 " 入力モードで開始する
 let g:unite_enable_start_insert=1
-let g:unite_enable_split_vertically = 1 "縦分割で開く
+" let g:unite_enable_split_vertically = 1 "縦分割で開く
 " let g:unite_winwidth = 40 "横幅40で開く
 " バッファ一覧
 nnoremap <silent> <Leader>. :<C-u>Unite buffer <CR>
@@ -565,13 +567,59 @@ call unite#set_substitute_pattern('files', '^\\', '~/*')
 call unite#set_substitute_pattern('files', '^v:', '~/.vim/*')
 call unite#set_substitute_pattern('files', '^p:', '~/projects/*')
 
+"-----------------------------------
+" VimFiler
+"-----------------------------------
+" vimデフォルトのエクスプローラーをVimFilerに置き換える
+let g:vimfiler_as_default_explorer = 1
+" セーフモードを無効にした状態で起動する
+let g:vimfiler_safe_mode_by_default = 0
+" <Leader>eで現在開いているバッファのディレクトリを開く
+nnoremap <silent> <Leader>e :<C-u>VimFilerBufferDir<CR>
+
+nnoremap <F12> :VimFiler -buffer-name=explorer -split -winwidth=45 -toggle -no-quit<CR>
+autocmd! FileType vimfiler call g:my_vimfiler_settings()
+function! g:my_vimfiler_settings()
+  nmap <buffer><expr><CR> vimfiler#smart_cursor_map("\<Plug>(vimfiler_expand_tree)", "\<Plug>(vimfiler_edit_file)")
+  nnoremap <buffer>s :call vimfiler#mappings#do_action('my_split')<CR>
+  nnoremap <buffer>v :call vimfiler#mappings#do_action('my_vsplit')<CR>
+  " nnoremap <buffer>t :call vimfiler#mappings#do_action('my_tabopen')<CR>
+endfunction
+
+let my_action = { 'is_selectable' : 1 }
+function! my_action.func(candidates)
+  wincmd p
+  exec 'split '.a:candidates[0].action__path
+endfunction
+call unite#custom_action('file', 'my_split', my_action)
+
+let my_action = { 'is_selectable' : 1 }
+function! my_action.func(candidates)
+  wincmd p
+  exec 'vsplit '.a:candidates[0].action__path
+endfunction
+call unite#custom_action('file', 'my_vsplit', my_action)
+
+" let my_action = { 'is_selectable' : 1 }
+" function! my_action.func(candidates)
+  " wincmd p
+  " exec 'tabopen '.a:candidates[0].action__path
+" endfunction
+" call unite#custom_action('file', 'my_tabopen', my_action)
+
+"----------------------------------
+" vimhshell
+"----------------------------------
+let g:vimshell_interactive_update_time = 10
+
+nnoremap <silent> vs :VimShell<CR>
+nnoremap <silent> vsc :VimShellCreate<CR>
+nnoremap <silent> vp :VimShellPop<CR>
 
 "------------------------------------
 " Ref
 "------------------------------------
 let g:ref_phpmanual_path = $HOME.'/.vim/php_manual_ja/php-chunked-xhtml'
-let g:ref_refe_cmd = $HOME . '/.vim/ruby_1_9_1_ref/ruby-refm-1.9.2-dynamic-20110729/refe-1_9_2'
-
 "-----------------------------------
 " YankRing
 "-----------------------------------

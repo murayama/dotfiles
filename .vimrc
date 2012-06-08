@@ -275,9 +275,9 @@ noremap 9 $
 "vimgrep(Vim7)
 "au QuickfixCmdPost vimgrep cwin
 " vimgrepでrubyの簡易アウトライン
-command! Routline vimgrep /\(class\|module\|def\)/j % | cwin
+" command! Routline vimgrep /\(class\|module\|def\)/j % | cwin
 " vimgrepでphpの簡易アウトライン
-command! Poutline vimgrep /\(class\|function\)/j % | cwin
+" command! Poutline vimgrep /\(class\|function\)/j % | cwin
 
 " 上の行のインデントを見て勝手にあわせてくれる
 nnoremap p p=`]
@@ -318,10 +318,10 @@ inoremap jj <Esc>
 " ========================
 " NERDTree
 " ========================
-nmap <silent> <F12> :NERDTreeToggle<CR>
-let NERDTreeWinSize=50
-let NERDTreeMinimalUI=1
-let NERDTreeDirArrows=0
+" nmap <silent> <F12> :NERDTreeToggle<CR>
+" let NERDTreeWinSize=50
+" let NERDTreeMinimalUI=1
+" let NERDTreeDirArrows=0
 
 " ========================
 " Zen-Coding setting
@@ -526,8 +526,10 @@ nnoremap <silent> <Leader>ub :<C-u>Unite bookmark<CR>
 nnoremap <silent> <Leader>um :<C-u>Unite file_mru<CR>
 " 全部乗せ
 nnoremap <silent> <Leader>uu :<C-u>Unite -buffer-name=files buffer file_mru bookmark file<CR>
-
+" ブックマークに追加
 nnoremap <silent> <Leader>ua :<C-u>UniteBookmarkAdd<CR>
+" アウトライン
+nnoremap <silent> <Leader>uo :<C-u>Unite outline<CR>
 
 " rubyリファレンス
 nnoremap <silent> <Leader>ur :<C-u>Unite ref/refe<CR>

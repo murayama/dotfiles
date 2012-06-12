@@ -19,6 +19,8 @@ Bundle 'unite.vim'
 Bundle 'https://github.com/basyura/unite-rails.git'
 Bundle 'https://github.com/h1mesuke/unite-outline.git'
 Bundle 'https://github.com/tacroe/unite-mark.git'
+Bundle 'https://github.com/tsukkee/unite-tag.git'
+Bundle 'https://github.com/sgur/unite-qf.git'
 
 Bundle 'git://github.com/Shougo/vimfiler.git'
 Bundle 'git://github.com/Shougo/vimproc.git'
@@ -30,11 +32,11 @@ Bundle 'git-commit'
 Bundle 'gitdiff.vim'
 
 " ruby
-Bundle 'git://github.com/vim-ruby/vim-ruby.git'
+Bundle 'vim-ruby/vim-ruby'
 Bundle 'endwise.vim'
-Bundle 'cucumber.zip'
-Bundle 'tpope/vim-rails'
-Bundle 'railstab.vim'
+" Bundle 'cucumber.zip'
+" Bundle 'tpope/vim-rails'
+" Bundle 'railstab.vim'
 
 " javascript
 Bundle 'JavaScript-syntax'
@@ -289,7 +291,7 @@ nnoremap p p=`]
 "map <CR> <c-w><CR>
 
 " ctags
-map <c-]> <c-w>g<c-]>
+" map <c-]> <c-w>g<c-]>
 
 "日時挿入
 imap <silent> <C-H> <C-R>=strftime("%Y-%m-%d %H:%M:%S")<CR>
@@ -359,6 +361,10 @@ let g:NeoComplCache_PluginCompletionLength = {
   \ }
 
 " Define dictionary.
+let g:neocomplcache_dictionary_filetype_lists = {
+  \ 'default' : '',
+  \ 'vimshell' : $HOME.'/.vimshell_hist'
+  \}
 " let g:neocomplcache_dictionary_filetype_lists = {
 "     \ 'scala' : $HOME.'/.vim/bundle/vim-scala/dict/scala.dict',
 "     \ 'java' : $HOME.'/.vim/dict/java.dict',
@@ -425,21 +431,21 @@ let g:neocomplcache_plugin_disable.snippets_complete = 1
 
 " FileType毎のOmni補完を設定
 " autocmd FileType python set omnifunc=pythoncomplete#Complete
-autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
-autocmd FileType css set omnifunc=csscomplete#CompleteCSS
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 " autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
-autocmd FileType php set omnifunc=phpcomplete#CompletePHP
+autocmd FileType php setlocal omnifunc=phpcomplete#CompletePHP
 " autocmd FileType c set omnifunc=ccomplete#Complete
-autocmd FileType ruby set omnifunc=rubycomplete#Complete
+autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
 
-" " Enable heavy omni completion.
+" Enable heavy omni completion.
+
 " if !exists('g:neocomplcache_omni_patterns')
-  " let g:neocomplcache_omni_patterns = {}
+"   let g:neocomplcache_omni_patterns = {}
 " endif
 " let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
-" "let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-" let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*'
+" let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
 
 
 " ========================
@@ -483,8 +489,8 @@ let g:rubycomplete_rails = 1
 " ========================
 " rails.vim
 " ========================
-let g:rails_level = 4
-let g:rails_defalut_database = 'mysql'
+" let g:rails_level = 4
+" let g:rails_defalut_database = 'mysql'
 
 
 " ========================
@@ -533,6 +539,16 @@ nnoremap <silent> <Leader>ua :<C-u>Unite -buffer-name=files buffer file_mru book
 nnoremap <silent> <Leader>uo :<C-u>Unite outline<CR>
 " マーク一覧
 nnoremap <silent> <Leader>um :<C-u>Unite mark<CR>
+" ライン
+nnoremap <silent> <Leader>/ :<C-u>Unite line<CR>
+" quickfix
+nnoremap <silent> <Leader>qf :<C-u>Unite qf<CR>
+
+" Unite tag
+autocmd BufEnter *
+  \   if empty(&buftype)
+  \|      nnoremap <buffer> <C-]> :<C-u>UniteWithCursorWord -immediately tag<CR>
+  \|  endif
 
 " rubyリファレンス
 nnoremap <silent> <Leader>rb :<C-u>Unite ref/refe<CR>
@@ -629,3 +645,9 @@ let g:ref_phpmanual_path = $HOME.'/.vim/php_manual_ja/php-chunked-xhtml'
 " YankRing
 "-----------------------------------
 let g:yankring_manual_clipboard_check = 0
+
+
+"----------------------------------
+" Rsense
+"----------------------------------
+" let g:rsenseHome = $HOME."/lib/rsense-0.3"

@@ -18,6 +18,7 @@ Bundle 'camelcasemotion'
 Bundle 'unite.vim'
 Bundle 'https://github.com/basyura/unite-rails.git'
 Bundle 'https://github.com/h1mesuke/unite-outline.git'
+Bundle 'https://github.com/tacroe/unite-mark.git'
 
 Bundle 'git://github.com/Shougo/vimfiler.git'
 Bundle 'git://github.com/Shougo/vimproc.git'
@@ -523,18 +524,20 @@ nnoremap <silent> <Leader>uf :<C-u>Unite -buffer-name=files file<CR>
 " ブックマーク一覧
 nnoremap <silent> <Leader>ub :<C-u>Unite bookmark<CR>
 " 最近使用したファイル一覧
-nnoremap <silent> <Leader>um :<C-u>Unite file_mru<CR>
+nnoremap <silent> <Leader>ur :<C-u>Unite file_mru<CR>
 " 全部乗せ
-nnoremap <silent> <Leader>uu :<C-u>Unite -buffer-name=files buffer file_mru bookmark file<CR>
+nnoremap <silent> <Leader>ua :<C-u>Unite -buffer-name=files buffer file_mru bookmark file<CR>
 " ブックマークに追加
-nnoremap <silent> <Leader>ua :<C-u>UniteBookmarkAdd<CR>
+" nnoremap <silent> <Leader>ua :<C-u>UniteBookmarkAdd<CR>
 " アウトライン
 nnoremap <silent> <Leader>uo :<C-u>Unite outline<CR>
+" マーク一覧
+nnoremap <silent> <Leader>um :<C-u>Unite mark<CR>
 
 " rubyリファレンス
-nnoremap <silent> <Leader>ur :<C-u>Unite ref/refe<CR>
+nnoremap <silent> <Leader>rb :<C-u>Unite ref/refe<CR>
 " phpマニアル
-nnoremap <silent> <Leader>up :<C-u>Unite ref/phpmanual<CR>
+nnoremap <silent> <Leader>ph :<C-u>Unite ref/phpmanual<CR>
 
 " レジスタ一覧
 " nnoremap <silent> ,ur :<C-u>Unite -buffer-name=register register<CR>

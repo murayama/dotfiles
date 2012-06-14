@@ -53,3 +53,10 @@ $ make -f make_unix.mak
 
 成功したらvimproc/autoload/vimproc_unix.soができます。  
 macの場合は、make_mac.makを使ってコンパイルしてください。  
+
+syntasiticプラグインが入っているので、javascriptのシンタックスチェックを行いたい場合は、node.jsのjshintをインストールする必要があります  
+jslintでもかまいませんが、チェックが厳しいのでjshintを使っています
+
+```
+$ npm install -g jshint
+```

@@ -49,7 +49,7 @@ Bundle 'https://github.com/kchmck/vim-coffee-script.git'
 Bundle 'ZenCoding.vim'
 Bundle 'html5.vim'
 Bundle 'https://github.com/hail2u/vim-css3-syntax.git'
-Bundle 'css_color.vim'
+" Bundle 'css_color.vim'
 
 " colorscheme
 Bundle 'jellybeans.vim'
@@ -273,8 +273,11 @@ map <kMultiply> <c-w>>
 
 " 行の最初に移動
 noremap 1 ^
+inoremap <C-a> <home>
 " 行末に移動
 noremap 9 $
+inoremap <C-e> <end>
+
 
 "vimgrep(Vim7)
 "au QuickfixCmdPost vimgrep cwin
@@ -341,6 +344,12 @@ inoremap jj <Esc>
 " let g:acp_enableAtStartup = 0
 " NeoComplCacheを有効にする
 let g:neocomplcache_enable_at_startup = 1
+" 表示候補の数
+let g:neocomplcache_max_list = 30
+" 自動補完を行う入力数
+let g:neocomplcache_auto_completion_start_length = 2
+" 手動補完時に補完を行う入力数を制御
+let g:neocomplcache_manual_completion_start_length = 3
 " smarrt case有効化。 大文字が入力されるまで大文字小文字の区別を無視する
 let g:neocomplcache_enable_smart_case = 1
 " camle caseを有効化。大文字を区切りとしたワイルドカードのように振る舞う
@@ -391,6 +400,11 @@ endif
 let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
 " let g:neocomplcache_keyword_patterns['ruby'] = '^=\%(b\%[egin]\|e\%[nd]\)\|#\%[!]\|\%(@@\|[:$@]\)\h\w*\|\h\w*\%(::\w*\)*[!?]\?\%(()\?\|\s\?\%(do\|{\)\s\?\)\?'
 
+if !exists('g:neocomplcache_delimiter_patterns')
+  let g:neocomplcache_delimiter_patterns = {}
+endif
+let g:neocomplcache_delimiter_patterns['php'] = ['->', '::', '\']
+
 " ユーザー定義スニペット保存ディレクトリ
 " let g:neocomplcache_snippets_dir = $HOME.'/.vim/snippets'
 " snipMateを使いたいのでneocomplcacheのスニペットをoffにする
@@ -436,7 +450,7 @@ autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 " autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
-autocmd FileType php setlocal omnifunc=phpcomplete#CompletePHP
+" autocmd FileType php setlocal omnifunc=phpcomplete#CompletePHP
 " autocmd FileType c set omnifunc=ccomplete#Complete
 autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
 
@@ -554,7 +568,7 @@ autocmd BufEnter *
 " rubyリファレンス
 nnoremap <silent> <Leader>rb :<C-u>Unite ref/refe<CR>
 " phpマニアル
-nnoremap <silent> <Leader>ph :<C-u>Unite ref/phpmanual<CR>
+" nnoremap <silent> <Leader>ph :<C-u>Unite ref/phpmanual<CR>
 
 " レジスタ一覧
 " nnoremap <silent> ,ur :<C-u>Unite -buffer-name=register register<CR>
@@ -600,12 +614,13 @@ let g:vimfiler_safe_mode_by_default = 0
 nnoremap <silent> <Leader>e :<C-u>VimFilerBufferDir<CR>
 
 nnoremap <F12> :VimFiler -buffer-name=explorer -split -winwidth=45 -toggle -no-quit<CR>
+
 autocmd! FileType vimfiler call g:my_vimfiler_settings()
 function! g:my_vimfiler_settings()
   nmap <buffer><expr><CR> vimfiler#smart_cursor_map("\<Plug>(vimfiler_expand_tree)", "\<Plug>(vimfiler_edit_file)")
   nnoremap <buffer>s :call vimfiler#mappings#do_action('my_split')<CR>
   nnoremap <buffer>v :call vimfiler#mappings#do_action('my_vsplit')<CR>
-  " nnoremap <buffer>t :call vimfiler#mappings#do_action('my_tabopen')<CR>
+  nnoremap <buffer>E :call vimfiler#mappings#do_action('my_tabopen')<CR>
 endfunction
 
 let my_action = { 'is_selectable' : 1 }
@@ -622,12 +637,12 @@ function! my_action.func(candidates)
 endfunction
 call unite#custom_action('file', 'my_vsplit', my_action)
 
-" let my_action = { 'is_selectable' : 1 }
-" function! my_action.func(candidates)
-  " wincmd p
-  " exec 'tabopen '.a:candidates[0].action__path
-" endfunction
-" call unite#custom_action('file', 'my_tabopen', my_action)
+let my_action = { 'is_selectable' : 1 }
+function! my_action.func(candidates)
+  wincmd p
+  exec 'tabnew '.a:candidates[0].action__path
+endfunction
+call unite#custom_action('file', 'my_tabopen', my_action)
 
 "----------------------------------
 " vimhshell
@@ -641,7 +656,7 @@ nnoremap <silent> vp :VimShellPop<CR>
 "------------------------------------
 " Ref
 "------------------------------------
-let g:ref_phpmanual_path = $HOME.'/.vim/php_manual_ja/php-chunked-xhtml'
+" let g:ref_phpmanual_path = $HOME.'/.vim/php_manual_ja/php-chunked-xhtml'
 "-----------------------------------
 " YankRing
 "-----------------------------------

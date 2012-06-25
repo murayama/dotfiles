@@ -3,7 +3,6 @@ call vundle#rc()
 
 Bundle 'neocomplcache'
 Bundle 'Align'
-Bundle 'The-NERD-Commenter'
 Bundle 'snipMate'
 Bundle 'surround.vim'
 Bundle 'YankRing.vim'
@@ -14,6 +13,7 @@ Bundle 'sudo.vim'
 Bundle 'AutoClose'
 Bundle 'camelcasemotion'
 Bundle 'scrooloose/syntastic'
+Bundle 'tComment'
 
 " unite
 Bundle 'unite.vim'
@@ -56,11 +56,11 @@ Bundle 'jellybeans.vim'
 Bundle 'railscasts'
 Bundle 'desert256.vim'
 Bundle 'leo256'
-Bundle 'Railscasts-Theme-GUIand256color'
+" Bundle 'Railscasts-Theme-GUIand256color'
 Bundle 'molokai'
-Bundle 'pyte'
-Bundle 'Zenburn'
-Bundle 'Solarized'
+" Bundle 'pyte'
+" Bundle 'Zenburn'
+" Bundle 'Solarized'
 "
 "#
 "# .vimrc
@@ -323,14 +323,6 @@ inoremap jj <Esc>
 "------------------------------
 
 " ========================
-" NERDTree
-" ========================
-" nmap <silent> <F12> :NERDTreeToggle<CR>
-" let NERDTreeWinSize=50
-" let NERDTreeMinimalUI=1
-" let NERDTreeDirArrows=0
-
-" ========================
 " Zen-Coding setting
 " ========================
 "let g:user_zen_expandabbr_key='<c-e>'
@@ -467,31 +459,6 @@ autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
 " Align
 " ========================
 let g:Align_xstrlen = 3
-
-
-" ========================
-" NERD_commenter
-" ========================
-let g:NERDCreateDefaultMappings = 0
-let g:NERDSpaceDelims = 1
-let NERDShutUp = 1
-
-"map <Leader>x ,c<space>
-"map <Leader>a ,cA
-
-nmap <Leader>cc <Plug>NERDCommenterAlignLeft
-vmap <Leader>c  <Plug>NERDCommenterComment
-nmap <Leader>C  <Plug>NERDCommenterToEOL
-vmap <Leader>C  <Plug>NERDCommenterAlignLeft
-
-nmap <Leader>u  <Plug>NERDCommenterUncomment
-vmap <Leader>u  <Plug>NERDCommenterUncomment
-
-nmap <Leader>xm <Plug>NERDCommenterMinimal
-nmap <Leader>xs <Plug>NERDCommenterSexy
-vmap <Leader>xm <Plug>NERDCommenterMinimal
-vmap <Leader>xs <Plug>NERDCommenterSexy
-nmap <Leader>xa <Plug>NERDCommenterAltDelims
 
 
 " ========================
@@ -682,3 +649,4 @@ let g:syntastic_mode_map = {
  \ 'passive_filetypes' : ['html']
  \}
 let g:syntastic_javascript_checker = 'jshint'
+" let g:syntastic_phpcs_disable = 1

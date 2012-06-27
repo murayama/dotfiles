@@ -28,9 +28,12 @@ Bundle 'git://github.com/Shougo/vimproc.git'
 Bundle 'git://github.com/Shougo/vimshell.git'
 
 " git
-Bundle 'git://github.com/motemen/git-vim.git'
+Bundle 'fugitive.vim'
+Bundle 'gitv'
+Bundle 'extradite.vim'
+" Bundle 'git://github.com/motemen/git-vim.git'
 Bundle 'git-commit'
-Bundle 'gitdiff.vim'
+" Bundle 'gitdiff.vim'
 
 " ruby
 Bundle 'vim-ruby/vim-ruby'

@@ -7,7 +7,7 @@ if has('vim_starting')
 endif
 
 NeoBundle 'neocomplcache'
-NeoBundle 'Align'
+" NeoBundle 'Align'
 NeoBundle 'snipMate'
 NeoBundle 'surround.vim'
 NeoBundle 'YankRing.vim'
@@ -28,10 +28,14 @@ NeoBundle 'https://github.com/h1mesuke/unite-outline.git'
 NeoBundle 'https://github.com/tacroe/unite-mark.git'
 NeoBundle 'https://github.com/tsukkee/unite-tag.git'
 NeoBundle 'https://github.com/sgur/unite-qf.git'
+NeoBundle 'https://github.com/h1mesuke/vim-alignta.git'
+NeoBundle 'https://github.com/daisuzu/unite-grep_launcher.git'
 
 NeoBundle 'git://github.com/Shougo/vimfiler.git'
 NeoBundle 'git://github.com/Shougo/vimproc.git'
 NeoBundle 'git://github.com/Shougo/vimshell.git'
+
+NeoBundle 'https://github.com/thinca/vim-qfreplace.git'
 
 " git
 NeoBundle 'fugitive.vim'
@@ -302,11 +306,6 @@ nnoremap p p=`]
 
 "日時挿入
 imap <silent> <C-H> <C-R>=strftime("%Y-%m-%d %H:%M:%S")<CR>
-" inoremap {} {}<LEFT>
-" inoremap [] []<LEFT>
-" inoremap () ()<LEFT>
-" inoremap "" ""<LEFT>
-" inoremap '' ''<LEFT>
 
 " 保存時に行末のスペースを削除
 function! RTrim()
@@ -370,18 +369,6 @@ let g:neocomplcache_dictionary_filetype_lists = {
   \ 'default' : '',
   \ 'vimshell' : $HOME.'/.vimshell_hist'
   \}
-" let g:neocomplcache_dictionary_filetype_lists = {
-"     \ 'scala' : $HOME.'/.vim/bundle/vim-scala/dict/scala.dict',
-"     \ 'java' : $HOME.'/.vim/dict/java.dict',
-"     \ 'c' : $HOME.'/.vim/dict/c.dict',
-"     \ 'cpp' : $HOME.'/.vim/dict/cpp.dict',
-"     \ 'javascript' : $HOME.'/.vim/dict/javascript.dict',
-"     \ 'ocaml' : $HOME.'/.vim/dict/ocaml.dict',
-"     \ 'perl' : $HOME.'/.vim/dict/perl.dict',
-"     \ 'php' : $HOME.'/.vim/dict/php.dict',
-"     \ 'scheme' : $HOME.'/.vim/dict/scheme.dict'
-"     \ }
-
 
 if !exists('g:neocomplcache_quick_match_patterns')
     let g:neocomplcache_quick_match_patterns = {}
@@ -408,37 +395,6 @@ if !exists('g:neocomplcache_plugin_disable')
 endif
 let g:neocomplcache_plugin_disable.snippets_complete = 1
 
-" " SuperTab like snippets behavior.
-" imap <expr><TAB> neocomplcache#sources#snippets_complete#expandable() ? "\<Plug>(neocomplcache_snippets_expand)" : pumvisible() ? "\<C-n>" : "\<TAB>"
-" smap <expr><TAB> neocomplcache#sources#snippets_complete#expandable() ? "\<Plug>(neocomplcache_snippets_expand)" : pumvisible() ? "\<C-n>" : "\<TAB>"
-" スニペット
-" imap <C-k> <Plug>(neocomplcache_snippets_expand)
-" smap <C-k> <Plug>(neocomplcache_snippets_expand)
-
-" 補完を選択しpopupを閉じる
-" inoremap <expr><C-y> neocomplcache#close_popup()
-" " 補完をキャンセルしpopupを閉じる
-" inoremap <expr><C-e> neocomplcache#cancel_popup()
-" " TABで補完できるようにする
-" inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
-" " undo
-" inoremap <expr><C-g>     neocomplcache#undo_completion()
-" " 補完候補の共通部分までを補完する
-" inoremap <expr><C-l> neocomplcache#complete_common_string()
-" " C-kを押すと行末まで削除
-" inoremap <C-k> <C-o>D
-" " C-nでneocomplcache補完
-" inoremap <expr><C-n>  pumvisible() ? "\<C-n>" : "\<C-x>\<C-u>\<C-p>"
-" " C-pでkeyword補完
-" inoremap <expr><C-p> pumvisible() ? "\<C-p>" : "\<C-p>\<C-n>"
-" " 補完候補が出ていたら確定、なければ改行
-" inoremap <expr><CR> pumvisible() ? neocomplcache#close_popup() : "\<CR>"
-
-" <C-h>, <BS>: close popup and delete backword char.
-" inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
-" inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
-" inoremap <expr><C-x><C-o> &filetype == 'vim' ? "\<C-x><C-v><C-p>" : neocomplcache#manual_omni_complete()
-
 " FileType毎のOmni補完を設定
 " autocmd FileType python set omnifunc=pythoncomplete#Complete
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
@@ -450,18 +406,11 @@ autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
 
 " Enable heavy omni completion.
-
 " if !exists('g:neocomplcache_omni_patterns')
 "   let g:neocomplcache_omni_patterns = {}
 " endif
 " let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
 " let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-
-
-" ========================
-" Align
-" ========================
-let g:Align_xstrlen = 3
 
 
 " ========================
@@ -484,33 +433,20 @@ let g:rubycomplete_rails = 1
 let g:snips_author = 'n-murayama'
 
 
-"------------------------------------
-" git.vim
-"------------------------------------
-" let g:git_no_map_default = 1
-" let g:git_command_edit = 'rightbelow vnew'
-" nnoremap <Leader>gD :<C-u>GitDiff --cached<Enter>
-" nnoremap <Leader>gd :<C-u>GitDiff<Enter>
-" nnoremap <Leader>gs :<C-u>GitStatus<Enter>
-" nnoremap <Leader>gl :<C-u>GitLog<Enter>
-" nnoremap <Leader>gL :<C-u>GitLog -u \| head -10000<Enter>
-" nnoremap <Leader>ga :<C-u>GitAdd<Enter>
-" nnoremap <Leader>gA :<C-u>GitAdd <cfile><Enter>
-" nnoremap <Leader>gc :<C-u>GitCommit -v<Enter>
-" nnoremap <Leader>gC :<C-u>GitCommit --amend<Enter>
-" nnoremap <Leader>gp :<C-u>Git push
+" gitv
+nnoremap <silent> <Leader>gh :<C-u>Gitv<CR>
 
 "------------------------------------
 " fugitive
 "------------------------------------
-nnoremap <Leader>gd :<C-u>Gdiff<CR>
-nnoremap <Leader>gD :<C-u>Gdiff HEAD<CR>
-nnoremap <Leader>gs :<C-u>Gstatus<CR>
-nnoremap <Leader>ga :<C-u>Gwrite<CR>
-nnoremap <Leader>gc :<C-u>Gcommit<CR>
-nnoremap <Leader>gb :<C-u>Gblame<CR>
+nnoremap <silent> <Leader>gd :<C-u>Gdiff<CR>
+nnoremap <silent> <Leader>gD :<C-u>Gdiff HEAD<CR>
+nnoremap <silent> <Leader>gs :<C-u>Gstatus<CR>
+nnoremap <silent> <Leader>ga :<C-u>Gwrite<CR>
+nnoremap <silent> <Leader>gc :<C-u>Gcommit<CR>
+nnoremap <silent> <Leader>gb :<C-u>Gblame<CR>
 " extradite
-nnoremap <Leader>gl :<C-u>Extradite<CR>
+nnoremap <silent> <Leader>gl :<C-u>Extradite<CR>
 
 "------------------------------------
 " Unite
@@ -539,6 +475,8 @@ nnoremap <silent> <Leader>um :<C-u>Unite mark<CR>
 nnoremap <silent> <Leader>/ :<C-u>Unite line<CR>
 " quickfix
 nnoremap <silent> <Leader>qf :<C-u>Unite qf<CR>
+" grep_launcher
+nnoremap <silent> <Leader>ug :<C-u>Unite grep_launcher<CR>
 
 " Unite tag
 autocmd BufEnter *
@@ -583,6 +521,48 @@ call unite#set_substitute_pattern('files', '^\\', '~/*')
 
 call unite#set_substitute_pattern('files', '^v:', '~/.vim/*')
 call unite#set_substitute_pattern('files', '^p:', '~/projects/*')
+
+"-----------------------------------
+" Alignta
+"-----------------------------------
+let g:unite_source_alignta_preset_arguments = [
+      \ ["Align at '='", '=>\='],
+      \ ["Align at ':'", '01 :'],
+      \ ["Align at '|'", '|'   ],
+      \ ["Align at ')'", '0 )' ],
+      \ ["Align at ']'", '0 ]' ],
+      \ ["Align at '}'", '}'   ],
+      \]
+
+let s:comment_leadings = '^\s*\("\|#\|/\*\|//\|<!--\)'
+let g:unite_source_alignta_preset_options = [
+      \ ["Justify Left",      '<<' ],
+      \ ["Justify Center",    '||' ],
+      \ ["Justify Right",     '>>' ],
+      \ ["Justify None",      '==' ],
+      \ ["Shift Left",        '<-' ],
+      \ ["Shift Right",       '->' ],
+      \ ["Shift Left  [Tab]", '<--'],
+      \ ["Shift Right [Tab]", '-->'],
+      \ ["Margin 0:0",        '0'  ],
+      \ ["Margin 0:1",        '01' ],
+      \ ["Margin 1:0",        '10' ],
+      \ ["Margin 1:1",        '1'  ],
+      \
+      \ 'v/' . s:comment_leadings,
+      \ 'g/' . s:comment_leadings,
+      \]
+unlet s:comment_leadings
+
+"-----------------------------------
+" unite-grep_launcher
+"-----------------------------------
+if !exists('g:grep_launcher_words')
+  let g:grep_launcher_words = {}
+endif
+
+let g:grep_launcher_words['TODO'] = 'TODO'
+
 
 "-----------------------------------
 " VimFiler
@@ -638,16 +618,11 @@ nnoremap <silent> vp :VimShellPop<CR>
 " Ref
 "------------------------------------
 " let g:ref_phpmanual_path = $HOME.'/.vim/php_manual_ja/php-chunked-xhtml'
+
 "-----------------------------------
 " YankRing
 "-----------------------------------
 let g:yankring_manual_clipboard_check = 0
-
-
-"----------------------------------
-" Rsense
-"----------------------------------
-" let g:rsenseHome = $HOME."/lib/rsense-0.3"
 
 "----------------------------------
 " syntastic

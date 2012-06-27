@@ -1,69 +1,69 @@
-set rtp+=~/dotfiles/.vim/vundle.git/
-call vundle#rc()
+set nocompatible
+filetype off
 
-Bundle 'neocomplcache'
-Bundle 'Align'
-Bundle 'snipMate'
-Bundle 'surround.vim'
-Bundle 'YankRing.vim'
-Bundle 'matchit.zip'
-Bundle 'https://github.com/thinca/vim-quickrun.git'
-Bundle 'https://github.com/thinca/vim-ref.git'
-Bundle 'sudo.vim'
-Bundle 'AutoClose'
-Bundle 'camelcasemotion'
-Bundle 'scrooloose/syntastic'
-Bundle 'tComment'
+if has('vim_starting')
+  set runtimepath+=~/.vim/neobundle.vim/
+  call neobundle#rc(expand('~/.vim/.bundle'))
+endif
+
+NeoBundle 'neocomplcache'
+NeoBundle 'Align'
+NeoBundle 'snipMate'
+NeoBundle 'surround.vim'
+NeoBundle 'YankRing.vim'
+NeoBundle 'matchit.zip'
+NeoBundle 'https://github.com/thinca/vim-quickrun.git'
+NeoBundle 'https://github.com/thinca/vim-ref.git'
+NeoBundle 'sudo.vim'
+NeoBundle 'AutoClose'
+NeoBundle 'camelcasemotion'
+NeoBundle 'scrooloose/syntastic'
+NeoBundle 'tComment'
+NeoBundle 'https://github.com/tpope/vim-markdown.git'
 
 " unite
-Bundle 'unite.vim'
-Bundle 'https://github.com/basyura/unite-rails.git'
-Bundle 'https://github.com/h1mesuke/unite-outline.git'
-Bundle 'https://github.com/tacroe/unite-mark.git'
-Bundle 'https://github.com/tsukkee/unite-tag.git'
-Bundle 'https://github.com/sgur/unite-qf.git'
+NeoBundle 'unite.vim'
+NeoBundle 'https://github.com/basyura/unite-rails.git'
+NeoBundle 'https://github.com/h1mesuke/unite-outline.git'
+NeoBundle 'https://github.com/tacroe/unite-mark.git'
+NeoBundle 'https://github.com/tsukkee/unite-tag.git'
+NeoBundle 'https://github.com/sgur/unite-qf.git'
 
-Bundle 'git://github.com/Shougo/vimfiler.git'
-Bundle 'git://github.com/Shougo/vimproc.git'
-Bundle 'git://github.com/Shougo/vimshell.git'
+NeoBundle 'git://github.com/Shougo/vimfiler.git'
+NeoBundle 'git://github.com/Shougo/vimproc.git'
+NeoBundle 'git://github.com/Shougo/vimshell.git'
 
 " git
-Bundle 'fugitive.vim'
-Bundle 'gitv'
-Bundle 'extradite.vim'
-" Bundle 'git://github.com/motemen/git-vim.git'
-Bundle 'git-commit'
-" Bundle 'gitdiff.vim'
+NeoBundle 'fugitive.vim'
+NeoBundle 'gitv'
+NeoBundle 'extradite.vim'
+NeoBundle 'git-commit'
 
 " ruby
-Bundle 'vim-ruby/vim-ruby'
-Bundle 'endwise.vim'
+NeoBundle 'vim-ruby/vim-ruby'
+NeoBundle 'endwise.vim'
 " Bundle 'cucumber.zip'
 " Bundle 'tpope/vim-rails'
 " Bundle 'railstab.vim'
 
 " javascript
-Bundle 'JavaScript-syntax'
-Bundle 'pangloss/vim-javascript'
-Bundle 'jQuery'
-Bundle 'https://github.com/kchmck/vim-coffee-script.git'
+NeoBundle 'JavaScript-syntax'
+NeoBundle 'pangloss/vim-javascript'
+NeoBundle 'jQuery'
+NeoBundle 'https://github.com/kchmck/vim-coffee-script.git'
 
 " html css
-Bundle 'ZenCoding.vim'
-Bundle 'html5.vim'
-Bundle 'https://github.com/hail2u/vim-css3-syntax.git'
-" Bundle 'css_color.vim'
+NeoBundle 'ZenCoding.vim'
+NeoBundle 'html5.vim'
+NeoBundle 'https://github.com/hail2u/vim-css3-syntax.git'
 
 " colorscheme
-Bundle 'jellybeans.vim'
-Bundle 'railscasts'
-Bundle 'desert256.vim'
-Bundle 'leo256'
+NeoBundle 'jellybeans.vim'
+NeoBundle 'railscasts'
+NeoBundle 'desert256.vim'
+NeoBundle 'leo256'
 " Bundle 'Railscasts-Theme-GUIand256color'
-Bundle 'molokai'
-" Bundle 'pyte'
-" Bundle 'Zenburn'
-" Bundle 'Solarized'
+NeoBundle 'molokai'
 "
 "#
 "# .vimrc
@@ -108,7 +108,7 @@ set magic				" 正規表現使用時に magic モードにする
 "set listchars=tab:-\ ,extends:<	" タブや改行などの代替文字設定(ex. tab:>-,extends:<.trail:-,eol:< )
 set keywordprg=man\ -a			" キーワードのヘルプコマンドの設定(default: man or man\ -s)
 "set lazyredraw				" マクロ実行中は画面を更新しない
-set statusline=%<%f\ %m%r%h%w%y%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%=%b\ 0x%B\ \ %l,%c%V%8P
+set statusline=%<%f\ %m%r%h%w%y%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%{fugitive#statusline()}%=%b\ 0x%B\ \ %l,%c%V%8P
 					" ステータス行のフォーマット
 set cursorline				" カーソル行に下線を表示(* vim7)
 "set cursorcolumn			" カーソル列をハイライト表示(* vim7)
@@ -487,19 +487,30 @@ let g:snips_author = 'n-murayama'
 "------------------------------------
 " git.vim
 "------------------------------------
-let g:git_no_map_default = 1
-let g:git_command_edit = 'rightbelow vnew'
-nnoremap <Leader>gD :<C-u>GitDiff --cached<Enter>
-nnoremap <Leader>gd :<C-u>GitDiff<Enter>
-nnoremap <Leader>gs :<C-u>GitStatus<Enter>
-nnoremap <Leader>gl :<C-u>GitLog<Enter>
-nnoremap <Leader>gL :<C-u>GitLog -u \| head -10000<Enter>
-nnoremap <Leader>ga :<C-u>GitAdd<Enter>
-nnoremap <Leader>gA :<C-u>GitAdd <cfile><Enter>
-nnoremap <Leader>gc :<C-u>GitCommit -v<Enter>
-nnoremap <Leader>gC :<C-u>GitCommit --amend<Enter>
-nnoremap <Leader>gp :<C-u>Git push
+" let g:git_no_map_default = 1
+" let g:git_command_edit = 'rightbelow vnew'
+" nnoremap <Leader>gD :<C-u>GitDiff --cached<Enter>
+" nnoremap <Leader>gd :<C-u>GitDiff<Enter>
+" nnoremap <Leader>gs :<C-u>GitStatus<Enter>
+" nnoremap <Leader>gl :<C-u>GitLog<Enter>
+" nnoremap <Leader>gL :<C-u>GitLog -u \| head -10000<Enter>
+" nnoremap <Leader>ga :<C-u>GitAdd<Enter>
+" nnoremap <Leader>gA :<C-u>GitAdd <cfile><Enter>
+" nnoremap <Leader>gc :<C-u>GitCommit -v<Enter>
+" nnoremap <Leader>gC :<C-u>GitCommit --amend<Enter>
+" nnoremap <Leader>gp :<C-u>Git push
 
+"------------------------------------
+" fugitive
+"------------------------------------
+nnoremap <Leader>gd :<C-u>Gdiff<CR>
+nnoremap <Leader>gD :<C-u>Gdiff HEAD<CR>
+nnoremap <Leader>gs :<C-u>Gstatus<CR>
+nnoremap <Leader>ga :<C-u>Gwrite<CR>
+nnoremap <Leader>gc :<C-u>Gcommit<CR>
+nnoremap <Leader>gb :<C-u>Gblame<CR>
+" extradite
+nnoremap <Leader>gl :<C-u>Extradite<CR>
 
 "------------------------------------
 " Unite

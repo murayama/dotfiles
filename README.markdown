@@ -7,15 +7,15 @@
 
 ## .vimrc
 
-プラグイン管理にvundleを使用します。
-vundleはsubmoduleとして運用します。  
+プラグイン管理にneobundleを使用します。
+neobundleはsubmoduleとして運用します。  
 
-vundleを有効にします  
+neobundleを有効にします  
     
     $ cd dotfiles
     $ git submodule init
     $ git submodule update
-    $ cd .vim/vundle.git
+    $ cd .vim/neobundle.git
     $ git checkout master
 
 .vimrcと.vimにシンボリックリンクをはります
@@ -29,7 +29,7 @@ vundleを有効にします
     $ mkdir ~/tmp
 
 プラグインをインストールします
-.vimrcを開いたらBundleInstallコマンドを実行してください
+.vimrcを開いたらNeoBundleInstallコマンドを実行してください
 
     $ vi .vimrc
 
@@ -47,7 +47,7 @@ vundleを有効にします
 vimprocをコンパイルします  
 
 ```
-$ cd .vim/bundle/vimproc
+$ cd .vim/.bundle/vimproc
 $ make -f make_unix.mak
 ```
 

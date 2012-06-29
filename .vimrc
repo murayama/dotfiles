@@ -445,8 +445,9 @@ nnoremap <silent> <Leader>gs :<C-u>Gstatus<CR>
 nnoremap <silent> <Leader>ga :<C-u>Gwrite<CR>
 nnoremap <silent> <Leader>gc :<C-u>Gcommit<CR>
 nnoremap <silent> <Leader>gb :<C-u>Gblame<CR>
+nnoremap <silent> <Leader>gl :<C-u>Glog<CR>
 " extradite
-nnoremap <silent> <Leader>gl :<C-u>Extradite<CR>
+nnoremap <silent> <Leader>ge :<C-u>Extradite<CR>
 
 "------------------------------------
 " Unite
@@ -455,6 +456,8 @@ nnoremap <silent> <Leader>gl :<C-u>Extradite<CR>
 let g:unite_enable_start_insert=1
 " let g:unite_enable_split_vertically = 1 "縦分割で開く
 " let g:unite_winwidth = 40 "横幅40で開く
+" タブ一覧
+nnoremap <silent> <Leader>t :<C-u>Unite tab<CR>
 " バッファ一覧
 nnoremap <silent> <Leader>. :<C-u>Unite buffer <CR>
 " ファイル一覧

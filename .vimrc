@@ -32,7 +32,9 @@ NeoBundle 'https://github.com/h1mesuke/vim-alignta.git'
 NeoBundle 'https://github.com/daisuzu/unite-grep_launcher.git'
 
 NeoBundle 'git://github.com/Shougo/vimfiler.git'
-NeoBundle 'git://github.com/Shougo/vimproc.git'
+if &encoding ==# 'utf-8'
+  NeoBundle 'git://github.com/Shougo/vimproc.git'
+endif
 NeoBundle 'git://github.com/Shougo/vimshell.git'
 
 NeoBundle 'https://github.com/thinca/vim-qfreplace.git'

@@ -58,6 +58,9 @@ NeoBundle 'pangloss/vim-javascript'
 NeoBundle 'jQuery'
 NeoBundle 'https://github.com/kchmck/vim-coffee-script.git'
 
+" php
+NeoBundle 'https://github.com/beyondwords/vim-twig.git'
+
 " html css
 NeoBundle 'ZenCoding.vim'
 NeoBundle 'html5.vim'
@@ -208,7 +211,7 @@ if has('iconv')
   if &encoding ==# 'utf-8'
     let s:fileencodings_default = &fileencodings
     let &fileencodings = s:enc_jis .','. s:enc_euc .',cp932'
-    let &fileencodings = &fileencodings .','. s:fileencodings_default
+    let &fileencodings = s:fileencodings_default .','. &fileencodings
     unlet s:fileencodings_default
   else
     let &fileencodings = &fileencodings .','. s:enc_jis

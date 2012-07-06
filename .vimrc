@@ -7,8 +7,7 @@ if has('vim_starting')
 endif
 
 NeoBundle 'neocomplcache'
-" NeoBundle 'Align'
-NeoBundle 'snipMate'
+NeoBundle 'git://github.com/Shougo/neocomplcache-snippets-complete.git'
 NeoBundle 'surround.vim'
 NeoBundle 'YankRing.vim'
 NeoBundle 'matchit.zip'
@@ -271,7 +270,13 @@ command! Sjis Cp932
 
 " 折り返し行関係なく上下移動する
 nnoremap j gj
+onoremap j gj
+xnoremap j gj
 nnoremap k gk
+onoremap k gk
+xnoremap k gk
+
+
 " 分割ウィンドウの移動
 map <Right> <c-w>l
 map <Left> <c-w>h
@@ -293,10 +298,6 @@ inoremap <C-e> <end>
 
 "vimgrep(Vim7)
 "au QuickfixCmdPost vimgrep cwin
-" vimgrepでrubyの簡易アウトライン
-" command! Routline vimgrep /\(class\|module\|def\)/j % | cwin
-" vimgrepでphpの簡易アウトライン
-" command! Poutline vimgrep /\(class\|function\)/j % | cwin
 
 " 上の行のインデントを見て勝手にあわせてくれる
 nnoremap p p=`]
@@ -310,7 +311,7 @@ nnoremap p p=`]
 " map <c-]> <c-w>g<c-]>
 
 "日時挿入
-imap <silent> <C-H> <C-R>=strftime("%Y-%m-%d %H:%M:%S")<CR>
+" imap <silent> <C-H> <C-R>=strftime("%Y-%m-%d %H:%M:%S")<CR>
 
 " 保存時に行末のスペースを削除
 function! RTrim()
@@ -338,9 +339,8 @@ inoremap jj <Esc>
 " ========================
 " neocomplcache
 " ========================
-
-" " AutoComplPopを無効にする
-" let g:acp_enableAtStartup = 0
+" 補完ウィンドウの設定
+set completeopt=menuone"
 " NeoComplCacheを有効にする
 let g:neocomplcache_enable_at_startup = 1
 " 表示候補の数
@@ -362,7 +362,7 @@ let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
 " -入力による候補番号の表示
 " let g:neocomplcache_enable_quick_match = 1
 " 補完候補の一番先頭を選択状態にする(AutoComplPopと似た動作)
-let g:neocomplcache_enable_auto_select = 1
+let g:neocomplcache_enable_auto_select = 0
 " プラグイン毎の補完関数を呼び出す文字数
 let g:NeoComplCache_PluginCompletionLength = {
   \ 'keyword_complete'  : 3,
@@ -385,20 +385,12 @@ if !exists('g:neocomplcache_keyword_patterns')
     let g:neocomplcache_keyword_patterns = {}
 endif
 let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
-" let g:neocomplcache_keyword_patterns['ruby'] = '^=\%(b\%[egin]\|e\%[nd]\)\|#\%[!]\|\%(@@\|[:$@]\)\h\w*\|\h\w*\%(::\w*\)*[!?]\?\%(()\?\|\s\?\%(do\|{\)\s\?\)\?'
 
 if !exists('g:neocomplcache_delimiter_patterns')
   let g:neocomplcache_delimiter_patterns = {}
 endif
 let g:neocomplcache_delimiter_patterns['php'] = ['->', '::', '\']
 
-" ユーザー定義スニペット保存ディレクトリ
-" let g:neocomplcache_snippets_dir = $HOME.'/.vim/snippets'
-" snipMateを使いたいのでneocomplcacheのスニペットをoffにする
-if !exists('g:neocomplcache_plugin_disable')
-  let g:neocomplcache_plugin_disable = {}
-endif
-let g:neocomplcache_plugin_disable.snippets_complete = 1
 
 " FileType毎のOmni補完を設定
 " autocmd FileType python set omnifunc=pythoncomplete#Complete
@@ -411,12 +403,42 @@ autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
 
 " Enable heavy omni completion.
-" if !exists('g:neocomplcache_omni_patterns')
-"   let g:neocomplcache_omni_patterns = {}
-" endif
-" let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
-" let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+if !exists('g:neocomplcache_omni_patterns')
+  let g:neocomplcache_omni_patterns = {}
+endif
+let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
+let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
 
+" Plugin key-mappings.
+" imap <C-k>     <Plug>(neocomplcache_snippets_expand)
+" smap <C-k>     <Plug>(neocomplcache_snippets_expand)
+
+inoremap <expr><C-g> neocomplcache#undo_completion()
+inoremap <expr><C-l> neocomplcache#complete_common_string()
+
+imap <expr><TAB> neocomplcache#sources#snippets_complete#expandable() ? "\<Plug>(neocomplcache_snippets_expand)" : pumvisible() ? "\<C-n>" : "\<TAB>"
+" Recommended key-mappings.
+" <CR>: close popup and save indent.
+" inoremap <expr><CR> neocomplcache#close_popup()."\<CR>"
+" <C-h>, <BS>: close popup and delete backword char.
+inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
+inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
+
+inoremap <expr><C-y> neocomplcache#close_popup()
+inoremap <expr><C-e> neocomplcache#cancel_popup()
+
+" ========================
+" neocomplcache-snippets-complete
+" ========================
+let g:neocomplcache_snippets_dir = '~/.vim/snippets'
+
+" imap <TAB> <Plug>(neocomplcache_snippets_expand)
+smap <TAB> <Plug>(neocomplcache_snippets_expand)
+
+" For snippet_complete marker.
+if has('conceal')
+  set conceallevel=2 concealcursor=i
+endif
 
 " ========================
 " vim-ruby
@@ -430,13 +452,6 @@ let g:rubycomplete_rails = 1
 " ========================
 " let g:rails_level = 4
 " let g:rails_defalut_database = 'mysql'
-
-
-" ========================
-" snipMate.vim
-" ========================
-let g:snips_author = 'n-murayama'
-
 
 " gitv
 nnoremap <silent> <Leader>gh :<C-u>Gitv<CR>

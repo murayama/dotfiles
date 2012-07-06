@@ -1,0 +1,53 @@
+snippet function
+abbr function () {}
+	${1:public }function ${2:FunctionName}(${3}) {
+		${4:// code...}
+	}
+
+snippet php
+	<?php
+	${1}
+
+snippet this
+	$this->${0}
+
+snippet docf
+	/**
+	 * ${4:undocumented function}
+	 *
+	 * @return ${5:void}
+	 * @author ${6}
+	 **/
+	${1}function ${2}(${3}) {
+		${0}
+	}
+
+snippet doci
+	/**
+	 * ${2:undocumented class}
+	 *
+	 * @package ${3:default}
+	 * @author ${4}
+	 **/
+	interface ${1} {
+		${0}
+	} // END interface ${1}
+
+snippet class
+	/**
+	 * $2
+	 *
+	 * ${1}
+	 **/
+	class ${2:ClassName} ${3:extends} {
+
+		${4:public} function ${5:__construct}(${6:argument}) {
+			${0:# code...}
+		}
+	}
+
+snippet con
+	${1:public} function __construct(${2}) {
+		${0}
+	}
+

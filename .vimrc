@@ -21,7 +21,7 @@ NeoBundle 'tComment'
 NeoBundle 'https://github.com/tpope/vim-markdown.git'
 
 " unite
-NeoBundle 'unite.vim'
+NeoBundle 'git://github.com/Shougo/unite.vim.git'
 NeoBundle 'https://github.com/basyura/unite-rails.git'
 NeoBundle 'https://github.com/h1mesuke/unite-outline.git'
 NeoBundle 'https://github.com/tacroe/unite-mark.git'
@@ -52,13 +52,13 @@ NeoBundle 'endwise.vim'
 " Bundle 'railstab.vim'
 
 " javascript
-NeoBundle 'JavaScript-syntax'
+" NeoBundle 'JavaScript-syntax'
 NeoBundle 'pangloss/vim-javascript'
 NeoBundle 'jQuery'
 NeoBundle 'https://github.com/kchmck/vim-coffee-script.git'
 
 " php
-NeoBundle 'https://github.com/beyondwords/vim-twig.git'
+" NeoBundle 'https://github.com/beyondwords/vim-twig.git'
 
 " html css
 NeoBundle 'ZenCoding.vim'
@@ -290,9 +290,11 @@ map <kMultiply> <c-w>>
 
 " 行の最初に移動
 noremap 1 ^
+noremap <C-a> ^
 inoremap <C-a> <home>
 " 行末に移動
 noremap 9 $
+noremap <C-e> $
 inoremap <C-e> <end>
 
 
@@ -425,7 +427,7 @@ inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
 inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
 
 inoremap <expr><C-y> neocomplcache#close_popup()
-inoremap <expr><C-e> neocomplcache#cancel_popup()
+inoremap <expr><C-d> neocomplcache#cancel_popup()
 
 " ========================
 " neocomplcache-snippets-complete
@@ -658,7 +660,7 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_mode_map = {
  \ 'mode' : 'active',
  \ 'active_filetypes' : [],
- \ 'passive_filetypes' : ['html']
+ \ 'passive_filetypes' : ['html','php']
  \}
 let g:syntastic_javascript_checker = 'jshint'
 " let g:syntastic_phpcs_disable = 1

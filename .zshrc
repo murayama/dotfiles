@@ -179,7 +179,7 @@ setopt complete_aliases # aliased ls needs if file/dir completions work
 alias du="du -h"
 alias df="df -h"
 
-alias ls="ls --color=auto"
+#alias ls="ls --color=auto"
 alias ll="ls -ltrAF --color"
 
 alias -g M='| more'

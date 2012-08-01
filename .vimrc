@@ -7,6 +7,7 @@ if has('vim_starting')
 endif
 
 NeoBundle 'neocomplcache'
+NeoBundle 'ujihisa/neco-look'
 NeoBundle 'git://github.com/Shougo/neocomplcache-snippets-complete.git'
 NeoBundle 'surround.vim'
 NeoBundle 'YankRing.vim'
@@ -19,6 +20,7 @@ NeoBundle 'camelcasemotion'
 NeoBundle 'scrooloose/syntastic'
 NeoBundle 'tComment'
 NeoBundle 'https://github.com/tpope/vim-markdown.git'
+NeoBundle 't9md/vim-textmanip'
 
 " unite
 NeoBundle 'git://github.com/Shougo/unite.vim.git'
@@ -72,6 +74,7 @@ NeoBundle 'desert256.vim'
 NeoBundle 'leo256'
 " Bundle 'Railscasts-Theme-GUIand256color'
 NeoBundle 'molokai'
+NeoBundle 'git://github.com/altercation/vim-colors-solarized.git'
 "
 "#
 "# .vimrc
@@ -118,7 +121,7 @@ set keywordprg=man\ -a			" キーワードのヘルプコマンドの設定(defa
 "set lazyredraw				" マクロ実行中は画面を更新しない
 set statusline=%<%f\ %m%r%h%w%y%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%{fugitive#statusline()}%=%b\ 0x%B\ \ %l,%c%V%8P
 					" ステータス行のフォーマット
-set cursorline				" カーソル行に下線を表示(* vim7)
+""set cursorline				" カーソル行に下線を表示(* vim7)
 "set cursorcolumn			" カーソル列をハイライト表示(* vim7)
 
 set incsearch	" サーチをインクリメンタルにする
@@ -145,8 +148,11 @@ autocmd! BufRead,BufNewFile *.htmlt set filetype=smarty
 
 colorscheme molokai
 " colorscheme jellybeans
+
+" let g:solarized_termcolors=256
 " set background=dark
 " colorscheme solarized
+
 " highlight Search ctermbg=yellow ctermfg=Black
 " highlight Folded ctermbg=grey ctermfg=darkblue
 " highlight FoldColumn ctermbg=darkgrey ctermfg=white
@@ -377,6 +383,11 @@ let g:neocomplcache_dictionary_filetype_lists = {
   \ 'vimshell' : $HOME.'/.vimshell_hist'
   \}
 
+let g:neocomplcache_text_mode_filetypes = {
+      \ 'md' : 1,
+      \ 'markdown' : 1
+      \}
+
 if !exists('g:neocomplcache_quick_match_patterns')
     let g:neocomplcache_quick_match_patterns = {}
 endif
@@ -493,7 +504,7 @@ nnoremap <silent> <Leader>ua :<C-u>Unite -buffer-name=files buffer file_mru book
 " ブックマークに追加
 " nnoremap <silent> <Leader>ua :<C-u>UniteBookmarkAdd<CR>
 " アウトライン
-nnoremap <silent> <Leader>uo :<C-u>Unite outline<CR>
+nnoremap <silent> <Leader>uo :<C-u>Unite outline -auto-preview<CR>
 " マーク一覧
 nnoremap <silent> <Leader>um :<C-u>Unite mark<CR>
 " ライン
@@ -664,3 +675,19 @@ let g:syntastic_mode_map = {
  \}
 let g:syntastic_javascript_checker = 'jshint'
 " let g:syntastic_phpcs_disable = 1
+
+
+"----------------------------------
+" textmanip
+"----------------------------------
+" 選択したテキストの移動
+xmap <C-j> <Plug>(textmanip-move-down)
+xmap <C-k> <Plug>(textmanip-move-up)
+xmap <C-h> <Plug>(textmanip-move-left)
+xmap <C-l> <Plug>(textmanip-move-right)
+
+" 行の複製
+xmap <Space>d <Plug>(textmanip-duplicate-down)
+nmap <Space>d <Plug>(textmanip-duplicate-down)
+xmap <Space>D <Plug>(textmanip-duplicate-up)
+nmap <Space>D <Plug>(textmanip-duplicate-up)

@@ -331,6 +331,7 @@ endfunction
 " autocmd BufWritePre * call RTrim()
 
 inoremap jj <Esc>
+inoremap kk <Esc>
 
 "------------------------------
 " ========================
@@ -504,7 +505,7 @@ nnoremap <silent> <Leader>ua :<C-u>Unite -buffer-name=files buffer file_mru book
 " ブックマークに追加
 " nnoremap <silent> <Leader>ua :<C-u>UniteBookmarkAdd<CR>
 " アウトライン
-nnoremap <silent> <Leader>uo :<C-u>Unite outline -auto-preview<CR>
+nnoremap <silent> <Leader>uo :<C-u>Unite outline<CR>
 " マーク一覧
 nnoremap <silent> <Leader>um :<C-u>Unite mark<CR>
 " ライン
@@ -548,6 +549,9 @@ function! s:unite_my_settings()
   "fでvimfiler
   nnoremap <silent><buffer><expr> f unite#smart_map('f', unite#do_action('vimfiler'))
   inoremap <silent><buffer><expr> f unite#smart_map('f', unite#do_action('vimfiler'))
+  "pでpreview
+  nnoremap <silent><buffer><expr> p unite#smart_map('p', unite#do_action('preview'))
+  inoremap <silent><buffer><expr> p unite#smart_map('p', unite#do_action('preview'))
 endfunction
 
 

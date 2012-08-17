@@ -15,12 +15,14 @@ NeoBundle 'matchit.zip'
 NeoBundle 'https://github.com/thinca/vim-quickrun.git'
 NeoBundle 'https://github.com/thinca/vim-ref.git'
 NeoBundle 'sudo.vim'
-NeoBundle 'AutoClose'
+" NeoBundle 'AutoClose'
 NeoBundle 'camelcasemotion'
 NeoBundle 'scrooloose/syntastic'
 NeoBundle 'tComment'
 NeoBundle 'https://github.com/tpope/vim-markdown.git'
 NeoBundle 't9md/vim-textmanip'
+
+NeoBundle 'git://github.com/vim-scripts/simple-pairs.git'
 
 " unite
 NeoBundle 'git://github.com/Shougo/unite.vim.git'

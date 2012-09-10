@@ -24,6 +24,7 @@ NeoBundle 'https://github.com/tpope/vim-markdown.git'
 NeoBundle 't9md/vim-textmanip'
 
 NeoBundle 'git://github.com/vim-scripts/simple-pairs.git'
+NeoBundle 'nathanaelkane/vim-indent-guides'
 
 " unite
 NeoBundle 'git://github.com/Shougo/unite.vim.git'
@@ -78,7 +79,9 @@ NeoBundle 'leo256'
 " Bundle 'Railscasts-Theme-GUIand256color'
 NeoBundle 'molokai'
 NeoBundle 'git://github.com/altercation/vim-colors-solarized.git'
-"
+NeoBundle 'vim-scripts/tir_black'
+
+
 "#
 "# .vimrc
 "#
@@ -150,6 +153,8 @@ syntax on
 autocmd! BufRead,BufNewFile *.htmlt set filetype=smarty
 
 colorscheme molokai
+" set background=dark
+" colorscheme tir_black
 " colorscheme jellybeans
 
 " let g:solarized_termcolors=256
@@ -171,6 +176,7 @@ colorscheme molokai
 "highlight PmenuSbar ctermbg=Grey
 "highlight Folded ctermbg=grey ctermfg=blue
 "highlight FoldColumn ctermbg=darkgrey ctermfg=white
+
 
 " PHP code fold
 let php_folding=1
@@ -727,3 +733,13 @@ function! RspecQuickrun()
 endfunction
 
 autocmd BufReadPost *_spec.rb call RspecQuickrun()
+
+"----------------------------------
+" indent_guides
+"----------------------------------
+let g:indent_guides_auto_colors = 0
+hi IndentGuidesOdd  ctermbg=234
+hi IndentGuidesEven ctermbg=236
+let g:indent_guides_start_level = 2
+let g:indent_guides_guide_size = 1
+let g:indent_guides_enable_on_vim_startup = 1

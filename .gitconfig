@@ -21,7 +21,7 @@
 	ci = commit
 	st = status
 [i18n]
-  commitencoding = UTF-8
-  logoutputencoding = UTF-8
+  commitencoding = utf-8
+  logoutputencoding = utf-8
 [http]
   sslVerify = false

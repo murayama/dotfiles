@@ -7,7 +7,15 @@ export PATH
 export PATH=$HOME/.nodebrew/current/bin:$PATH
 export RSENSE_HOME=$HOME/lib/rsense-0.3
 #PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
+# [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
 
-eval "$(rbenv init -)"
-source ~/.rbenv/completions/rbenv.zsh
+#[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
+#=============================
+# rbenv
+#=============================
+if [ -d ${HOME}/.rbenv  ] ; then
+  PATH=${HOME}/.rbenv/bin:${PATH}
+  export PATH
+  eval "$(rbenv init -)"
+  source ~/.rbenv/completions/rbenv.zsh
+fi

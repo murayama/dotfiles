@@ -13,6 +13,7 @@ NeoBundle 'surround.vim'
 NeoBundle 'YankRing.vim'
 NeoBundle 'matchit.zip'
 NeoBundle 'https://github.com/thinca/vim-quickrun.git'
+NeoBundle 'vim-scripts/AnsiEsc.vim'
 NeoBundle 'https://github.com/thinca/vim-ref.git'
 NeoBundle 'sudo.vim'
 " NeoBundle 'AutoClose'
@@ -697,3 +698,32 @@ xmap <Space>d <Plug>(textmanip-duplicate-down)
 nmap <Space>d <Plug>(textmanip-duplicate-down)
 xmap <Space>D <Plug>(textmanip-duplicate-up)
 nmap <Space>D <Plug>(textmanip-duplicate-up)
+
+"----------------------------------
+" quickrun
+"----------------------------------
+
+autocmd FileType quickrun AnsiEsc
+
+let g:quickrun_config = {}
+let g:quickrun_config._ = {'runner': 'vimproc'}
+
+let g:quickrun_config['rspec/bundle'] = {
+  \ 'type': 'rspec/bundle',
+  \ 'command': 'rspec',
+  \ 'exec': 'bundle exec %c %o -fs --color --drb --tty %s',
+  \}
+
+let g:quickrun_config['rspec/normal'] = {
+  \ 'type': 'rspec/normal',
+  \ 'command': 'rspec',
+  \ 'exec': '%c %o -fs --color --drb --tty %s'
+  \}
+
+
+function! RspecQuickrun()
+  let b:quickrun_config = {'type': 'rspec/normal'}
+  nnoremap <expr><silent> <Leader>lr "<Esc>:QuickRun -cmdopt \"-l " . line(".") . "\"<CR>"
+endfunction
+
+autocmd BufReadPost *_spec.rb call RspecQuickrun()

@@ -172,6 +172,8 @@ zstyle ':completion:*' list-colors 'di=01;34' 'ln=35' 'so=31' 'ex=01;32' 'bd=46;
 #zstyle ':completion:*' list-colors ''
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([%0-9]#)*=0=01;31'
 
+zle_highlight=(default:fg=blue isearch:bold,fg=red)
+
 ## alias
 #
 setopt complete_aliases # aliased ls needs if file/dir completions work

@@ -8,41 +8,42 @@ endif
 
 NeoBundle 'neocomplcache'
 NeoBundle 'ujihisa/neco-look'
-NeoBundle 'git://github.com/Shougo/neocomplcache-snippets-complete.git'
+NeoBundle 'neocomplcache-snippets-complete.git'
 NeoBundle 'surround.vim'
 NeoBundle 'YankRing.vim'
-NeoBundle 'matchit.zip'
-NeoBundle 'https://github.com/thinca/vim-quickrun.git'
-NeoBundle 'vim-scripts/AnsiEsc.vim'
-NeoBundle 'https://github.com/thinca/vim-ref.git'
+" NeoBundle 'matchit.zip'
+NeoBundle 'thinca/vim-quickrun.git'
+" NeoBundle 'vim-scripts/AnsiEsc.vim'
+NeoBundle 'thinca/vim-ref.git'
 NeoBundle 'sudo.vim'
 " NeoBundle 'AutoClose'
 NeoBundle 'camelcasemotion'
 NeoBundle 'scrooloose/syntastic'
 NeoBundle 'tComment'
-NeoBundle 'https://github.com/tpope/vim-markdown.git'
+NeoBundle 'tpope/vim-markdown.git'
 NeoBundle 't9md/vim-textmanip'
 
-NeoBundle 'git://github.com/vim-scripts/simple-pairs.git'
+" NeoBundle 'git://github.com/vim-scripts/simple-pairs.git'
 NeoBundle 'nathanaelkane/vim-indent-guides'
 
 " unite
-NeoBundle 'git://github.com/Shougo/unite.vim.git'
-NeoBundle 'https://github.com/basyura/unite-rails.git'
-NeoBundle 'https://github.com/h1mesuke/unite-outline.git'
-NeoBundle 'https://github.com/tacroe/unite-mark.git'
-NeoBundle 'https://github.com/tsukkee/unite-tag.git'
-NeoBundle 'https://github.com/sgur/unite-qf.git'
-NeoBundle 'https://github.com/h1mesuke/vim-alignta.git'
-NeoBundle 'https://github.com/daisuzu/unite-grep_launcher.git'
+NeoBundle 'Shougo/unite.vim.git'
+NeoBundle 'basyura/unite-rails.git'
+NeoBundle 'h1mesuke/unite-outline.git'
+NeoBundle 'tacroe/unite-mark.git'
+NeoBundle 'tsukkee/unite-tag.git'
+NeoBundle 'sgur/unite-qf.git'
+NeoBundle 'h1mesuke/vim-alignta.git'
+NeoBundle 'daisuzu/unite-grep_launcher.git'
+NeoBundle 'ujihisa/unite-rake'
 
-NeoBundle 'git://github.com/Shougo/vimfiler.git'
+NeoBundle 'Shougo/vimfiler.git'
 if &encoding ==# 'utf-8'
-  NeoBundle 'git://github.com/Shougo/vimproc.git'
+  NeoBundle 'Shougo/vimproc.git'
 endif
-NeoBundle 'git://github.com/Shougo/vimshell.git'
+NeoBundle 'Shougo/vimshell.git'
 
-NeoBundle 'https://github.com/thinca/vim-qfreplace.git'
+NeoBundle 'thinca/vim-qfreplace.git'
 
 " git
 NeoBundle 'fugitive.vim'
@@ -52,16 +53,19 @@ NeoBundle 'git-commit'
 
 " ruby
 NeoBundle 'vim-ruby/vim-ruby'
-NeoBundle 'endwise.vim'
-" Bundle 'cucumber.zip'
-" Bundle 'tpope/vim-rails'
-" Bundle 'railstab.vim'
+NeoBundle 'tpope/vim-endwise.git'
+NeoBundle 'ruby-matchit'
+NeoBundle 'taichouchou2/vim-rsense'
+NeoBundle 'taq/vim-rspec'
+NeoBundle 'taichouchou2/vim-ref-ri'
+NeoBundle 'taichouchou2/vim-rails'
+NeoBundle 'romanvbabenko/rails.vim'
 
 " javascript
 " NeoBundle 'JavaScript-syntax'
 NeoBundle 'pangloss/vim-javascript'
 NeoBundle 'jQuery'
-NeoBundle 'https://github.com/kchmck/vim-coffee-script.git'
+NeoBundle 'kchmck/vim-coffee-script.git'
 
 " php
 " NeoBundle 'https://github.com/beyondwords/vim-twig.git'
@@ -354,6 +358,97 @@ inoremap kk <Esc>
 "let g:user_zen_expandabbr_key='<c-e>'
 "let g:use_zen_complete_tag = 1
 
+
+" ========================
+" vim-ruby
+" ========================
+let g:rubycomplete_buffer_loading = 1
+let g:rubycomplete_classes_in_global = 1
+let g:rubycomplete_rails = 1
+
+" ========================
+" vim-rails.vim
+" ========================
+"有効化
+let g:rails_some_option = 1
+let g:rails_level = 4
+let g:rails_syntax = 1
+let g:rails_statusline = 1
+" let g:rails_url='http://localhost:3000'
+let g:rails_subversion=0
+" let g:dbext_default_SQLITE_bin = 'mysql2'
+let g:rails_default_file='config/database.yml'
+" let g:rails_ctags_arguments = ''
+function! SetUpRailsSetting()
+  nmap <buffer><C-C> <Nop>
+  imap <buffer><C-C> <Nop>
+  map <buffer><C-_><C-C> <Nop>
+
+  nmap <buffer><Space>r :R<CR>
+  nmap <buffer><Space>a :A<CR>
+  nmap <buffer><Space>m :Rmodel<Space>
+  nmap <buffer><Space>c :Rcontroller<Space>
+  nmap <buffer><Space>v :Rview<Space>
+  nmap <buffer><Space>s :Rspec<Space>
+  nmap <buffer><Space>m :Rgen model<Space>
+  nmap <buffer><Space>c :Rgen contoller<Space>
+  nmap <buffer><Space>s :Rgen scaffold<Space>
+  nmap <buffer><Space>p :Rpreview<CR>
+  " au FileType ruby,eruby,ruby.rspec let g:neocomplcache_dictionary_filetype_lists = {
+  "       \'ruby' : $HOME.'/.vim/dict/rails.dict',
+  "       \'eruby' : $HOME.'/.vim/dict/rails.dict'
+  "       \}
+  " setl dict+=~/.vim/dict/rails.dict
+  " setl dict+=~/.vim/dict/ruby.dict
+endfunction
+autocmd User Rails call SetUpRailsSetting()
+
+
+" ========================
+" rsense
+" ========================
+let g:rsenseUseOmniFunc = 1
+let g:rsenseHome = expand('~/.vim/ref/rsense-0.3')
+
+function! SetUpRubySetting()
+  setlocal completefunc=RSenseCompleteFunction
+  " nmap <buffer>tj :RSenseJumpToDefinition<CR>
+  " nmap <buffer>tk :RSenseWhereIs<CR>
+  " nmap <buffer>td :RSenseTypeHelp<CR>
+endfunction
+autocmd FileType ruby,eruby,ruby.rspec call SetUpRubySetting()
+
+" ========================
+" tcomment
+" ========================
+" tcommentで使用する形式を追加
+if !exists('g:tcomment_types')
+  let g:tcomment_types = {}
+endif
+let g:tcomment_types = {
+      \'php_surround' : "<?php %s ?>",
+      \'eruby_surround' : "<%% %s %%>",
+      \'eruby_surround_minus' : "<%% %s -%%>",
+      \'eruby_surround_equality' : "<%%= %s %%>",
+\}
+
+" マッピングを追加
+function! SetErubyMapping2()
+  nmap <buffer> <C-_>c :TCommentAs eruby_surround<CR>
+  nmap <buffer> <C-_>- :TCommentAs eruby_surround_minus<CR>
+  nmap <buffer> <C-_>= :TCommentAs eruby_surround_equality<CR>
+
+  vmap <buffer> <C-_>c :TCommentAs eruby_surround<CR>
+  vmap <buffer> <C-_>- :TCommentAs eruby_surround_minus<CR>
+  vmap <buffer> <C-_>= :TCommentAs eruby_surround_equality<CR>
+endfunction
+
+" erubyのときだけ設定を追加
+au FileType eruby call SetErubyMapping2()
+" phpのときだけ設定を追加
+au FileType php nmap <buffer><C-_>c :TCommentAs php_surround<CR>
+au FileType php vmap <buffer><C-_>c :TCommentAs php_surround<CR>
+
 " ========================
 " neocomplcache
 " ========================
@@ -423,7 +518,12 @@ autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 " autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
 " autocmd FileType php setlocal omnifunc=phpcomplete#CompletePHP
 " autocmd FileType c set omnifunc=ccomplete#Complete
-autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
+" autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
+" rubyの設定
+if !exists('g:neocomplcache_omni_functions')
+  let g:neocomplcache_omni_functions = {}
+endif
+let g:neocomplcache_omni_functions.ruby = 'RSenseCompleteFunction'
 
 " Enable heavy omni completion.
 if !exists('g:neocomplcache_omni_patterns')
@@ -462,19 +562,6 @@ smap <TAB> <Plug>(neocomplcache_snippets_expand)
 if has('conceal')
   set conceallevel=2 concealcursor=i
 endif
-
-" ========================
-" vim-ruby
-" ========================
-let g:rubycomplete_buffer_loading = 1
-let g:rubycomplete_classes_in_global = 1
-let g:rubycomplete_rails = 1
-
-" ========================
-" rails.vim
-" ========================
-" let g:rails_level = 4
-" let g:rails_defalut_database = 'mysql'
 
 " gitv
 nnoremap <silent> <Leader>gh :<C-u>Gitv<CR>
@@ -523,6 +610,21 @@ nnoremap <silent> <Leader>/ :<C-u>Unite line<CR>
 nnoremap <silent> <Leader>qf :<C-u>Unite qf<CR>
 " grep_launcher
 nnoremap <silent> <Leader>ug :<C-u>Unite grep_launcher<CR>
+
+" rails controller
+nnoremap <silent> <Leader>rc :<C-u>Unite rails/controller<CR>
+" rails helper
+nnoremap <silent> <Leader>rh :<C-u>Unite rails/helper<CR>
+" rails model
+nnoremap <silent> <Leader>rm :<C-u>Unite rails/model<CR>
+" rails view
+nnoremap <silent> <Leader>rv :<C-u>Unite rails/view<CR>
+" rails javascripts
+nnoremap <silent> <Leader>rj :<C-u>Unite rails/javascript<CR>
+" rails stylesheet
+nnoremap <silent> <Leader>rs :<C-u>Unite rails/stylesheet<CR>
+" rails bundle gem
+nnoremap <silent> <Leader>rg :<C-u>Unite rails/bundled_gem<CR>
 
 " Unite tag
 autocmd BufEnter *
@@ -684,7 +786,7 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_mode_map = {
  \ 'mode' : 'active',
  \ 'active_filetypes' : [],
- \ 'passive_filetypes' : ['html','php']
+ \ 'passive_filetypes' : ['html','php','ruby']
  \}
 let g:syntastic_javascript_checker = 'jshint'
 " let g:syntastic_phpcs_disable = 1
@@ -708,31 +810,51 @@ nmap <Space>D <Plug>(textmanip-duplicate-up)
 "----------------------------------
 " quickrun
 "----------------------------------
-
-autocmd FileType quickrun AnsiEsc
-
+" Rspec
 let g:quickrun_config = {}
-let g:quickrun_config._ = {'runner': 'vimproc'}
+let g:quickrun_config['ruby.rspec'] = {
+      \ 'type' : 'ruby.rspec',
+      \ 'command': 'rspec',
+      \ 'exec': 'bundle exec %c %o %s',
+      \ 'outputter' : 'rspec_outputter'
+      \}
 
-let g:quickrun_config['rspec/bundle'] = {
-  \ 'type': 'rspec/bundle',
-  \ 'command': 'rspec',
-  \ 'exec': 'bundle exec %c %o -fs --color --drb --tty %s',
-  \}
-
-let g:quickrun_config['rspec/normal'] = {
-  \ 'type': 'rspec/normal',
-  \ 'command': 'rspec',
-  \ 'exec': '%c %o -fs --color --drb --tty %s'
-  \}
-
-
-function! RspecQuickrun()
-  let b:quickrun_config = {'type': 'rspec/normal'}
-  nnoremap <expr><silent> <Leader>lr "<Esc>:QuickRun -cmdopt \"-l " . line(".") . "\"<CR>"
+let rspec_outputter = quickrun#outputter#buffer#new()
+function! rspec_outputter.init(session)
+  call call(quickrun#outputter#buffer#new().init, [a:session], self)
 endfunction
 
-autocmd BufReadPost *_spec.rb call RspecQuickrun()
+" syntax color
+function! rspec_outputter.finish(session)
+  " 文字に色をつける。
+  highlight default RSpecGreen   ctermfg=White ctermbg=Green guifg=White guibg=Green
+  highlight default RSpecRed     ctermfg=White ctermbg=Red   guifg=White guibg=Red
+
+  call matchadd("RSpecGreen", "^[\.F]*\.[\.F]*$")
+  call matchadd("RSpecGreen", "^.*, 0 failures$")
+  call matchadd("RSpecRed", "F")
+  call matchadd("RSpecRed", "^.*, [1-9]* failures.*$")
+  call matchadd("RSpecRed", "^.*, 1 failure.*$")
+  call matchadd("RSpecRed", "^ *(.*$")
+  call matchadd("RSpecRed", "^ *expected.*$")
+  call matchadd("RSpecRed", "^ *got.*$")
+  call matchadd("RSpecRed", "Failure/Error:.*$")
+  call matchadd("RSpecRed", "^.*(FAILED - [0-9]*)$")
+  call matchadd("NonText", "Failures:")
+  call matchadd("NonText", "Finished")
+  call matchadd("NonText", "Failed")
+  call call(quickrun#outputter#buffer#new().finish,  [a:session], self)
+endfunction
+call quickrun#register_outputter("rspec_outputter", rspec_outputter)
+
+" ファイル名が_spec.rbで終わるファイルを読み込んだ時に上記の設定を自動で読み込む
+function! RSpecQuickrun()
+  nmap <silent><buffer><Leader>lr :<C-U>QuickRun ruby.rspec.oneline<CR>
+  let b:quickrun_config = {'type' : 'ruby.rspec'}
+  " nnoremap <silent><buffer><Leader>lr :QuickRun ruby.rspec line('.')<CR>
+  nnoremap <expr><silent><buffer><Leader>lr "<Esc>:QuickRun ruby.rspec -cmdopt \"-l" .  line('.') . "\"<CR>"
+endfunction
+au BufReadPost *_spec.rb call RSpecQuickrun()
 
 "----------------------------------
 " indent_guides

@@ -149,38 +149,9 @@ filetype indent on
 "------------------------------
 
 syntax on
-"highlight Comment ctermfg=Cyan
-"highlight Comment ctermfg=Green
-"highlight Search ctermbg=Green ctermfg=Black
-"highlight Error ctermfg=Black
-"autocmd! BufRead,BufNewFile *.ctp set filetype=html
 autocmd! BufRead,BufNewFile *.htmlt set filetype=smarty
 
 colorscheme molokai
-" set background=dark
-" colorscheme tir_black
-" colorscheme jellybeans
-
-" let g:solarized_termcolors=256
-" set background=dark
-" colorscheme solarized
-
-" highlight Search ctermbg=yellow ctermfg=Black
-" highlight Folded ctermbg=grey ctermfg=darkblue
-" highlight FoldColumn ctermbg=darkgrey ctermfg=white
-" highlight StatusLine ctermfg=Black ctermbg=white
-" highlight StatusLineNC ctermfg=Black ctermbg=grey
-" highlight VertSplit ctermfg=none ctermbg=grey
-" highlight DiffText ctermfg=Green ctermbg=grey
-" highlight DiffChange ctermfg=Green ctermbg=grey
-" highlight DiffAdd ctermfg=Green ctermbg=grey
-" highlight DiffDelete ctermfg=Green ctermbg=grey
-"highlight Pmenu ctermbg=Cyan
-"highlight PmenuSel ctermbg=Green
-"highlight PmenuSbar ctermbg=Grey
-"highlight Folded ctermbg=grey ctermfg=blue
-"highlight FoldColumn ctermbg=darkgrey ctermfg=white
-
 
 " PHP code fold
 let php_folding=1
@@ -188,17 +159,15 @@ au Syntax php set fdm=syntax
 au Syntax html set fdm=indent
 set foldlevel=5
 
-" autocmd! BufNewFile,BufRead *.php set ts=4 sw=4 fenc=euc-jp noexpandtab
-" autocmd! BufNewFile,BufRead *.php5 set ts=4 sw=4 fenc=euc-jp noexpandtab
 autocmd! BufNewFile,BufRead *.php set ts=2 sw=2 noexpandtab
 autocmd! BufNewFile,BufRead *.php5 set ts=2 sw=2 noexpandtab
 
 " ruby code fold
 let ruby_folding=1
 au Syntax ruby set fdm=syntax
-au Syntax erb set fdm=indent
+au Syntax eruby set fdm=indent
 au Syntax html set fdm=indent
-set foldlevel=5
+set foldlevel=3
 
 autocmd! BufNewFile,BufRead *.rb set ts=2 sw=2 fenc=utf-8 expandtab
 autocmd! BufNewFile,BufRead *.js set ts=2 sw=2 fenc=utf-8 expandtab
@@ -410,13 +379,13 @@ autocmd User Rails call SetUpRailsSetting()
 let g:rsenseUseOmniFunc = 1
 let g:rsenseHome = expand('~/.vim/ref/rsense-0.3')
 
-function! SetUpRubySetting()
-  setlocal completefunc=RSenseCompleteFunction
-  " nmap <buffer>tj :RSenseJumpToDefinition<CR>
-  " nmap <buffer>tk :RSenseWhereIs<CR>
-  " nmap <buffer>td :RSenseTypeHelp<CR>
-endfunction
-autocmd FileType ruby,eruby,ruby.rspec call SetUpRubySetting()
+" function! SetUpRubySetting()
+"   setlocal completefunc=RSenseCompleteFunction
+"   " nmap <buffer>tj :RSenseJumpToDefinition<CR>
+"   " nmap <buffer>tk :RSenseWhereIs<CR>
+"   " nmap <buffer>td :RSenseTypeHelp<CR>
+" endfunction
+" autocmd FileType ruby,eruby,ruby.rspec call SetUpRubySetting()
 
 " ========================
 " tcomment

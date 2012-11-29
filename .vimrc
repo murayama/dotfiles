@@ -8,7 +8,7 @@ endif
 
 NeoBundle 'neocomplcache'
 NeoBundle 'ujihisa/neco-look'
-NeoBundle 'neocomplcache-snippets-complete.git'
+NeoBundle 'Shougo/neosnippet.git'
 NeoBundle 'surround.vim'
 NeoBundle 'YankRing.vim'
 " NeoBundle 'matchit.zip'
@@ -519,18 +519,40 @@ inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
 inoremap <expr><C-y> neocomplcache#close_popup()
 inoremap <expr><C-d> neocomplcache#cancel_popup()
 
-" ========================
-" neocomplcache-snippets-complete
-" ========================
-let g:neocomplcache_snippets_dir = '~/.vim/snippets'
 
-" imap <TAB> <Plug>(neocomplcache_snippets_expand)
-smap <TAB> <Plug>(neocomplcache_snippets_expand)
+" =======================
+" neosnippet
+" =======================
+let g:neosnippet#snippets_directory='~/.vim/snippets'
+
+" Plugin key-mappings.
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+
+" SuperTab like snippets behavior.
+imap <expr><TAB> neosnippet#expandable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-n>" : "\<TAB>"
+smap <expr><TAB> neosnippet#expandable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 
 " For snippet_complete marker.
 if has('conceal')
   set conceallevel=2 concealcursor=i
 endif
+
+autocmd BufEnter * if exists("b:rails_root") | NeoComplCacheSetFileType ruby.rails | endif
+autocmd BufEnter * if (expand("%") =~ "_spec\.rb$") || (expand("%") =~ "^spec.*\.rb$") | NeoComplCacheSetFileType ruby.rspec | endif
+
+" ========================
+" neocomplcache-snippets-complete
+" ========================
+" let g:neocomplcache_snippets_dir = '~/.vim/snippets'
+
+" imap <TAB> <Plug>(neocomplcache_snippets_expand)
+" smap <TAB> <Plug>(neocomplcache_snippets_expand)
+
+" For snippet_complete marker.
+" if has('conceal')
+"   set conceallevel=2 concealcursor=i
+" endif
 
 " gitv
 nnoremap <silent> <Leader>gh :<C-u>Gitv<CR>

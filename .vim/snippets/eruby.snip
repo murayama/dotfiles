@@ -20,8 +20,12 @@ abbr        <% if %><% else %>
     ${3}
   <% end %>
 
+snippet     else
+abbr        <% else %>
+  <% else %>  
+
 snippet     elsif
-abbr        <% elsif %%>
+abbr        <% elsif %>
   <% elsif ${1:condition} %>
     ${2}
 

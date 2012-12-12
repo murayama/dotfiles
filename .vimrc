@@ -11,7 +11,7 @@ NeoBundle 'ujihisa/neco-look'
 NeoBundle 'Shougo/neosnippet.git'
 NeoBundle 'surround.vim'
 NeoBundle 'YankRing.vim'
-" NeoBundle 'matchit.zip'
+NeoBundle 'matchit.zip'
 NeoBundle 'thinca/vim-quickrun.git'
 " NeoBundle 'vim-scripts/AnsiEsc.vim'
 NeoBundle 'thinca/vim-ref.git'
@@ -22,6 +22,9 @@ NeoBundle 'scrooloose/syntastic'
 NeoBundle 'tComment'
 NeoBundle 'tpope/vim-markdown.git'
 NeoBundle 't9md/vim-textmanip'
+
+NeoBundle 'kana/vim-textobj-user'
+NeoBundle 'nelstrom/vim-textobj-rubyblock'
 
 " NeoBundle 'git://github.com/vim-scripts/simple-pairs.git'
 NeoBundle 'nathanaelkane/vim-indent-guides'
@@ -508,7 +511,7 @@ let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
 inoremap <expr><C-g> neocomplcache#undo_completion()
 inoremap <expr><C-l> neocomplcache#complete_common_string()
 
-imap <expr><TAB> neocomplcache#sources#snippets_complete#expandable() ? "\<Plug>(neocomplcache_snippets_expand)" : pumvisible() ? "\<C-n>" : "\<TAB>"
+" imap <expr><TAB> neocomplcache#sources#snippets_complete#expandable() ? "\<Plug>(neocomplcache_snippets_expand)" : pumvisible() ? "\<C-n>" : "\<TAB>"
 " Recommended key-mappings.
 " <CR>: close popup and save indent.
 " inoremap <expr><CR> neocomplcache#close_popup()."\<CR>"
@@ -538,7 +541,7 @@ if has('conceal')
   set conceallevel=2 concealcursor=i
 endif
 
-autocmd BufEnter * if exists("b:rails_root") | NeoComplCacheSetFileType ruby.rails | endif
+autocmd BufEnter * if exists("b:rails_root") && !(expand("%") =~ "\.erb$") | NeoComplCacheSetFileType ruby.rails | endif
 autocmd BufEnter * if (expand("%") =~ "_spec\.rb$") || (expand("%") =~ "^spec.*\.rb$") | NeoComplCacheSetFileType ruby.rspec | endif
 
 " ========================

@@ -80,13 +80,13 @@ NeoBundle 'https://github.com/hail2u/vim-css3-syntax.git'
 
 " colorscheme
 NeoBundle 'jellybeans.vim'
-NeoBundle 'railscasts'
+"NeoBundle 'railscasts'
 NeoBundle 'desert256.vim'
-NeoBundle 'leo256'
+"NeoBundle 'leo256'
 " Bundle 'Railscasts-Theme-GUIand256color'
 NeoBundle 'molokai'
-NeoBundle 'git://github.com/altercation/vim-colors-solarized.git'
-NeoBundle 'vim-scripts/tir_black'
+"NeoBundle 'git://github.com/altercation/vim-colors-solarized.git'
+"NeoBundle 'vim-scripts/tir_black'
 
 
 "#
@@ -580,6 +580,7 @@ nnoremap <silent> <Leader>ge :<C-u>Extradite<CR>
 let g:unite_enable_start_insert=1
 " let g:unite_enable_split_vertically = 1 "縦分割で開く
 " let g:unite_winwidth = 40 "横幅40で開く
+let g:unite_split_rule='botright'
 " タブ一覧
 nnoremap <silent> <Leader>t :<C-u>Unite tab<CR>
 " バッファ一覧

@@ -20,8 +20,21 @@
 	br = branch
 	ci = commit
 	st = status
+  logp = log -p
+  logs = log --stat
+  logone = log --pretty=oneline
 [i18n]
   commitencoding = utf-8
   logoutputencoding = utf-8
 [http]
   sslVerify = false
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+[diff]
+	tool = vimdiff
+[merge]
+	tool = vimdiff

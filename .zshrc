@@ -81,6 +81,7 @@ chpwd()
 # auto change directory
 #
 setopt auto_cd
+function chpwd() {ls}
 
 # auto directory pushed that you can get dirs list by cd -[tab]
 #
@@ -202,3 +203,6 @@ alias lv="lv -c"
 function git_diff() {
   git diff --no-ext-diff -w "$@" | vim -R -
 }
+
+### Added by the Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"

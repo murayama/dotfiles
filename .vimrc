@@ -37,7 +37,6 @@ NeoBundle 'tacroe/unite-mark.git'
 NeoBundle 'tsukkee/unite-tag.git'
 NeoBundle 'sgur/unite-qf.git'
 NeoBundle 'h1mesuke/vim-alignta.git'
-NeoBundle 'daisuzu/unite-grep_launcher.git'
 NeoBundle 'ujihisa/unite-rake'
 
 NeoBundle 'Shougo/vimfiler.git'
@@ -586,25 +585,34 @@ nnoremap <silent> <Leader>t :<C-u>Unite tab<CR>
 " バッファ一覧
 nnoremap <silent> <Leader>. :<C-u>Unite buffer <CR>
 " ファイル一覧
-nnoremap <silent> <Leader>uf :<C-u>Unite -buffer-name=files file<CR>
+nnoremap <silent> <Leader>u :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
+nnoremap <silent> <Leader>f :<C-u>Unite -buffer-name=files file<CR>
 " ブックマーク一覧
-nnoremap <silent> <Leader>ub :<C-u>Unite bookmark<CR>
+nnoremap <silent> <Leader>b :<C-u>Unite bookmark<CR>
 " 最近使用したファイル一覧
-nnoremap <silent> <Leader>ur :<C-u>Unite file_mru<CR>
+nnoremap <silent> <Leader>r :<C-u>Unite file_mru<CR>
+" レジスタ一覧
+nnoremap <silent> <Leader>y :<C-u>Unite -buffer-name=register register<CR>
 " 全部乗せ
-nnoremap <silent> <Leader>ua :<C-u>Unite -buffer-name=files buffer file_mru bookmark file<CR>
+nnoremap <silent> <Leader>a :<C-u>Unite -buffer-name=files buffer file_mru bookmark file<CR>
 " ブックマークに追加
 " nnoremap <silent> <Leader>ua :<C-u>UniteBookmarkAdd<CR>
 " アウトライン
-nnoremap <silent> <Leader>uo :<C-u>Unite outline<CR>
+nnoremap <silent> <Leader>o :<C-u>Unite outline<CR>
+nnoremap <silent> <Leader>O :<C-u>Unite-no-quit outline<CR>
 " マーク一覧
-nnoremap <silent> <Leader>um :<C-u>Unite mark<CR>
+nnoremap <silent> <Leader>m :<C-u>Unite mark<CR>
 " ライン
 nnoremap <silent> <Leader>/ :<C-u>Unite line<CR>
+nnoremap <silent> <Leader>? :<C-u>Unite -no-quit line<CR>
 " quickfix
-nnoremap <silent> <Leader>qf :<C-u>Unite qf<CR>
-" grep_launcher
-nnoremap <silent> <Leader>ug :<C-u>Unite grep_launcher<CR>
+nnoremap <silent> <Leader>qf :<C-u>Unite -no-quit qf<CR>
+" grep
+nnoremap <silent> <Leader>gr :<C-u>Unite grep<CR>
+nnoremap <silent> <Leader>GR :<C-u>Unite -no-quit grep<CR>
+" vimgrep
+nnoremap <silent> <Leader>vgr :<C-u>Unite vimgrep<CR>
+nnoremap <silent> <Leader>VGR :<C-u>Unite -no-quit vimgrep<CR>
 
 " rails controller
 nnoremap <silent> <Leader>rc :<C-u>Unite rails/controller<CR>
@@ -631,9 +639,6 @@ autocmd BufEnter *
 nnoremap <silent> <Leader>rb :<C-u>Unite ref/refe<CR>
 " phpマニアル
 " nnoremap <silent> <Leader>ph :<C-u>Unite ref/phpmanual<CR>
-
-" レジスタ一覧
-" nnoremap <silent> ,ur :<C-u>Unite -buffer-name=register register<CR>
 
 "uniteを開いている間のキーマッピング
 augroup vimrc
@@ -699,16 +704,6 @@ let g:unite_source_alignta_preset_options = [
       \ 'g/' . s:comment_leadings,
       \]
 unlet s:comment_leadings
-
-"-----------------------------------
-" unite-grep_launcher
-"-----------------------------------
-if !exists('g:grep_launcher_words')
-  let g:grep_launcher_words = {}
-endif
-
-let g:grep_launcher_words['TODO'] = 'TODO'
-
 
 "-----------------------------------
 " VimFiler

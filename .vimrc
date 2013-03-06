@@ -26,6 +26,9 @@ NeoBundle 't9md/vim-textmanip'
 NeoBundle 'kana/vim-textobj-user'
 NeoBundle 'nelstrom/vim-textobj-rubyblock'
 
+NeoBundle 'Lokaltog/vim-powerline'
+" NeoBundle 'Lokaltog/powerline'
+
 " NeoBundle 'git://github.com/vim-scripts/simple-pairs.git'
 NeoBundle 'nathanaelkane/vim-indent-guides'
 
@@ -86,6 +89,7 @@ NeoBundle 'desert256.vim'
 NeoBundle 'molokai'
 "NeoBundle 'git://github.com/altercation/vim-colors-solarized.git'
 "NeoBundle 'vim-scripts/tir_black'
+NeoBundle 'w0ng/vim-hybrid'
 
 
 "#
@@ -131,8 +135,8 @@ set magic				" 正規表現使用時に magic モードにする
 "set listchars=tab:-\ ,extends:<	" タブや改行などの代替文字設定(ex. tab:>-,extends:<.trail:-,eol:< )
 set keywordprg=man\ -a			" キーワードのヘルプコマンドの設定(default: man or man\ -s)
 "set lazyredraw				" マクロ実行中は画面を更新しない
-set statusline=%<%f\ %m%r%h%w%y%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%{fugitive#statusline()}%=%b\ 0x%B\ \ %l,%c%V%8P
-					" ステータス行のフォーマット
+" set statusline=%<%f\ %m%r%h%w%y%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%{fugitive#statusline()}%=%b\ 0x%B\ \ %l,%c%V%8P
+	" ステータス行のフォーマット
 ""set cursorline				" カーソル行に下線を表示(* vim7)
 "set cursorcolumn			" カーソル列をハイライト表示(* vim7)
 
@@ -153,7 +157,9 @@ filetype indent on
 syntax on
 autocmd! BufRead,BufNewFile *.htmlt set filetype=smarty
 
-colorscheme molokai
+"colorscheme molokai
+colorscheme hybrid
+hi Normal ctermbg=none
 
 " PHP code fold
 let php_folding=1
@@ -161,7 +167,7 @@ au Syntax php set fdm=syntax
 au Syntax html set fdm=indent
 set foldlevel=5
 
-autocmd! BufNewFile,BufRead *.php set ts=2 sw=2 noexpandtab
+autocmd! BufNewFile,BufRead *.php set ts=2 sw=2 expandtab
 autocmd! BufNewFile,BufRead *.php5 set ts=2 sw=2 noexpandtab
 
 " ruby code fold
@@ -322,6 +328,12 @@ inoremap kk <Esc>
 " plug-ins
 " ========================
 "------------------------------
+
+" ========================
+" vim-powerline
+" ========================
+let g:Powerline_symbols = 'fancy'
+
 
 " ========================
 " Zen-Coding setting

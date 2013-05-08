@@ -22,10 +22,14 @@ NeoBundle 'scrooloose/syntastic'
 NeoBundle 'tComment'
 NeoBundle 'tpope/vim-markdown.git'
 NeoBundle 't9md/vim-textmanip'
+NeoBundle 'terryma/vim-multiple-cursors'
+NeoBundle 'kien/ctrlp.vim.git'
 
 NeoBundle 'kana/vim-textobj-user'
 NeoBundle 'nelstrom/vim-textobj-rubyblock'
 
+" NeoBundle 'taichouchou2/alpaca_powertabline'
+" NeoBundle 'Lokaltog/powerline', { 'rtp' : 'powerline/bindings/vim'}
 NeoBundle 'Lokaltog/vim-powerline'
 " NeoBundle 'Lokaltog/powerline'
 
@@ -74,6 +78,7 @@ NeoBundle 'kchmck/vim-coffee-script.git'
 
 " php
 " NeoBundle 'https://github.com/beyondwords/vim-twig.git'
+" NeoBundle 'shawncplus/php.vim'
 
 " html css
 NeoBundle 'ZenCoding.vim'
@@ -293,6 +298,8 @@ noremap 9 $
 noremap <C-e> $
 inoremap <C-e> <end>
 
+" Enterでインサートモードにならずに改行
+noremap <CR> o<ESC>
 
 "vimgrep(Vim7)
 "au QuickfixCmdPost vimgrep cwin
@@ -436,21 +443,25 @@ au FileType php vmap <buffer><C-_>c :TCommentAs php_surround<CR>
 " neocomplcache
 " ========================
 " 補完ウィンドウの設定
-set completeopt=menuone"
+set completeopt=menuone
 " NeoComplCacheを有効にする
 let g:neocomplcache_enable_at_startup = 1
 " 表示候補の数
-let g:neocomplcache_max_list = 30
+let g:neocomplcache_max_list = 20
 " 自動補完を行う入力数
 let g:neocomplcache_auto_completion_start_length = 2
 " 手動補完時に補完を行う入力数を制御
 let g:neocomplcache_manual_completion_start_length = 3
+"バッファや辞書ファイル中で、補完の対象となるキーワードの最小長さ。初期値は4。
+let g:neocomplcache_min_keyword_length = 4
+"1:補完候補検索時に大文字・小文字を無視する
+let g:neocomplcache_enable_ignore_case = 1
 " smarrt case有効化。 大文字が入力されるまで大文字小文字の区別を無視する
 let g:neocomplcache_enable_smart_case = 1
 " camle caseを有効化。大文字を区切りとしたワイルドカードのように振る舞う
-let g:neocomplcache_enable_camel_case_completion = 1
+let g:neocomplcache_enable_camel_case_completion = 0
 " _(アンダーバー)区切りの補完を有効化
-let g:neocomplcache_enable_underbar_completion = 1
+let g:neocomplcache_enable_underbar_completion = 0
 " シンタックスをキャッシュするときの最小文字長を3に
 let g:neocomplcache_min_syntax_length = 3
 " neocomplcacheを自動的にロックするバッファ名のパターン
@@ -512,8 +523,8 @@ let g:neocomplcache_omni_functions.ruby = 'RSenseCompleteFunction'
 if !exists('g:neocomplcache_omni_patterns')
   let g:neocomplcache_omni_patterns = {}
 endif
-let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
-let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+" let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
+" let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
 
 " Plugin key-mappings.
 " imap <C-k>     <Plug>(neocomplcache_snippets_expand)
@@ -595,7 +606,7 @@ nnoremap <silent> <Leader>ge :<C-u>Extradite<CR>
 let g:unite_enable_start_insert=1
 " let g:unite_enable_split_vertically = 1 "縦分割で開く
 " let g:unite_winwidth = 40 "横幅40で開く
-let g:unite_split_rule='botright'
+" let g:unite_split_rule='botright'
 " タブ一覧
 nnoremap <silent> <Leader>t :<C-u>Unite tab<CR>
 " バッファ一覧
@@ -731,7 +742,7 @@ let g:vimfiler_safe_mode_by_default = 0
 " <Leader>eで現在開いているバッファのディレクトリを開く
 nnoremap <silent> <Leader>e :<C-u>VimFilerBufferDir<CR>
 
-nnoremap <F12> :VimFiler -buffer-name=explorer -split -winwidth=45 -toggle -no-quit<CR>
+nnoremap <F12> :VimFiler -buffer-name=explorer -split -simple -winwidth=45 -toggle -no-quit<CR>
 
 autocmd! FileType vimfiler call g:my_vimfiler_settings()
 function! g:my_vimfiler_settings()
@@ -871,3 +882,11 @@ hi IndentGuidesEven ctermbg=236
 let g:indent_guides_start_level = 2
 let g:indent_guides_guide_size = 1
 let g:indent_guides_enable_on_vim_startup = 1
+
+"----------------------------------
+" ctrip
+"----------------------------------
+let g:ctrip_use_migemo = 1
+let g:ctrip_clear_cache_on_exit = 0
+let g:ctrip_mruf_max = 500
+let g:ctrip_open_new_file = 1

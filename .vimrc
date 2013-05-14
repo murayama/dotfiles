@@ -22,7 +22,7 @@ NeoBundle 'scrooloose/syntastic'
 NeoBundle 'tComment'
 NeoBundle 'tpope/vim-markdown.git'
 NeoBundle 't9md/vim-textmanip'
-NeoBundle 'terryma/vim-multiple-cursors'
+" NeoBundle 'terryma/vim-multiple-cursors'
 NeoBundle 'kien/ctrlp.vim.git'
 
 NeoBundle 'kana/vim-textobj-user'
@@ -59,6 +59,7 @@ NeoBundle 'fugitive.vim'
 NeoBundle 'gitv'
 NeoBundle 'extradite.vim'
 NeoBundle 'git-commit'
+NeoBundle 'airblade/vim-gitgutter'
 
 " ruby
 NeoBundle 'vim-ruby/vim-ruby'
@@ -142,8 +143,8 @@ set keywordprg=man\ -a			" キーワードのヘルプコマンドの設定(defa
 "set lazyredraw				" マクロ実行中は画面を更新しない
 " set statusline=%<%f\ %m%r%h%w%y%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%{fugitive#statusline()}%=%b\ 0x%B\ \ %l,%c%V%8P
 	" ステータス行のフォーマット
-""set cursorline				" カーソル行に下線を表示(* vim7)
-"set cursorcolumn			" カーソル列をハイライト表示(* vim7)
+set cursorline				" カーソル行に下線を表示(* vim7)
+set cursorcolumn			" カーソル列をハイライト表示(* vim7)
 
 set incsearch	" サーチをインクリメンタルにする
 
@@ -301,11 +302,16 @@ inoremap <C-e> <end>
 " Enterでインサートモードにならずに改行
 noremap <CR> o<ESC>
 
+imap <c-h> <Left>
+imap <c-j> <Down>
+imap <c-k> <Up>
+imap <c-l> <Right>
+
 "vimgrep(Vim7)
 "au QuickfixCmdPost vimgrep cwin
 
 " 上の行のインデントを見て勝手にあわせてくれる
-nnoremap p p=`]
+noremap p p=`]
 
 " for, if, while などがある行にカーソルを置いて、これを実行すると、そのブロックを選択する。
 "nnoremap vb /{<CR>%v%0
@@ -531,15 +537,15 @@ endif
 " smap <C-k>     <Plug>(neocomplcache_snippets_expand)
 
 inoremap <expr><C-g> neocomplcache#undo_completion()
-inoremap <expr><C-l> neocomplcache#complete_common_string()
+" inoremap <expr><C-l> neocomplcache#complete_common_string()
 
-" imap <expr><TAB> neocomplcache#sources#snippets_complete#expandable() ? "\<Plug>(neocomplcache_snippets_expand)" : pumvisible() ? "\<C-n>" : "\<TAB>"
+imap <expr><TAB> neocomplcache#sources#snippets_complete#expandable() ? "\<Plug>(neocomplcache_snippets_expand)" : pumvisible() ? "\<C-n>" : "\<TAB>"
 " Recommended key-mappings.
 " <CR>: close popup and save indent.
 " inoremap <expr><CR> neocomplcache#close_popup()."\<CR>"
 " <C-h>, <BS>: close popup and delete backword char.
-inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
-inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
+" inoremap <expr><c-h> neocomplcache#smart_close_popup()."\<c-h>"
+" inoremap <expr><bs> neocomplcache#smart_close_popup()."\<c-h>"
 
 inoremap <expr><C-y> neocomplcache#close_popup()
 inoremap <expr><C-d> neocomplcache#cancel_popup()
@@ -551,8 +557,8 @@ inoremap <expr><C-d> neocomplcache#cancel_popup()
 let g:neosnippet#snippets_directory='~/.vim/snippets'
 
 " Plugin key-mappings.
-imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+" imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+" smap <C-k>     <Plug>(neosnippet_expand_or_jump)
 
 " SuperTab like snippets behavior.
 imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
@@ -805,7 +811,7 @@ let g:syntastic_mode_map = {
  \ 'active_filetypes' : [],
  \ 'passive_filetypes' : ['html','php','ruby']
  \}
-let g:syntastic_javascript_checker = 'jshint'
+let g:syntastic_javascript_checkers = ['jshint']
 " let g:syntastic_phpcs_disable = 1
 
 
@@ -884,9 +890,23 @@ let g:indent_guides_guide_size = 1
 let g:indent_guides_enable_on_vim_startup = 1
 
 "----------------------------------
-" ctrip
+" ctrlp
 "----------------------------------
+let g:ctrlp_map = '<c-c>'
 let g:ctrip_use_migemo = 1
 let g:ctrip_clear_cache_on_exit = 0
 let g:ctrip_mruf_max = 500
 let g:ctrip_open_new_file = 1
+let g:ctrlp_show_hidden = 1
+let g:ctrlp_prompt_mappings = {
+    \ 'AcceptSelection("t")': ['<c-a>'],
+    \ }
+
+"----------------------------------
+" vim-gitgutter
+"----------------------------------
+let g:gitgutter_enabled = 0
+nmap gh <Plug>GitGutterNextHunk
+nmap gH <Plug>GitGutterPrevHunk
+nnoremap <silent> <Leader>gg :<C-u>GitGutterToggle<CR>
+nnoremap <silent> <Leader>gl :<C-u>GitGutterLineHighlightsToggle<CR>

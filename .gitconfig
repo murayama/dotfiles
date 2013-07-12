@@ -23,6 +23,7 @@
   logp = log -p
   logs = log --stat
   logone = log --pretty=oneline
+  f = flow
 [i18n]
   commitencoding = utf-8
   logoutputencoding = utf-8
@@ -38,6 +39,6 @@
 	tool = vimdiff
 [merge]
 	tool = vimdiff
-	ff = false
-[pull]
-	rebase = true
+	; ff = false
+; [pull]
+; 	rebase = true

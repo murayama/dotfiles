@@ -7,6 +7,7 @@ if has('vim_starting')
 endif
 
 NeoBundle 'neocomplcache'
+NeoBundle 'Shougo/neocomplete.vim'
 NeoBundle 'ujihisa/neco-look'
 NeoBundle 'Shougo/neosnippet.git'
 NeoBundle 'surround.vim'
@@ -24,6 +25,7 @@ NeoBundle 'tpope/vim-markdown.git'
 NeoBundle 't9md/vim-textmanip'
 " NeoBundle 'terryma/vim-multiple-cursors'
 NeoBundle 'kien/ctrlp.vim.git'
+NeoBundle 'Lokaltog/vim-easymotion.git'
 
 NeoBundle 'kana/vim-textobj-user'
 NeoBundle 'nelstrom/vim-textobj-rubyblock'
@@ -118,40 +120,54 @@ set novisualbell			" ヴィジュアルベルを使わない
 set cmdheight=1				" コマンドラインの高さ
 set shortmess=t				" 'Press RETURN or enter command to continue' を表示しない
 set history=50				" 記憶するコマンド数
-set number				" 行番号を表示
+" set number				" 行番号を表示
+set relativenumber " 相対行を表示
 set showmode				"
 set wildmenu				" コマンド入力中の補完候補をステータスラインに表示
 set wildignore=*.o,*.so		" 補完候補から除外するファイル
 set tabstop=2				" タブ幅
 set shiftwidth=2			" インデント幅
+set shiftround          " '<'や'>'でインデントする際に'shiftwidth'の倍数に丸める
 set smarttab				"
 set expandtab
 "set noexpandtab				" オートインデント時に挿入タブをスペースに変換しない
+"set infercase           " 補完時に大文字小文字を区別しない
+"set virtualedit=all     " カーソルを文字が存在しない部分でも動けるようにする
+set hidden              " バッファを閉じる代わりに隠す（Undo履歴を残すため）
+set switchbuf=useopen   " 新しく開く代わりにすでに開いてあるバッファを開く
 set ruler				" ルーラーを表示
 set showcmd				" 実行したコマンドを表示
 set showmatch				" 対応する括弧に一時的に移動
+set matchpairs& matchpairs+=<:> " 対応括弧に'<'と'>'のペアを追加
 "set title				" タイトルを表示
 set laststatus=2			" 常にステータス行を表示
-"set ignorecase				" 大文字・小文字を無視
+set ignorecase				" 大文字・小文字を無視
 set smartcase				" 検索キーワードに大文字が含まれていれば大文字小文字を区別
+set incsearch	" サーチをインクリメンタルにする
 set hlsearch				" 検索キーワードをハイライトする
 set wrapscan				" ファイルの最後に来たら最初から検索
 set magic				" 正規表現使用時に magic モードにする
-"set list				" タブや改行などを別の文字に区別する
+" set list				" タブや改行などを別の文字に区別する
+" set listchars=tab:»-,trail:-,extends:»,precedes:«,nbsp:%,eol:↲
 "set listchars=tab:-\ ,extends:<	" タブや改行などの代替文字設定(ex. tab:>-,extends:<.trail:-,eol:< )
+set textwidth=0         " 自動的に改行が入るのを無効化
 set keywordprg=man\ -a			" キーワードのヘルプコマンドの設定(default: man or man\ -s)
 "set lazyredraw				" マクロ実行中は画面を更新しない
 " set statusline=%<%f\ %m%r%h%w%y%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%{fugitive#statusline()}%=%b\ 0x%B\ \ %l,%c%V%8P
 	" ステータス行のフォーマット
-set cursorline				" カーソル行に下線を表示(* vim7)
+"set cursorline				" カーソル行に下線を表示(* vim7)
 set cursorcolumn			" カーソル列をハイライト表示(* vim7)
+cnoremap <expr> / getcmdtype() == '/' ? '\/' : '/'
+cnoremap <expr> ? getcmdtype() == '?' ? '\?' : '?'
 
-set incsearch	" サーチをインクリメンタルにする
 
 set modifiable
 set t_Co=256
 
 set directory=~/tmp/
+
+set mouse=a
+set ttymouse=xterm2
 
 filetype on
 filetype plugin on
@@ -290,17 +306,32 @@ map <kMinus> <c-w>-
 map <kDivide> <c-w><
 map <kMultiply> <c-w>>
 
+nnoremap sh <C-w>h:call <SID>good_width()<Cr>
+nnoremap sj <C-w>j
+nnoremap sk <C-w>k
+nnoremap sl <C-w>l:call <SID>good_width()<Cr>
+nnoremap sH <C-w>H:call <SID>good_width()<Cr>
+nnoremap sJ <C-w>J
+nnoremap sK <C-w>K
+nnoremap sL <C-w>L:call <SID>good_width()<Cr>
+function! s:good_width()
+  if winwidth(0) < 144
+    vertical resize 144
+  endif
+endfunction
+
+
 " 行の最初に移動
-noremap 1 ^
+" noremap 1 ^
 noremap <C-a> ^
 inoremap <C-a> <home>
 " 行末に移動
-noremap 9 $
+" noremap 9 $
 noremap <C-e> $
 inoremap <C-e> <end>
 
 " Enterでインサートモードにならずに改行
-noremap <CR> o<ESC>
+" noremap <CR> o<ESC>
 
 imap <c-h> <Left>
 imap <c-j> <Down>
@@ -335,6 +366,24 @@ endfunction
 
 inoremap jj <Esc>
 inoremap kk <Esc>
+
+" 検索後にジャンプした際に検索単語を画面中央に持ってくる
+nnoremap n nzz
+nnoremap N Nzz
+nnoremap * *zz
+nnoremap # #zz
+nnoremap g* g*zz
+nnoremap g# g#zz
+
+" vを二回で行末まで選択
+vnoremap v $h
+
+" TABにて対応ペアにジャンプ
+nnoremap <Tab> %
+vnoremap <Tab> %
+
+" w!! でスーパーユーザーとして保存（sudoが使える環境限定）
+cmap w!! w !sudo tee > /dev/null %
 
 "------------------------------
 " ========================
@@ -445,110 +494,138 @@ au FileType eruby call SetErubyMapping2()
 au FileType php nmap <buffer><C-_>c :TCommentAs php_surround<CR>
 au FileType php vmap <buffer><C-_>c :TCommentAs php_surround<CR>
 
-" ========================
-" neocomplcache
-" ========================
-" 補完ウィンドウの設定
-set completeopt=menuone
-" NeoComplCacheを有効にする
-let g:neocomplcache_enable_at_startup = 1
-" 表示候補の数
-let g:neocomplcache_max_list = 20
-" 自動補完を行う入力数
-let g:neocomplcache_auto_completion_start_length = 2
-" 手動補完時に補完を行う入力数を制御
-let g:neocomplcache_manual_completion_start_length = 3
-"バッファや辞書ファイル中で、補完の対象となるキーワードの最小長さ。初期値は4。
-let g:neocomplcache_min_keyword_length = 4
-"1:補完候補検索時に大文字・小文字を無視する
-let g:neocomplcache_enable_ignore_case = 1
-" smarrt case有効化。 大文字が入力されるまで大文字小文字の区別を無視する
-let g:neocomplcache_enable_smart_case = 1
-" camle caseを有効化。大文字を区切りとしたワイルドカードのように振る舞う
-let g:neocomplcache_enable_camel_case_completion = 0
-" _(アンダーバー)区切りの補完を有効化
-let g:neocomplcache_enable_underbar_completion = 0
-" シンタックスをキャッシュするときの最小文字長を3に
-let g:neocomplcache_min_syntax_length = 3
-" neocomplcacheを自動的にロックするバッファ名のパターン
-let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
-" -入力による候補番号の表示
-" let g:neocomplcache_enable_quick_match = 1
-" 補完候補の一番先頭を選択状態にする(AutoComplPopと似た動作)
-let g:neocomplcache_enable_auto_select = 0
-" プラグイン毎の補完関数を呼び出す文字数
-let g:NeoComplCache_PluginCompletionLength = {
-  \ 'keyword_complete'  : 3,
-  \ 'syntax_complete'   : 3
-  \ }
 
-" Define dictionary.
-let g:neocomplcache_dictionary_filetype_lists = {
-  \ 'default' : '',
-  \ 'vimshell' : $HOME.'/.vimshell_hist'
-  \}
+" if has('lua') && v:version > 703 && has('patch825')
+if has('lua') "&& v:version > 703 && has('patch825')
+    NeoBundleLazy "Shougo/neocomplete.vim", {
+        \ "autoload": {
+        \   "insert": 1,
+        \ }}
+    let s:hooks = neobundle#get_hooks("neocomplete.vim")
+    function! s:hooks.on_source(bundle)
+        let g:acp_enableAtStartup = 0
+        let g:neocomplet#enable_smart_case = 1
+        " NeoCompleteを有効化
+        NeoCompleteEnable
+    endfunction
+else
+    NeoBundleLazy "Shougo/neocomplcache.vim", {
+        \ "autoload": {
+        \   "insert": 1,
+        \ }}
+    let s:hooks = neobundle#get_hooks("neocomplcache.vim")
+    function! s:hooks.on_source(bundle)
+        let g:acp_enableAtStartup = 0
+        let g:neocomplcache_enable_smart_case = 1
+        " NeoComplCacheを有効化
+        NeoComplCacheEnable
+    endfunction
+  " ========================
+  " neocomplcache
+  " ========================
+  " 補完ウィンドウの設定
+  set completeopt=menuone
+  " NeoComplCacheを有効にする
+  " let g:neocomplcache_enable_at_startup = 1
+  " 表示候補の数
+  let g:neocomplcache_max_list = 20
+  " 自動補完を行う入力数
+  let g:neocomplcache_auto_completion_start_length = 2
+  " 手動補完時に補完を行う入力数を制御
+  let g:neocomplcache_manual_completion_start_length = 3
+  "バッファや辞書ファイル中で、補完の対象となるキーワードの最小長さ。初期値は4。
+  let g:neocomplcache_min_keyword_length = 4
+  "1:補完候補検索時に大文字・小文字を無視する
+  let g:neocomplcache_enable_ignore_case = 1
+  " smarrt case有効化。 大文字が入力されるまで大文字小文字の区別を無視する
+  let g:neocomplcache_enable_smart_case = 1
+  " camle caseを有効化。大文字を区切りとしたワイルドカードのように振る舞う
+  let g:neocomplcache_enable_camel_case_completion = 0
+  " _(アンダーバー)区切りの補完を有効化
+  let g:neocomplcache_enable_underbar_completion = 0
+  " シンタックスをキャッシュするときの最小文字長を3に
+  let g:neocomplcache_min_syntax_length = 3
+  " neocomplcacheを自動的にロックするバッファ名のパターン
+  let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
+  " -入力による候補番号の表示
+  " let g:neocomplcache_enable_quick_match = 1
+  " 補完候補の一番先頭を選択状態にする(AutoComplPopと似た動作)
+  let g:neocomplcache_enable_auto_select = 0
+  " プラグイン毎の補完関数を呼び出す文字数
+  let g:NeoComplCache_PluginCompletionLength = {
+    \ 'keyword_complete'  : 3,
+    \ 'syntax_complete'   : 3
+    \ }
 
-let g:neocomplcache_text_mode_filetypes = {
-      \ 'md' : 1,
-      \ 'markdown' : 1
-      \}
+  " Define dictionary.
+  let g:neocomplcache_dictionary_filetype_lists = {
+    \ 'default' : '',
+    \ 'vimshell' : $HOME.'/.vimshell_hist'
+    \}
 
-if !exists('g:neocomplcache_quick_match_patterns')
-    let g:neocomplcache_quick_match_patterns = {}
+  let g:neocomplcache_text_mode_filetypes = {
+        \ 'md' : 1,
+        \ 'markdown' : 1
+        \}
+
+  if !exists('g:neocomplcache_quick_match_patterns')
+      let g:neocomplcache_quick_match_patterns = {}
+  endif
+  let g:neocomplcache_quick_match_patterns['default'] = '\`'
+
+  " Define keyword.
+  if !exists('g:neocomplcache_keyword_patterns')
+      let g:neocomplcache_keyword_patterns = {}
+  endif
+  let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
+
+  if !exists('g:neocomplcache_delimiter_patterns')
+    let g:neocomplcache_delimiter_patterns = {}
+  endif
+  let g:neocomplcache_delimiter_patterns['php'] = ['->', '::', '\']
+
+
+  " FileType毎のOmni補完を設定
+  " autocmd FileType python set omnifunc=pythoncomplete#Complete
+  autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+  autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+  autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+  " autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
+  " autocmd FileType php setlocal omnifunc=phpcomplete#CompletePHP
+  " autocmd FileType c set omnifunc=ccomplete#Complete
+  " autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
+  " rubyの設定
+  if !exists('g:neocomplcache_omni_functions')
+    let g:neocomplcache_omni_functions = {}
+  endif
+  let g:neocomplcache_omni_functions.ruby = 'RSenseCompleteFunction'
+
+  " Enable heavy omni completion.
+  if !exists('g:neocomplcache_omni_patterns')
+    let g:neocomplcache_omni_patterns = {}
+  endif
+  " let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
+  " let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+
+  " Plugin key-mappings.
+  " imap <C-k>     <Plug>(neocomplcache_snippets_expand)
+  " smap <C-k>     <Plug>(neocomplcache_snippets_expand)
+
+  inoremap <expr><C-g> neocomplcache#undo_completion()
+  " inoremap <expr><C-l> neocomplcache#complete_common_string()
+
+  imap <expr><TAB> neocomplcache#sources#snippets_complete#expandable() ? "\<Plug>(neocomplcache_snippets_expand)" : pumvisible() ? "\<C-n>" : "\<TAB>"
+  " Recommended key-mappings.
+  " <CR>: close popup and save indent.
+  " inoremap <expr><CR> neocomplcache#close_popup()."\<CR>"
+  " <C-h>, <BS>: close popup and delete backword char.
+  " inoremap <expr><c-h> neocomplcache#smart_close_popup()."\<c-h>"
+  " inoremap <expr><bs> neocomplcache#smart_close_popup()."\<c-h>"
+
+  inoremap <expr><C-y> neocomplcache#close_popup()
+  inoremap <expr><C-d> neocomplcache#cancel_popup()
+
 endif
-let g:neocomplcache_quick_match_patterns['default'] = '\`'
-
-" Define keyword.
-if !exists('g:neocomplcache_keyword_patterns')
-    let g:neocomplcache_keyword_patterns = {}
-endif
-let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
-
-if !exists('g:neocomplcache_delimiter_patterns')
-  let g:neocomplcache_delimiter_patterns = {}
-endif
-let g:neocomplcache_delimiter_patterns['php'] = ['->', '::', '\']
-
-
-" FileType毎のOmni補完を設定
-" autocmd FileType python set omnifunc=pythoncomplete#Complete
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-" autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
-" autocmd FileType php setlocal omnifunc=phpcomplete#CompletePHP
-" autocmd FileType c set omnifunc=ccomplete#Complete
-" autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
-" rubyの設定
-if !exists('g:neocomplcache_omni_functions')
-  let g:neocomplcache_omni_functions = {}
-endif
-let g:neocomplcache_omni_functions.ruby = 'RSenseCompleteFunction'
-
-" Enable heavy omni completion.
-if !exists('g:neocomplcache_omni_patterns')
-  let g:neocomplcache_omni_patterns = {}
-endif
-" let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
-" let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-
-" Plugin key-mappings.
-" imap <C-k>     <Plug>(neocomplcache_snippets_expand)
-" smap <C-k>     <Plug>(neocomplcache_snippets_expand)
-
-inoremap <expr><C-g> neocomplcache#undo_completion()
-" inoremap <expr><C-l> neocomplcache#complete_common_string()
-
-imap <expr><TAB> neocomplcache#sources#snippets_complete#expandable() ? "\<Plug>(neocomplcache_snippets_expand)" : pumvisible() ? "\<C-n>" : "\<TAB>"
-" Recommended key-mappings.
-" <CR>: close popup and save indent.
-" inoremap <expr><CR> neocomplcache#close_popup()."\<CR>"
-" <C-h>, <BS>: close popup and delete backword char.
-" inoremap <expr><c-h> neocomplcache#smart_close_popup()."\<c-h>"
-" inoremap <expr><bs> neocomplcache#smart_close_popup()."\<c-h>"
-
-inoremap <expr><C-y> neocomplcache#close_popup()
-inoremap <expr><C-d> neocomplcache#cancel_popup()
 
 
 " =======================
@@ -699,12 +776,12 @@ function! s:unite_my_settings()
 endfunction
 
 
-call unite#set_substitute_pattern('files', '^@@', '\=fnamemodify(expand("#"), ":p:h")."/*"', 2)
-call unite#set_substitute_pattern('files', '^@', '\=getcwd()."/*"', 1)
-call unite#set_substitute_pattern('files', '^\\', '~/*')
+call unite#custom#substitute('files', '^@@', '\=fnamemodify(expand("#"), ":p:h")."/*"', 2)
+call unite#custom#substitute('files', '^@', '\=getcwd()."/*"', 1)
+call unite#custom#substitute('files', '^\\', '~/*')
 
-call unite#set_substitute_pattern('files', '^v:', '~/.vim/*')
-call unite#set_substitute_pattern('files', '^p:', '~/projects/*')
+call unite#custom#substitute('files', '^v:', '~/.vim/*')
+call unite#custom#substitute('files', '^p:', '~/projects/*')
 
 "-----------------------------------
 " Alignta
@@ -906,6 +983,7 @@ let g:ctrlp_prompt_mappings = {
 " vim-gitgutter
 "----------------------------------
 let g:gitgutter_enabled = 0
+let g:gitgutter_highlight_lines = 1
 nmap gh <Plug>GitGutterNextHunk
 nmap gH <Plug>GitGutterPrevHunk
 nnoremap <silent> <Leader>gg :<C-u>GitGutterToggle<CR>

@@ -30,11 +30,13 @@ NeoBundle 'Lokaltog/vim-easymotion.git'
 NeoBundle 'kana/vim-textobj-user'
 NeoBundle 'nelstrom/vim-textobj-rubyblock'
 
+NeoBundle 'rking/ag.vim'
+
 " NeoBundle 'taichouchou2/alpaca_powertabline'
 " NeoBundle 'Lokaltog/powerline', { 'rtp' : 'powerline/bindings/vim'}
-NeoBundle 'Lokaltog/vim-powerline'
+" NeoBundle 'Lokaltog/vim-powerline'
 " NeoBundle 'Lokaltog/powerline'
-
+NeoBundle 'bling/vim-airline'
 " NeoBundle 'git://github.com/vim-scripts/simple-pairs.git'
 NeoBundle 'nathanaelkane/vim-indent-guides'
 
@@ -57,7 +59,7 @@ NeoBundle 'Shougo/vimshell.git'
 NeoBundle 'thinca/vim-qfreplace.git'
 
 " git
-NeoBundle 'fugitive.vim'
+NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'gitv'
 NeoBundle 'extradite.vim'
 NeoBundle 'git-commit'
@@ -394,8 +396,34 @@ cmap w!! w !sudo tee > /dev/null %
 " ========================
 " vim-powerline
 " ========================
-let g:Powerline_symbols = 'fancy'
+" let g:Powerline_symbols = 'fancy'
 
+" =======================
+" vim-airline
+" =======================
+" let g:airline_powerline_fonts = 1
+let g:airline_theme='badwolf'
+" old vim-powerline symbols
+let g:airline_left_sep = '⮀'
+let g:airline_left_alt_sep = '⮁'
+let g:airline_right_sep = '⮂'
+let g:airline_right_alt_sep = '⮃'
+let g:airline_branch_prefix = '⭠'
+let g:airline_readonly_symbol = '⭤'
+let g:airline_linecolumn_prefix = '⭡'
+
+" unicode symbols
+" let g:airline_left_sep = '»'
+" let g:airline_left_sep = '▶'
+" let g:airline_right_sep = '«'
+" let g:airline_right_sep = '◀'
+" let g:airline_linecolumn_prefix = '␊ '
+" let g:airline_linecolumn_prefix = '␤ '
+" let g:airline_linecolumn_prefix = '¶ '
+" let g:airline_branch_prefix = '⎇ '
+" let g:airline_paste_symbol = 'ρ'
+" let g:airline_paste_symbol = 'Þ'
+" let g:airline_paste_symbol = '∥'
 
 " ========================
 " Zen-Coding setting
@@ -857,9 +885,12 @@ endfunction
 call unite#custom_action('file', 'my_tabopen', my_action)
 
 "----------------------------------
-" vimhshell
+" vimshell
 "----------------------------------
 let g:vimshell_interactive_update_time = 10
+let g:vimshell_prompt_expr =
+      \ 'escape(fnamemodify(getcwd(), ":~").">", "\\[]()?! ")." "'
+let g:vimshell_prompt_pattern = '^\%(\f\|\\.\)\+> '
 
 nnoremap <silent> vs :VimShell<CR>
 nnoremap <silent> vsc :VimShellCreate<CR>

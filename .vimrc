@@ -1,214 +1,11 @@
 set nocompatible
-filetype off
-
-if has('vim_starting')
-  set runtimepath+=~/.vim/neobundle.vim/
-  call neobundle#rc(expand('~/.vim/.bundle'))
-endif
-
-NeoBundle 'neocomplcache'
-NeoBundle 'Shougo/neocomplete.vim'
-NeoBundle 'ujihisa/neco-look'
-NeoBundle 'Shougo/neosnippet.git'
-NeoBundle 'surround.vim'
-NeoBundle 'YankRing.vim'
-NeoBundle 'matchit.zip'
-NeoBundle 'thinca/vim-quickrun.git'
-" NeoBundle 'vim-scripts/AnsiEsc.vim'
-NeoBundle 'thinca/vim-ref.git'
-NeoBundle 'sudo.vim'
-" NeoBundle 'AutoClose'
-NeoBundle 'camelcasemotion'
-NeoBundle 'scrooloose/syntastic'
-NeoBundle 'tComment'
-NeoBundle 'tpope/vim-markdown.git'
-NeoBundle 't9md/vim-textmanip'
-" NeoBundle 'terryma/vim-multiple-cursors'
-NeoBundle 'kien/ctrlp.vim.git'
-NeoBundle 'Lokaltog/vim-easymotion.git'
-
-NeoBundle 'kana/vim-textobj-user'
-NeoBundle 'nelstrom/vim-textobj-rubyblock'
-
-NeoBundle 'rking/ag.vim'
-
-" NeoBundle 'taichouchou2/alpaca_powertabline'
-" NeoBundle 'Lokaltog/powerline', { 'rtp' : 'powerline/bindings/vim'}
-" NeoBundle 'Lokaltog/vim-powerline'
-" NeoBundle 'Lokaltog/powerline'
-NeoBundle 'bling/vim-airline'
-" NeoBundle 'git://github.com/vim-scripts/simple-pairs.git'
-NeoBundle 'nathanaelkane/vim-indent-guides'
-
-" unite
-NeoBundle 'Shougo/unite.vim.git'
-NeoBundle 'basyura/unite-rails.git'
-NeoBundle 'h1mesuke/unite-outline.git'
-NeoBundle 'tacroe/unite-mark.git'
-NeoBundle 'tsukkee/unite-tag.git'
-NeoBundle 'sgur/unite-qf.git'
-NeoBundle 'h1mesuke/vim-alignta.git'
-NeoBundle 'ujihisa/unite-rake'
-
-NeoBundle 'Shougo/vimfiler.git'
-if &encoding ==# 'utf-8'
-  NeoBundle 'Shougo/vimproc.git'
-endif
-NeoBundle 'Shougo/vimshell.git'
-
-NeoBundle 'thinca/vim-qfreplace.git'
-
-" git
-NeoBundle 'tpope/vim-fugitive'
-NeoBundle 'gitv'
-NeoBundle 'extradite.vim'
-NeoBundle 'git-commit'
-NeoBundle 'airblade/vim-gitgutter'
-
-" ruby
-NeoBundle 'vim-ruby/vim-ruby'
-NeoBundle 'tpope/vim-endwise.git'
-NeoBundle 'ruby-matchit'
-NeoBundle 'taichouchou2/vim-rsense'
-NeoBundle 'taq/vim-rspec'
-NeoBundle 'taichouchou2/vim-ref-ri'
-NeoBundle 'taichouchou2/vim-rails'
-NeoBundle 'romanvbabenko/rails.vim'
-
-" javascript
-" NeoBundle 'JavaScript-syntax'
-NeoBundle 'pangloss/vim-javascript'
-NeoBundle 'jQuery'
-NeoBundle 'kchmck/vim-coffee-script.git'
-
-" php
-" NeoBundle 'https://github.com/beyondwords/vim-twig.git'
-" NeoBundle 'shawncplus/php.vim'
-
-" html css
-NeoBundle 'ZenCoding.vim'
-NeoBundle 'html5.vim'
-NeoBundle 'https://github.com/hail2u/vim-css3-syntax.git'
-
-" colorscheme
-NeoBundle 'jellybeans.vim'
-"NeoBundle 'railscasts'
-NeoBundle 'desert256.vim'
-"NeoBundle 'leo256'
-" Bundle 'Railscasts-Theme-GUIand256color'
-NeoBundle 'molokai'
-"NeoBundle 'git://github.com/altercation/vim-colors-solarized.git'
-"NeoBundle 'vim-scripts/tir_black'
-NeoBundle 'w0ng/vim-hybrid'
-
-
-"#
-"# .vimrc
-"#
-
-"----------------------------
-"set options
-"----------------------------
-set nocompatible			" viに互換しない
-"set fffs=unix				" 改行コードをFLにする(default: unix,dis)
-set noinsertmode			" デフォルトモードをインサートにしない
-set wrap				" 行の端まで到達したら折り返す
-set nolinebreak				" ホワイト・スペースで折り返さない
-set formatoptions=q			" gq コマンド以外では自動改行しない
-set backspace=indent,eol,start				" 全て Backspace で削除可能にする
-set smartindent				" オートインデント
-set noerrorbells			" エラー時にベルを鳴らさない
-set novisualbell			" ヴィジュアルベルを使わない
-set cmdheight=1				" コマンドラインの高さ
-set shortmess=t				" 'Press RETURN or enter command to continue' を表示しない
-set history=50				" 記憶するコマンド数
-" set number				" 行番号を表示
-set relativenumber " 相対行を表示
-set showmode				"
-set wildmenu				" コマンド入力中の補完候補をステータスラインに表示
-set wildignore=*.o,*.so		" 補完候補から除外するファイル
-set tabstop=2				" タブ幅
-set shiftwidth=2			" インデント幅
-set shiftround          " '<'や'>'でインデントする際に'shiftwidth'の倍数に丸める
-set smarttab				"
-set expandtab
-"set noexpandtab				" オートインデント時に挿入タブをスペースに変換しない
-"set infercase           " 補完時に大文字小文字を区別しない
-"set virtualedit=all     " カーソルを文字が存在しない部分でも動けるようにする
-set hidden              " バッファを閉じる代わりに隠す（Undo履歴を残すため）
-set switchbuf=useopen   " 新しく開く代わりにすでに開いてあるバッファを開く
-set ruler				" ルーラーを表示
-set showcmd				" 実行したコマンドを表示
-set showmatch				" 対応する括弧に一時的に移動
-set matchpairs& matchpairs+=<:> " 対応括弧に'<'と'>'のペアを追加
-"set title				" タイトルを表示
-set laststatus=2			" 常にステータス行を表示
-set ignorecase				" 大文字・小文字を無視
-set smartcase				" 検索キーワードに大文字が含まれていれば大文字小文字を区別
-set incsearch	" サーチをインクリメンタルにする
-set hlsearch				" 検索キーワードをハイライトする
-set wrapscan				" ファイルの最後に来たら最初から検索
-set magic				" 正規表現使用時に magic モードにする
-" set list				" タブや改行などを別の文字に区別する
-" set listchars=tab:»-,trail:-,extends:»,precedes:«,nbsp:%,eol:↲
-"set listchars=tab:-\ ,extends:<	" タブや改行などの代替文字設定(ex. tab:>-,extends:<.trail:-,eol:< )
-set textwidth=0         " 自動的に改行が入るのを無効化
-set keywordprg=man\ -a			" キーワードのヘルプコマンドの設定(default: man or man\ -s)
-"set lazyredraw				" マクロ実行中は画面を更新しない
-" set statusline=%<%f\ %m%r%h%w%y%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%{fugitive#statusline()}%=%b\ 0x%B\ \ %l,%c%V%8P
-	" ステータス行のフォーマット
-"set cursorline				" カーソル行に下線を表示(* vim7)
-set cursorcolumn			" カーソル列をハイライト表示(* vim7)
-cnoremap <expr> / getcmdtype() == '/' ? '\/' : '/'
-cnoremap <expr> ? getcmdtype() == '?' ? '\?' : '?'
-
-
-set modifiable
-set t_Co=256
-
-set directory=~/tmp/
-
-set mouse=a
-set ttymouse=xterm2
-
-filetype on
-filetype plugin on
-filetype indent on
-"------------------------------
-" syntax
-"------------------------------
-
-syntax on
-autocmd! BufRead,BufNewFile *.htmlt set filetype=smarty
-
-"colorscheme molokai
-colorscheme hybrid
-hi Normal ctermbg=none
-
-" PHP code fold
-let php_folding=1
-au Syntax php set fdm=syntax
-au Syntax html set fdm=indent
-set foldlevel=5
-
-autocmd! BufNewFile,BufRead *.php set ts=2 sw=2 expandtab
-autocmd! BufNewFile,BufRead *.php5 set ts=2 sw=2 noexpandtab
-
-" ruby code fold
-let ruby_folding=1
-au Syntax ruby set fdm=syntax
-au Syntax eruby set fdm=indent
-au Syntax html set fdm=indent
-set foldlevel=3
-
-autocmd! BufNewFile,BufRead *.rb set ts=2 sw=2 fenc=utf-8 expandtab
-autocmd! BufNewFile,BufRead *.js set ts=2 sw=2 fenc=utf-8 expandtab
 
 "------------------------------
 " auto encoding
 "------------------------------
+set encoding=utf-8    " デフォルトエンコーディング
+set fileencodings=ucs_bom,utf8,ucs-2le,ucs-2
 set ffs=unix,dos,mac  " 改行文字
-"set encoding=utf-8    " デフォルトエンコーディング
 "文字コードの自動認識
 if &encoding !=# 'utf-8'
   set encoding=japan
@@ -267,6 +64,294 @@ endif
 if exists('&ambiwidth')
   set ambiwidth=double
 endif
+
+if has('vim_starting')
+  set runtimepath+=~/.vim/neobundle.vim/
+endif
+
+call neobundle#rc(expand('~/.vim/.bundle'))
+
+NeoBundleFetch 'Shougo/neobundle.vim'
+
+
+if &encoding ==# 'utf-8'
+  NeoBundle 'Shougo/vimproc', {
+        \ 'build' : {
+        \    'windows': 'make -f make_mingw32.mak',
+        \    'cygwin': 'make -f make_cygwin.mak',
+        \    'mac': 'make -f make_mac.mak',
+        \    'unix': 'make -f make_unix.mak',
+        \   },
+        \ }
+endif
+
+" colorscheme
+NeoBundle 'jellybeans.vim'
+"NeoBundle 'railscasts'
+NeoBundle 'desert256.vim'
+"NeoBundle 'leo256'
+" Bundle 'Railscasts-Theme-GUIand256color'
+NeoBundle 'molokai'
+"NeoBundle 'git://github.com/altercation/vim-colors-solarized.git'
+"NeoBundle 'vim-scripts/tir_black'
+NeoBundle 'w0ng/vim-hybrid'
+NeoBundle 'itchyny/landscape.vim'
+NeoBundle '29decibel/codeschool-vim-theme'
+
+" ruby
+NeoBundle 'vim-ruby/vim-ruby'
+NeoBundle 'tpope/vim-rails'
+NeoBundle 'tpope/vim-endwise'
+NeoBundle 'ruby-matchit'
+NeoBundle 'taichouchou2/vim-rsense'
+NeoBundle 'skwp/vim-rspec'
+NeoBundle 'romanvbabenko/rails.vim'
+
+NeoBundle 'thinca/vim-ref.git'
+NeoBundle 'taichouchou2/vim-ref-ri'
+
+NeoBundle 'neocomplcache'
+NeoBundle 'Shougo/neocomplete.vim'
+NeoBundle 'ujihisa/neco-look'
+
+NeoBundle 'tpope/vim-surround'
+NeoBundle 'YankRing.vim'
+NeoBundle 'matchit.zip'
+NeoBundle 'thinca/vim-quickrun'
+" NeoBundle 'vim-scripts/AnsiEsc.vim'
+NeoBundle 'sudo.vim'
+" NeoBundle 'AutoClose'
+NeoBundle 'camelcasemotion'
+NeoBundle 'scrooloose/syntastic'
+NeoBundle 'tComment'
+NeoBundle 'tpope/vim-markdown'
+NeoBundle 't9md/vim-textmanip'
+NeoBundle 'Lokaltog/vim-easymotion'
+
+NeoBundle 'kana/vim-textobj-user'
+NeoBundle 'nelstrom/vim-textobj-rubyblock'
+NeoBundle 'kana/vim-textobj-line'
+
+NeoBundle 'rking/ag.vim'
+
+NeoBundle 'itchyny/lightline.vim'
+NeoBundle 'nathanaelkane/vim-indent-guides'
+
+" unite
+NeoBundle 'basyura/unite-rails'
+NeoBundle 'h1mesuke/unite-outline'
+NeoBundle 'tacroe/unite-mark'
+NeoBundle 'tsukkee/unite-tag'
+NeoBundle 'sgur/unite-qf'
+NeoBundle 'h1mesuke/vim-alignta'
+NeoBundle 'ujihisa/unite-rake'
+
+NeoBundleLazy 'Shougo/unite.vim', {
+      \   'autoload': {
+      \     'commands': ["Unite", "UniteWithBufferDir", "UniteWithCurrentDir"]
+      \   }
+      \ }
+
+NeoBundleLazy 'Shougo/neosnippet'
+
+if has('lua')
+  NeoBundleLazy 'Shougo/neocomplete', {
+        \ 'depends': ['Shougo/neosnippet', 'Shougo/context_filetype.vim'],
+        \  'vim_version': '7.3.885',
+        \  'autoload': {
+        \     'insert': 1,
+        \   }
+        \ }
+else
+  NeoBundleLazy 'Shougo/neocomplcache', {
+        \   'depends': ["Shougo/neosnippet"],
+        \   'autoload': {
+        \     'insert': 1,
+        \   }
+        \ }
+endif
+
+NeoBundleLazy 'Shougo/vimfiler.git', {
+      \   'depends': ["Shougo/unite.vim"],
+      \   'autoload': {
+      \     'commands': ["VimFilerTab", "VimFiler", "VimFilerExplorer", "VimFilerBufferDir"],
+      \     'mappings': ["<Plug>(vimfiler_switch)"],
+      \     'explorer': 1,
+      \   }
+      \ }
+
+NeoBundleLazy 'Shougo/vimshell.git', {
+      \ 'depends' : 'Shougo/vimproc',
+      \ 'autoload' : {
+      \   'commands' : [{ 'name' : 'VimShell',
+      \                   'complete' : 'customlist,vimshell#complete'},
+      \                 'VimShellExecute', 'VimShellInteractive',
+      \                 'VimShellTerminal', 'VimShellPop'],
+      \   'mappings' : ['<Plug>(vimshell_switch)']
+      \ }}
+
+NeoBundleLazy 'sjl/gundo.vim', {
+      \   'autoload' : {
+      \       'commands' : [ "GundoShow", "GundoToggle" ]
+      \   }
+      \}
+
+NeoBundle 'thinca/vim-qfreplace.git'
+
+" git
+NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'gitv'
+NeoBundle 'extradite.vim'
+NeoBundle 'git-commit'
+NeoBundle 'airblade/vim-gitgutter'
+NeoBundle 'tyru/open-browser.vim'
+NeoBundle 'tyru/open-browser-github.vim'
+
+
+" javascript
+" NeoBundle 'JavaScript-syntax'
+NeoBundle 'pangloss/vim-javascript'
+NeoBundle 'jQuery'
+NeoBundle 'kchmck/vim-coffee-script.git'
+
+" php
+" NeoBundle 'https://github.com/beyondwords/vim-twig.git'
+" NeoBundle 'shawncplus/php.vim'
+
+" html css
+NeoBundle 'mattn/emmet-vim'
+NeoBundle 'html5.vim'
+NeoBundle 'https://github.com/hail2u/vim-css3-syntax.git'
+
+
+syntax enable
+filetype plugin indent on
+
+NeoBundleCheck
+
+" augroup init (from tyru's vimrc)
+augroup vimrc
+  autocmd!
+augroup END
+
+command!
+\ -bang -nargs=*
+\ MyAutocmd
+\ autocmd<bang> vimrc <args>
+
+
+" Basic Settings {{{
+set backspace=indent,eol,start				" 全て Backspace で削除可能にする
+set nocompatible			" viに互換しない
+"set fffs=unix				" 改行コードをFLにする(default: unix,dis)
+set noinsertmode			" デフォルトモードをインサートにしない
+set wrap				" 行の端まで到達したら折り返す
+set nolinebreak				" ホワイト・スペースで折り返さない
+set formatoptions=q			" gq コマンド以外では自動改行しない
+set smartindent				" オートインデント
+set noerrorbells			" エラー時にベルを鳴らさない
+set novisualbell			" ヴィジュアルベルを使わない
+set cmdheight=1				" コマンドラインの高さ
+set shortmess=t				" 'Press RETURN or enter command to continue' を表示しない
+set history=50				" 記憶するコマンド数
+set number				" 行番号を表示
+" set relativenumber " 相対行を表示
+set showmode				"
+set wildmenu				" コマンド入力中の補完候補をステータスラインに表示
+set wildmode=longest,list,full
+set wildignore=*.o,*.so		" 補完候補から除外するファイル
+
+" タブストップ
+set tabstop=2				" タブ幅
+set shiftwidth=2			" インデント幅
+set shiftround          " '<'や'>'でインデントする際に'shiftwidth'の倍数に丸める
+set smarttab
+set expandtab
+"set noexpandtab				" オートインデント時に挿入タブをスペースに変換しない
+
+"set infercase           " 補完時に大文字小文字を区別しない
+"set virtualedit=all     " カーソルを文字が存在しない部分でも動けるようにする
+set hidden              " バッファを閉じる代わりに隠す（Undo履歴を残すため）
+set switchbuf=useopen   " 新しく開く代わりにすでに開いてあるバッファを開く
+set ruler				" ルーラーを表示
+set showcmd				" 実行したコマンドを表示
+set showmatch				" 対応する括弧に一時的に移動
+set matchpairs& matchpairs+=<:> " 対応括弧に'<'と'>'のペアを追加
+"set title				" タイトルを表示
+set laststatus=2			" 常にステータス行を表示
+set ignorecase				" 大文字・小文字を無視
+set smartcase				" 検索キーワードに大文字が含まれていれば大文字小文字を区別
+set incsearch	" サーチをインクリメンタルにする
+set hlsearch				" 検索キーワードをハイライトする
+set wrapscan				" ファイルの最後に来たら最初から検索
+set magic				" 正規表現使用時に magic モードにする
+set list				" タブや改行などを別の文字に区別する
+" set listchars=tab:»-,trail:-,extends:»,precedes:«,nbsp:%,eol:↲
+if !has('multi_byte')
+  set listchars=tab:^I,extends:>,precedes:<,nbsp:%
+else
+  try
+    set listchars=tab:▸\ ,extends:»,precedes:«,nbsp:%
+  catch
+    set listchars=tab:^I,extends:>,precedes:<,nbsp:%
+    let g:vimfiler_tree_leaf_icon = '|'
+    let g:vimfiler_tree_opened_icon = '-'
+    let g:vimfiler_tree_closed_icon = '+'
+  endtry
+endif
+
+"set listchars=tab:-\ ,extends:<	" タブや改行などの代替文字設定(ex. tab:>-,extends:<.trail:-,eol:< )
+set textwidth=0         " 自動的に改行が入るのを無効化
+set keywordprg=man\ -a			" キーワードのヘルプコマンドの設定(default: man or man\ -s)
+"set lazyredraw				" マクロ実行中は画面を更新しない
+" set statusline=%<%f\ %m%r%h%w%y%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%{fugitive#statusline()}%=%b\ 0x%B\ \ %l,%c%V%8P
+	" ステータス行のフォーマット
+"set cursorline				" カーソル行に下線を表示(* vim7)
+set cursorcolumn			" カーソル列をハイライト表示(* vim7)
+cnoremap <expr> / getcmdtype() == '/' ? '\/' : '/'
+cnoremap <expr> ? getcmdtype() == '?' ? '\?' : '?'
+
+
+set modifiable
+set t_Co=256
+
+set directory=~/tmp/
+
+set mouse=a
+set ttymouse=xterm2
+" }}}
+
+"------------------------------
+" syntax
+"------------------------------
+
+syntax on
+autocmd! BufRead,BufNewFile *.htmlt set filetype=smarty
+
+" colorscheme molokai
+colorscheme hybrid
+" colorscheme jellybeans
+" hi Normal ctermbg=none
+
+" PHP code fold
+let php_folding=1
+au Syntax php set fdm=syntax
+au Syntax html set fdm=indent
+set foldlevel=5
+
+autocmd! BufNewFile,BufRead *.php set ts=2 sw=2 expandtab
+autocmd! BufNewFile,BufRead *.php5 set ts=2 sw=2 noexpandtab
+
+" ruby code fold
+let ruby_folding=1
+au Syntax ruby set fdm=syntax
+au Syntax eruby set fdm=indent
+au Syntax html set fdm=indent
+set foldlevel=3
+
+autocmd! BufNewFile,BufRead *.rb set ts=2 sw=2 fenc=utf-8 expandtab
+autocmd! BufNewFile,BufRead *.js set ts=2 sw=2 fenc=utf-8 expandtab
+
 
 " バッファ移動
 "map <F2> <ESC>:bp<CR>
@@ -387,6 +472,13 @@ vnoremap <Tab> %
 " w!! でスーパーユーザーとして保存（sudoが使える環境限定）
 cmap w!! w !sudo tee > /dev/null %
 
+" inoremap '' ''<left>
+" inoremap "" ""<left>
+" inoremap `` ``<left>
+" inoremap } }<left>
+" inoremap ] ]<left>
+" inoremap ) )<left>
+" inoremap > ><left>
 "------------------------------
 " ========================
 " plug-ins
@@ -394,36 +486,140 @@ cmap w!! w !sudo tee > /dev/null %
 "------------------------------
 
 " ========================
-" vim-powerline
+" vim-lightline
 " ========================
-" let g:Powerline_symbols = 'fancy'
+let g:lightline = {
+      \ 'colorscheme': 'Tomorrow_Night',
+      \ 'mode_map': {'c': 'NORMAL'},
+      \   'active': {
+      \     'left': [
+      \       ['mode', 'paste'],
+      \       ['fugitive', 'gitgutter', 'filename'],
+      \     ],
+      \     'right': [
+      \       ['lineinfo', 'syntastic'],
+      \       ['percent'],
+      \       ['charcode', 'fileformat', 'fileencoding', 'filetype'],
+      \     ]
+      \   },
+      \   'component_function': {
+      \     'modified': 'MyModified',
+      \     'readonly': 'MyReadonly',
+      \     'fugitive': 'MyFugitive',
+      \     'filename': 'MyFilename',
+      \     'fileformat': 'MyFileformat',
+      \     'filetype': 'MyFiletype',
+      \     'fileencoding': 'MyFileencoding',
+      \     'mode': 'MyMode',
+      \     'syntastic': 'SyntasticStatuslineFlag',
+      \     'charcode': 'MyCharCode',
+      \     'gitgutter': 'MyGitGutter',
+      \   },
+      \   'separator': {'left': '⮀', 'right': '⮂'},
+      \   'subseparator': {'left': '⮁', 'right': '⮃'},
+      \ }
 
-" =======================
-" vim-airline
-" =======================
-" let g:airline_powerline_fonts = 1
-let g:airline_theme='badwolf'
-" old vim-powerline symbols
-let g:airline_left_sep = '⮀'
-let g:airline_left_alt_sep = '⮁'
-let g:airline_right_sep = '⮂'
-let g:airline_right_alt_sep = '⮃'
-let g:airline_branch_prefix = '⭠'
-let g:airline_readonly_symbol = '⭤'
-let g:airline_linecolumn_prefix = '⭡'
+function! MyModified()
+  return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
+endfunction
 
-" unicode symbols
-" let g:airline_left_sep = '»'
-" let g:airline_left_sep = '▶'
-" let g:airline_right_sep = '«'
-" let g:airline_right_sep = '◀'
-" let g:airline_linecolumn_prefix = '␊ '
-" let g:airline_linecolumn_prefix = '␤ '
-" let g:airline_linecolumn_prefix = '¶ '
-" let g:airline_branch_prefix = '⎇ '
-" let g:airline_paste_symbol = 'ρ'
-" let g:airline_paste_symbol = 'Þ'
-" let g:airline_paste_symbol = '∥'
+function! MyReadonly()
+  return &ft !~? 'help\|vimfiler\|gundo' && &ro ? '⭤' : ''
+endfunction
+
+function! MyFilename()
+  return ('' != MyReadonly() ? MyReadonly() . ' ' : '') .
+        \ (&ft == 'vimfiler' ? vimfiler#get_status_string() :
+        \  &ft == 'unite' ? unite#get_status_string() :
+        \  &ft == 'vimshell' ? substitute(b:vimshell.current_dir,expand('~'),'~','') :
+        \ '' != expand('%:t') ? expand('%:t') : '[No Name]') .
+        \ ('' != MyModified() ? ' ' . MyModified() : '')
+endfunction
+
+function! MyFugitive()
+  try
+    if &ft !~? 'vimfiler\|gundo' && exists('*fugitive#head')
+      let _ = fugitive#head()
+      return strlen(_) ? '⭠ '._ : ''
+    endif
+  catch
+  endtry
+  return ''
+endfunction
+
+function! MyFileformat()
+  return winwidth('.') > 70 ? &fileformat : ''
+endfunction
+
+function! MyFiletype()
+  return winwidth('.') > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
+endfunction
+
+function! MyFileencoding()
+  return winwidth('.') > 70 ? (strlen(&fenc) ? &fenc : &enc) : ''
+endfunction
+
+function! MyMode()
+  return winwidth('.') > 60 ? lightline#mode() : ''
+endfunction
+
+function! MyGitGutter()
+  if ! exists('*GitGutterGetHunkSummary')
+        \ || ! get(g:, 'gitgutter_enabled', 0)
+        \ || winwidth('.') <= 90
+    return ''
+  endif
+  let symbols = [
+        \ g:gitgutter_sign_added . ' ',
+        \ g:gitgutter_sign_modified . ' ',
+        \ g:gitgutter_sign_removed . ' '
+        \ ]
+  let hunks = GitGutterGetHunkSummary()
+  let ret = []
+  for i in [0, 1, 2]
+    if hunks[i] > 0
+      call add(ret, symbols[i] . hunks[i])
+    endif
+  endfor
+  return join(ret, ' ')
+endfunction
+
+" https://github.com/Lokaltog/vim-powerline/blob/develop/autoload/Powerline/Functions.vim
+function! MyCharCode()
+  if winwidth('.') <= 70
+    return ''
+  endif
+
+  " Get the output of :ascii
+  redir => ascii
+  silent! ascii
+  redir END
+
+  if match(ascii, 'NUL') != -1
+    return 'NUL'
+  endif
+
+  " Zero pad hex values
+  let nrformat = '0x%02x'
+
+  let encoding = (&fenc == '' ? &enc : &fenc)
+
+  if encoding == 'utf-8'
+    " Zero pad with 4 zeroes in unicode files
+    let nrformat = '0x%04x'
+  endif
+
+  " Get the character and the numeric value from the return value of :ascii
+  " This matches the two first pieces of the return value, e.g.
+  " "<F>  70" => char: 'F', nr: '70'
+  let [str, char, nr; rest] = matchlist(ascii, '\v\<(.{-1,})\>\s*([0-9]+)')
+
+  " Format the numeric value
+  let nr = printf(nrformat, nr)
+
+  return "'". char ."' ". nr
+endfunction
+
 
 " ========================
 " Zen-Coding setting
@@ -525,10 +721,6 @@ au FileType php vmap <buffer><C-_>c :TCommentAs php_surround<CR>
 
 " if has('lua') && v:version > 703 && has('patch825')
 if has('lua') "&& v:version > 703 && has('patch825')
-    NeoBundleLazy "Shougo/neocomplete.vim", {
-        \ "autoload": {
-        \   "insert": 1,
-        \ }}
     let s:hooks = neobundle#get_hooks("neocomplete.vim")
     function! s:hooks.on_source(bundle)
         let g:acp_enableAtStartup = 0
@@ -537,10 +729,6 @@ if has('lua') "&& v:version > 703 && has('patch825')
         NeoCompleteEnable
     endfunction
 else
-    NeoBundleLazy "Shougo/neocomplcache.vim", {
-        \ "autoload": {
-        \   "insert": 1,
-        \ }}
     let s:hooks = neobundle#get_hooks("neocomplcache.vim")
     function! s:hooks.on_source(bundle)
         let g:acp_enableAtStartup = 0
@@ -717,11 +905,30 @@ nnoremap <silent> <Leader>ge :<C-u>Extradite<CR>
 let g:unite_enable_start_insert=1
 " let g:unite_enable_split_vertically = 1 "縦分割で開く
 " let g:unite_winwidth = 40 "横幅40で開く
-" let g:unite_split_rule='botright'
+let g:unite_split_rule='botright'
+
+let g:unite_source_rec_max_cache_files = 5000
+" let g:unite_source_rec_min_cache_files = 1
+
+call unite#custom#source('file_rec/async', 'ignore_pattern', '\(png\|gif\|jpeg\|jpg\|.git\)$')
+let g:unite_source_history_yank_enable = 1
+
+" Use ag in unite grep source
+if executable('ag')
+  let g:unite_source_grep_command       = 'ag'
+  let g:unite_source_grep_default_opts  = '--nocolor --nogroup --hidden'
+        \ . " --ignore='*.vimsessions*'"
+        \ . " --ignore='*.idea*'"
+        \ . " --ignore='.zeus.sock'"
+  let g:unite_source_grep_recursive_opt = ''
+endif
+let g:unite_source_buffer_time_format = ''
+
+
 " タブ一覧
 nnoremap <silent> <Leader>t :<C-u>Unite tab<CR>
 " バッファ一覧
-nnoremap <silent> <Leader>. :<C-u>Unite buffer <CR>
+nnoremap <silent> <Leader>. :<C-u>Unite -quick-match buffer<CR>
 " ファイル一覧
 nnoremap <silent> <Leader>u :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
 nnoremap <silent> <Leader>f :<C-u>Unite -buffer-name=files file<CR>
@@ -730,7 +937,8 @@ nnoremap <silent> <Leader>b :<C-u>Unite bookmark<CR>
 " 最近使用したファイル一覧
 nnoremap <silent> <Leader>r :<C-u>Unite file_mru<CR>
 " レジスタ一覧
-nnoremap <silent> <Leader>y :<C-u>Unite -buffer-name=register register<CR>
+" nnoremap <silent> <Leader>y :<C-u>Unite -buffer-name=register register<CR>
+nnoremap <silent> <Leader>y :<C-u>Unite history/yank<CR>
 " 全部乗せ
 nnoremap <silent> <Leader>a :<C-u>Unite -buffer-name=files buffer file_mru bookmark file<CR>
 " ブックマークに追加
@@ -746,11 +954,15 @@ nnoremap <silent> <Leader>? :<C-u>Unite -no-quit line<CR>
 " quickfix
 nnoremap <silent> <Leader>qf :<C-u>Unite -no-quit qf<CR>
 " grep
-nnoremap <silent> <Leader>gr :<C-u>Unite grep<CR>
-nnoremap <silent> <Leader>GR :<C-u>Unite -no-quit grep<CR>
+nnoremap <silent> <Leader>gr :<C-u>Unite grep:.<CR>
+nnoremap <silent> <Leader>GR :<C-u>Unite -no-quit grep:.<CR>
 " vimgrep
 nnoremap <silent> <Leader>vgr :<C-u>Unite vimgrep<CR>
 nnoremap <silent> <Leader>VGR :<C-u>Unite -no-quit vimgrep<CR>
+
+" like ctrlp
+" nnoremap <silent> <Leader>p :<C-u>Unite -buffer-name=files -start-insert buffer file_rec/async:!<cr>
+nnoremap <silent> <Leader>p :<C-u>Unite -start-insert file_rec/async:!<cr>
 
 " rails controller
 nnoremap <silent> <Leader>rc :<C-u>Unite rails/controller<CR>
@@ -853,7 +1065,7 @@ let g:vimfiler_safe_mode_by_default = 0
 " <Leader>eで現在開いているバッファのディレクトリを開く
 nnoremap <silent> <Leader>e :<C-u>VimFilerBufferDir<CR>
 
-nnoremap <F12> :VimFiler -buffer-name=explorer -split -simple -winwidth=45 -toggle -no-quit<CR>
+nnoremap <space>f :VimFiler -buffer-name=explorer -split -simple -winwidth=45 -toggle -no-quit<CR>
 
 autocmd! FileType vimfiler call g:my_vimfiler_settings()
 function! g:my_vimfiler_settings()
@@ -1000,15 +1212,15 @@ let g:indent_guides_enable_on_vim_startup = 1
 "----------------------------------
 " ctrlp
 "----------------------------------
-let g:ctrlp_map = '<c-c>'
-let g:ctrip_use_migemo = 1
-let g:ctrip_clear_cache_on_exit = 0
-let g:ctrip_mruf_max = 500
-let g:ctrip_open_new_file = 1
-let g:ctrlp_show_hidden = 1
-let g:ctrlp_prompt_mappings = {
-    \ 'AcceptSelection("t")': ['<c-a>'],
-    \ }
+" let g:ctrlp_map = '<c-c>'
+" let g:ctrip_use_migemo = 1
+" let g:ctrip_clear_cache_on_exit = 0
+" let g:ctrip_mruf_max = 500
+" let g:ctrip_open_new_file = 1
+" let g:ctrlp_show_hidden = 1
+" let g:ctrlp_prompt_mappings = {
+"     \ 'AcceptSelection("t")': ['<c-a>'],
+"     \ }
 
 "----------------------------------
 " vim-gitgutter
@@ -1019,3 +1231,16 @@ nmap gh <Plug>GitGutterNextHunk
 nmap gH <Plug>GitGutterPrevHunk
 nnoremap <silent> <Leader>gg :<C-u>GitGutterToggle<CR>
 nnoremap <silent> <Leader>gl :<C-u>GitGutterLineHighlightsToggle<CR>
+let g:gitgutter_sign_added = '✚'
+let g:gitgutter_sign_modified = '➜'
+let g:gitgutter_sign_removed = '✘'
+
+" gundo
+nnoremap <space>u :<C-U>GundoToggle<CR>
+
+" easymotion
+let g:EasyMotion_keys='hjklasdfgyuiopqwertnmzxcvbHJKLASDFGYUIOPQWERTNMZXCVB'
+let g:EasyMotion_leader_key=';'
+let g:EasyMotion_grouping=1
+hi EasyMotionTraget ctermbg=none ctermfg=red
+hi EasyMotionShade ctermbg=none ctermfg=blue

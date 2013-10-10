@@ -17,9 +17,10 @@
 [alias]
 	graph = log --graph --all --pretty=format:'%Cgreen%h%Creset %cn %s %Cred%d%Creset'
 	co = checkout
-	br = branch
+	br = branch -v
+  sb = show-branch
 	ci = commit
-	st = status
+	st = !git status -s && echo --- branch && git branch -v && echo --- stash && git stash list | cat
   logp = log -p
   logs = log --stat
   logone = log --pretty=oneline
@@ -42,3 +43,5 @@
 	; ff = false
 ; [pull]
 ; 	rebase = true
+[hub]
+	host = git.logiclogic.jp

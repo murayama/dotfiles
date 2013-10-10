@@ -18,8 +18,8 @@ local YELLOW=$'%{\e[33m%}'
 
 #PROMPT="%{${CYAN}%}[%n@%m] %(!.#.$) %{${reset_color}%}"
 PROMPT="%{${GREEN}%}[%n@%m %1~]${WINDOW:+"[$WINDOW]"} %(!.#.$) %{${reset_color}%}"
-PROMPT2="%{${fg[blue]}%}%_> %{${reset_color}%}"
-SPROMPT="%{${fg[red]}%}correct: %R -> %r [nyae]? %{${reset_color}%}"
+# PROMPT2="%{${fg[blue]}%}%_> %{${reset_color}%}"
+# SPROMPT="%{${fg[red]}%}correct: %R -> %r [nyae]? %{${reset_color}%}"
 # RPROMPT="%{${YELLOW}%}[%~]%{${reset_color}%}"
 
 autoload -Uz vcs_info
@@ -84,6 +84,8 @@ function echo_rprompt () {
 
 setopt prompt_subst
 RPROMPT='`echo_rprompt`'
+
+PROMPT+='$([ -n "$TMUX" ] && tmux setenv TMUXPWD_$(tmux display -p "#D" | tr -d %) "$PWD")'
 
 # how to use
 # PROMPT='`rprompt-git-current-branch`'
@@ -271,3 +273,9 @@ function git_diff() {
 
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
+
+alias php="/usr/local/php5/bin/php"
+
+PS1="$PS1"'$([ -n "$TMUX" ] && tmux setenv TMUXPWD_$(tmux display -p "#D" | tr -d %) "$PWD")'
+
+# alias tmux='tmuxx'

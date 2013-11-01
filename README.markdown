@@ -1,7 +1,7 @@
 # 各種設定ファイル
 
     $ cd ~/
-    $ git clone git@210.131.249.250:murayama/dotfiles.git    
+    $ git clone git@git.logiclogic.jp:murayama/dotfiles.git    
 
 ホームディレクトリに使いたい設定ファイルをコピーするか、シンボリックリンクをはるかしてください
 
@@ -59,23 +59,5 @@ jslintでもかまいませんが、チェックが厳しいのでjshintを使�
 
 ```
 $ npm install -g jshint
-```
-
-### vim-powerline  
-
-ここでは、Macにインストールする場合を記述します  
-詳しくはここ<https://github.com/Lokaltog/vim-powerline/tree/develop/fontpatcher>
-
-fontforgeが入っていなければbrewでいれておきます
-
-```
-$ brew install --use-gcc fontforge
-```
-カスタムフォントを用意します  
-
-```
-$ cd ~/dotfiles/.vim/.bundle/vim-powerline
-$ cp ~/Library/Fonts/SomeFont.ttf .
-$ fontforge -script fontpatcher/fontpatcher SomeFont.ttf
 ```
 

@@ -1139,6 +1139,7 @@ let g:syntastic_javascript_checkers = ['jshint']
 " textmanip
 "----------------------------------
 " 選択したテキストの移動
+let g:textmanip_enable_mappings = 0
 xmap <C-j> <Plug>(textmanip-move-down)
 xmap <C-k> <Plug>(textmanip-move-up)
 xmap <C-h> <Plug>(textmanip-move-left)

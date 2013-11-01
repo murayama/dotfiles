@@ -1,7 +1,7 @@
 # 各種設定ファイル
 
     $ cd ~/
-    $ git clone git@git.logiclogic.jp:murayama/dotfiles.git    
+    $ git clone git@github.com:murayama/dotfiles.git    
 
 ホームディレクトリに使いたい設定ファイルをコピーするか、シンボリックリンクをはるかしてください
 

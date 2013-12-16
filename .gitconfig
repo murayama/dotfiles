@@ -2,6 +2,7 @@
 	pager = lv -c
   editor = vim -c \"set fenc=utf-8\"
   excludesfile = /fractal/home/n-murayama/.gitignore
+  attributesfile = ~/.gitattributes_global
 [user]
 #	name = Norichika.Murayama
 #	email = mura869@gmail.com
@@ -9,6 +10,10 @@
   email = murayama@logiclogic.jp
 [color]
 	ui = auto
+[pager]
+  log = diff-highlight | less
+  show = diff-highlight | less
+  diff = diff-highlight | less
 
 #[diff]
 #  external = git_diff_wrapper

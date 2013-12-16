@@ -114,8 +114,8 @@ NeoBundle 'neocomplcache'
 NeoBundle 'Shougo/neocomplete.vim'
 NeoBundle 'ujihisa/neco-look'
 
-NeoBundle 'tpope/vim-surround'
-NeoBundle 'YankRing.vim'
+" NeoBundle 'YankRing.vim'
+NeoBundle 'LeafCage/yankround.vim'
 NeoBundle 'matchit.zip'
 NeoBundle 'thinca/vim-quickrun'
 " NeoBundle 'vim-scripts/AnsiEsc.vim'
@@ -125,17 +125,29 @@ NeoBundle 'camelcasemotion'
 NeoBundle 'scrooloose/syntastic'
 NeoBundle 'tComment'
 NeoBundle 'tpope/vim-markdown'
+
 NeoBundle 't9md/vim-textmanip'
 NeoBundle 'Lokaltog/vim-easymotion'
+NeoBundle 'nathanaelkane/vim-indent-guides'
+NeoBundle 'osyo-manga/vim-over'
 
+" text object
+NeoBundle 'tpope/vim-surround'
 NeoBundle 'kana/vim-textobj-user'
 NeoBundle 'nelstrom/vim-textobj-rubyblock'
 NeoBundle 'kana/vim-textobj-line'
+NeoBundle "kana/vim-textobj-function"
+NeoBundle 'terryma/vim-expand-region'
+NeoBundle 'kana/vim-textobj-entire'
 
 NeoBundle 'rking/ag.vim'
 
 NeoBundle 'itchyny/lightline.vim'
-NeoBundle 'nathanaelkane/vim-indent-guides'
+
+NeoBundle 'mhinz/vim-startify'
+
+NeoBundle 'AndrewRadev/linediff.vim'
+NeoBundle 'AndrewRadev/switch.vim'
 
 " unite
 NeoBundle 'basyura/unite-rails'
@@ -319,6 +331,19 @@ set directory=~/tmp/
 
 set mouse=a
 set ttymouse=xterm2
+
+" auto write
+" set autowrite
+" set updatetime=500
+" 
+" function  s:AutoWriteIfPossible()
+"   if !&readonly && bufname('%') !=# ''
+"     w
+"   endif
+" endfunction
+" 
+" autocmd CursorHold * call s:AutoWriteIfPossible()
+" autocmd CursorHoldI * call s:AutoWriteIfPossible()
 " }}}
 
 "------------------------------
@@ -430,6 +455,7 @@ imap <c-l> <Right>
 
 " 上の行のインデントを見て勝手にあわせてくれる
 noremap p p=`]
+noremap == `[=`]
 
 " for, if, while などがある行にカーソルを置いて、これを実行すると、そのブロックを選択する。
 "nnoremap vb /{<CR>%v%0
@@ -882,8 +908,32 @@ autocmd BufEnter * if (expand("%") =~ "_spec\.rb$") || (expand("%") =~ "^spec.*\
 "   set conceallevel=2 concealcursor=i
 " endif
 
+
+
 " gitv
 nnoremap <silent> <Leader>gh :<C-u>Gitv<CR>
+" autocmd FileType gitv call s:my_gitv_settings()
+" 
+" function! s:my_gitv_settings()
+"   setlocal iskeyword+=/,-,.
+"   nnoremap <silent><buffer> C :<C-u>Git checkout <C-r><C-w><CR>
+"   nnoremap <buffer> <Space>rb :<C-u>Git rebase <C-r>=GitvGetCurrentHash()<CR><Space>
+"   nnoremap <buffer> <Space>R :<C-u>Git revert <C-r>=GitvGetCurrentHash()<CR><CR>
+"   nnoremap <buffer> <Space>h :<C-u>Git cherry-pick <C-r>=GitvGetCurrentHash()<CR><CR>
+"   nnoremap <buffer> <Space>rh :<C-u>Git reset --hard <C-r>=GitvGetCurrentHash()<CR>
+"   nnoremap <silent><buffer> t :<C-u>windo call <SID>toggle_git_folding()<CR>1<C-w>w
+" endfunction
+" 
+" function! s:gitv_get_current_hash()
+"     return matchstr(getline('.'), '\[\zs.\{7\}\ze\]$')
+" endfunction
+" 
+" autocmd FileType git setlocal nofoldenable foldlevel=0
+" function! s:toggle_git_folding()
+"   if &filetype ==# 'git'
+"     setlocal foldenable!
+"   endif
+" endfunction
 
 "------------------------------------
 " fugitive
@@ -938,7 +988,8 @@ nnoremap <silent> <Leader>b :<C-u>Unite bookmark<CR>
 nnoremap <silent> <Leader>r :<C-u>Unite file_mru<CR>
 " レジスタ一覧
 " nnoremap <silent> <Leader>y :<C-u>Unite -buffer-name=register register<CR>
-nnoremap <silent> <Leader>y :<C-u>Unite history/yank<CR>
+" nnoremap <silent> <Leader>y :<C-u>Unite history/yank<CR>
+nnoremap <silent> <Leader>y :<C-u>Unite yankround<CR>
 " 全部乗せ
 nnoremap <silent> <Leader>a :<C-u>Unite -buffer-name=files buffer file_mru bookmark file<CR>
 " ブックマークに追加
@@ -1116,7 +1167,19 @@ nnoremap <silent> vp :VimShellPop<CR>
 "-----------------------------------
 " YankRing
 "-----------------------------------
-let g:yankring_manual_clipboard_check = 0
+" let g:yankring_manual_clipboard_check = 0
+"-----------------------------------
+" YankRound
+"-----------------------------------
+let g:yankround_use_region_hl = 1
+nmap p <Plug>(yankround-p)
+nmap P <Plug>(yankround-P)
+" nmap p :<C-u>exe yankround#init('p')<Bar>exe "normal! =`]"<Bar>call yankround#activate()<CR>
+" nmap P :<C-u>exe yankround#init('P')<Bar>exe "normal! =`]"<Bar>call yankround#activate()<CR>
+nmap <C-p> <Plug>(yankround-prev)
+nmap <C-n> <Plug>(yankround-next)
+" nmap <C-n> :<C-u>call yankround#prev()<Bar>exe "normal! =`]"<CR>
+" nmap <C-n> :<C-u>call yankround#next()<Bar>exe "normal! =`]"<CR>
 
 "----------------------------------
 " syntastic
@@ -1245,3 +1308,20 @@ let g:EasyMotion_leader_key="'"
 let g:EasyMotion_grouping=1
 hi EasyMotionTraget ctermbg=none ctermfg=red
 hi EasyMotionShade ctermbg=none ctermfg=blue
+
+" vim-over
+nnoremap <silent> <Leader>s :OverCommandLine<CR>%s/
+
+" startify
+" startifyのヘッダー部分に表示する文字列を設定する(dateコマンドを実行して日付を設定している)
+let g:startify_custom_header =
+  \ map(split(system('date'), '\n'), '"   ". v:val') + ['','']
+" デフォルトだと、最近使ったファイルの先頭は数字なので、使用するアルファベットを指定
+let g:startify_custom_indices = ['a', 's', 'd', 'f', 'g', 'h', 'r', 'i', 'o', 'b']
+" よく使うファイルをブックマークとして登録しておく
+let g:startify_bookmarks = [
+  \ '~/.vimrc'
+  \ ]
+
+" switch vim
+nnoremap <silent> <Leader>c :Switch<CR>

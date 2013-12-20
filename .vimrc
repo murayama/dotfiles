@@ -1,8 +1,6 @@
 set nocompatible
 
-"------------------------------
-" auto encoding
-"------------------------------
+" auto encoding {{{
 set encoding=utf-8    " デフォルトエンコーディング
 set fileencodings=ucs_bom,utf8,ucs-2le,ucs-2
 set ffs=unix,dos,mac  " 改行文字
@@ -64,7 +62,9 @@ endif
 if exists('&ambiwidth')
   set ambiwidth=double
 endif
+"}}}
 
+" NeoBundle {{{
 if has('vim_starting')
   set runtimepath+=~/.vim/neobundle.vim/
 endif
@@ -137,6 +137,7 @@ NeoBundle 'kana/vim-textobj-user'
 NeoBundle 'nelstrom/vim-textobj-rubyblock'
 NeoBundle 'kana/vim-textobj-line'
 NeoBundle "kana/vim-textobj-function"
+NeoBundle "kana/vim-textobj-indent"
 NeoBundle 'terryma/vim-expand-region'
 NeoBundle 'kana/vim-textobj-entire'
 
@@ -148,6 +149,7 @@ NeoBundle 'mhinz/vim-startify'
 
 NeoBundle 'AndrewRadev/linediff.vim'
 NeoBundle 'AndrewRadev/switch.vim'
+NeoBundle 'AndrewRadev/splitjoin.vim'
 
 " unite
 NeoBundle 'basyura/unite-rails'
@@ -240,8 +242,9 @@ syntax enable
 filetype plugin indent on
 
 NeoBundleCheck
+"}}}
 
-" augroup init (from tyru's vimrc)
+" augroup init (from tyru's vimrc) {{{
 augroup vimrc
   autocmd!
 augroup END
@@ -251,6 +254,15 @@ command!
 \ MyAutocmd
 \ autocmd<bang> vimrc <args>
 
+
+if !has('gui_running') && $TMUX !=# ''
+  augroup Tmux
+    autocmd!
+    autocmd VimEnter,VimLeave * silent !tmux set status
+  augroup END
+endif
+
+"}}}
 
 " Basic Settings {{{
 set backspace=indent,eol,start				" 全て Backspace で削除可能にする
@@ -346,10 +358,7 @@ set ttymouse=xterm2
 " autocmd CursorHoldI * call s:AutoWriteIfPossible()
 " }}}
 
-"------------------------------
-" syntax
-"------------------------------
-
+" syntax {{{
 syntax on
 autocmd! BufRead,BufNewFile *.htmlt set filetype=smarty
 
@@ -360,64 +369,78 @@ colorscheme hybrid
 
 " PHP code fold
 let php_folding=1
-au Syntax php set fdm=syntax
-au Syntax html set fdm=indent
-set foldlevel=5
+au Syntax php set fdm=syntax foldlevel=5
+au Syntax html set fdm=indent foldlevel=4
 
 autocmd! BufNewFile,BufRead *.php set ts=2 sw=2 expandtab
 autocmd! BufNewFile,BufRead *.php5 set ts=2 sw=2 noexpandtab
 
 " ruby code fold
 let ruby_folding=1
-au Syntax ruby set fdm=syntax
-au Syntax eruby set fdm=indent
-au Syntax html set fdm=indent
+au Syntax ruby set fdm=syntax foldlevel=3
+au Syntax eruby set fdm=indent foldlevel=3
+au Syntax html set fdm=indent foldlevel=3
 set foldlevel=3
 
 autocmd! BufNewFile,BufRead *.rb set ts=2 sw=2 fenc=utf-8 expandtab
 autocmd! BufNewFile,BufRead *.js set ts=2 sw=2 fenc=utf-8 expandtab
 
+" vim fold
+let vim_folding=1
+au Syntax vim set fdm=marker foldlevel=0
 
-" バッファ移動
+
+"}}}
+
+" map and command"{{{
+
+" バッファ移動"{{{
 "map <F2> <ESC>:bp<CR>
 "map <F3> <ESC>:bn<CR>
 "map <F4> <ESC>:bw<CR>
-" diffsplit したときデフォルトでno wrapなので必要なら使う
+"}}}
+
+" diffsplit したときデフォルトでno wrapなので必要なら使う"{{{
 "map <F5> <ESC>:set wrap<CR>
 " カレントファイルの文字コードを変更する
 " map <F7>e <ESC>:set fileencoding=euc-jp<CR>
 " map <F7>s <ESC>:set fileencoding=cp932<CR>
 " map <F7>u <ESC>:set fileencoding=utf8<CR>
+"}}}
 
-" 指定文字コードで強制的にファイルを開く
+" 指定文字コードで強制的にファイルを開く"{{{
 command! Cp932 edit ++enc=cp932
 command! Eucjp edit ++enc=euc-jp
 command! Iso2022jp edit ++enc=iso-2022-jp
 command! Utf8 edit ++enc=utf-8
 command! Jis Iso2022jp
 command! Sjis Cp932
+"}}}
 
-
-" 折り返し行関係なく上下移動する
+" 折り返し行関係なく上下移動する"{{{
 nnoremap j gj
 onoremap j gj
 xnoremap j gj
 nnoremap k gk
 onoremap k gk
 xnoremap k gk
+"}}}
 
-
-" 分割ウィンドウの移動
+" 分割ウィンドウの移動"{{{
 map <Right> <c-w>l
 map <Left> <c-w>h
 map <Up> <c-w>k
 map <Down> <c-w>j
-" 分割ウィンドウのサイズ変更
+"}}}
+
+" 分割ウィンドウのサイズ変更"{{{
 map <kPlus> <c-w>+
 map <kMinus> <c-w>-
 map <kDivide> <c-w><
 map <kMultiply> <c-w>>
+"}}}
 
+" good width"{{{
 nnoremap sh <C-w>h:call <SID>good_width()<Cr>
 nnoremap sj <C-w>j
 nnoremap sk <C-w>k
@@ -431,31 +454,34 @@ function! s:good_width()
     vertical resize 144
   endif
 endfunction
+"}}}
 
-
-" 行の最初に移動
+" 行の最初に移動"{{{
 " noremap 1 ^
 noremap <C-a> ^
 inoremap <C-a> <home>
-" 行末に移動
+"}}}
+
+" 行末に移動"{{{
 " noremap 9 $
 noremap <C-e> $
 inoremap <C-e> <end>
+"}}}
 
-" Enterでインサートモードにならずに改行
-" noremap <CR> o<ESC>
-
+" インサートモード中のカーソル操作"{{{
 imap <c-h> <Left>
 imap <c-j> <Down>
 imap <c-k> <Up>
 imap <c-l> <Right>
+"}}}
 
 "vimgrep(Vim7)
 "au QuickfixCmdPost vimgrep cwin
 
-" 上の行のインデントを見て勝手にあわせてくれる
+" 上の行のインデントを見て勝手にあわせてくれる"{{{
 noremap p p=`]
 noremap == `[=`]
+"}}}
 
 " for, if, while などがある行にカーソルを置いて、これを実行すると、そのブロックを選択する。
 "nnoremap vb /{<CR>%v%0
@@ -468,7 +494,7 @@ noremap == `[=`]
 "日時挿入
 " imap <silent> <C-H> <C-R>=strftime("%Y-%m-%d %H:%M:%S")<CR>
 
-" 保存時に行末のスペースを削除
+" 保存時に行末のスペースを削除"{{{
 function! RTrim()
 	let s:cursor = getpos(".")
 	%s/\s\+$//e
@@ -476,27 +502,34 @@ function! RTrim()
 endfunction
 
 " autocmd BufWritePre * call RTrim()
+"}}}
 
+" jj kk でインサートモードを抜ける"{{{
 inoremap jj <Esc>
 inoremap kk <Esc>
+"}}}
 
-" 検索後にジャンプした際に検索単語を画面中央に持ってくる
+" 検索後にジャンプした際に検索単語を画面中央に持ってくる"{{{
 nnoremap n nzz
 nnoremap N Nzz
 nnoremap * *zz
 nnoremap # #zz
 nnoremap g* g*zz
 nnoremap g# g#zz
+"}}}
 
-" vを二回で行末まで選択
+" vを二回で行末まで選択"{{{
 vnoremap v $h
+"}}}
 
-" TABにて対応ペアにジャンプ
+" TABにて対応ペアにジャンプ"{{{
 nnoremap <Tab> %
 vnoremap <Tab> %
+"}}}
 
-" w!! でスーパーユーザーとして保存（sudoが使える環境限定）
+" w!! でスーパーユーザーとして保存（sudoが使える環境限定）"{{{
 cmap w!! w !sudo tee > /dev/null %
+"}}}
 
 " inoremap '' ''<left>
 " inoremap "" ""<left>
@@ -505,15 +538,11 @@ cmap w!! w !sudo tee > /dev/null %
 " inoremap ] ]<left>
 " inoremap ) )<left>
 " inoremap > ><left>
-"------------------------------
-" ========================
-" plug-ins
-" ========================
-"------------------------------
+"}}}
 
-" ========================
-" vim-lightline
-" ========================
+" plug-ins"{{{
+
+" vim-lightline {{{
 let g:lightline = {
       \ 'colorscheme': 'Tomorrow_Night',
       \ 'mode_map': {'c': 'NORMAL'},
@@ -645,25 +674,20 @@ function! MyCharCode()
 
   return "'". char ."' ". nr
 endfunction
+"}}}
 
-
-" ========================
-" Zen-Coding setting
-" ========================
+" Zen-Coding setting {{{
 "let g:user_zen_expandabbr_key='<c-e>'
 "let g:use_zen_complete_tag = 1
+"}}}
 
-
-" ========================
-" vim-ruby
-" ========================
+" vim-ruby {{{
 let g:rubycomplete_buffer_loading = 1
 let g:rubycomplete_classes_in_global = 1
 let g:rubycomplete_rails = 1
+"}}}
 
-" ========================
-" vim-rails.vim
-" ========================
+" vim-rails.vim {{{
 "有効化
 let g:rails_some_option = 1
 let g:rails_level = 4
@@ -697,11 +721,9 @@ function! SetUpRailsSetting()
   " setl dict+=~/.vim/dict/ruby.dict
 endfunction
 autocmd User Rails call SetUpRailsSetting()
+"}}}
 
-
-" ========================
-" rsense
-" ========================
+" rsense {{{
 let g:rsenseUseOmniFunc = 1
 let g:rsenseHome = expand('~/.vim/ref/rsense-0.3')
 
@@ -712,10 +734,9 @@ let g:rsenseHome = expand('~/.vim/ref/rsense-0.3')
 "   " nmap <buffer>td :RSenseTypeHelp<CR>
 " endfunction
 " autocmd FileType ruby,eruby,ruby.rspec call SetUpRubySetting()
+"}}}
 
-" ========================
-" tcomment
-" ========================
+" tcomment {{{
 " tcommentで使用する形式を追加
 if !exists('g:tcomment_types')
   let g:tcomment_types = {}
@@ -743,8 +764,9 @@ au FileType eruby call SetErubyMapping2()
 " phpのときだけ設定を追加
 au FileType php nmap <buffer><C-_>c :TCommentAs php_surround<CR>
 au FileType php vmap <buffer><C-_>c :TCommentAs php_surround<CR>
+"}}}
 
-
+" NeoComplete or NeoCompleCache"{{{
 " if has('lua') && v:version > 703 && has('patch825')
 if has('lua') "&& v:version > 703 && has('patch825')
     let s:hooks = neobundle#get_hooks("neocomplete.vim")
@@ -868,11 +890,9 @@ else
   inoremap <expr><C-d> neocomplcache#cancel_popup()
 
 endif
+"}}}
 
-
-" =======================
-" neosnippet
-" =======================
+" neosnippet"{{{
 let g:neosnippet#snippets_directory='~/.vim/snippets'
 
 " Plugin key-mappings.
@@ -907,10 +927,10 @@ autocmd BufEnter * if (expand("%") =~ "_spec\.rb$") || (expand("%") =~ "^spec.*\
 " if has('conceal')
 "   set conceallevel=2 concealcursor=i
 " endif
+"}}}
 
 
-
-" gitv
+" gitv"{{{
 nnoremap <silent> <Leader>gh :<C-u>Gitv<CR>
 " autocmd FileType gitv call s:my_gitv_settings()
 " 
@@ -934,10 +954,9 @@ nnoremap <silent> <Leader>gh :<C-u>Gitv<CR>
 "     setlocal foldenable!
 "   endif
 " endfunction
+"}}}
 
-"------------------------------------
-" fugitive
-"------------------------------------
+" fugitive"{{{
 nnoremap <silent> <Leader>gd :<C-u>Gdiff<CR>
 nnoremap <silent> <Leader>gD :<C-u>Gdiff HEAD<CR>
 nnoremap <silent> <Leader>gs :<C-u>Gstatus<CR>
@@ -947,10 +966,9 @@ nnoremap <silent> <Leader>gb :<C-u>Gblame<CR>
 nnoremap <silent> <Leader>gl :<C-u>Glog<CR>
 " extradite
 nnoremap <silent> <Leader>ge :<C-u>Extradite<CR>
+"}}}
 
-"------------------------------------
-" Unite
-"------------------------------------
+" Unite"{{{
 " 入力モードで開始する
 let g:unite_enable_start_insert=1
 " let g:unite_enable_split_vertically = 1 "縦分割で開く
@@ -1073,10 +1091,9 @@ call unite#custom#substitute('files', '^\\', '~/*')
 
 call unite#custom#substitute('files', '^v:', '~/.vim/*')
 call unite#custom#substitute('files', '^p:', '~/projects/*')
+"}}}
 
-"-----------------------------------
-" Alignta
-"-----------------------------------
+" Alignta"{{{
 let g:unite_source_alignta_preset_arguments = [
       \ ["Align at '='", '=>\='],
       \ ["Align at ':'", '01 :'],
@@ -1105,10 +1122,9 @@ let g:unite_source_alignta_preset_options = [
       \ 'g/' . s:comment_leadings,
       \]
 unlet s:comment_leadings
+"}}}
 
-"-----------------------------------
-" VimFiler
-"-----------------------------------
+" VimFiler"{{{
 " vimデフォルトのエクスプローラーをVimFilerに置き換える
 let g:vimfiler_as_default_explorer = 1
 " セーフモードを無効にした状態で起動する
@@ -1146,10 +1162,9 @@ function! my_action.func(candidates)
   exec 'tabnew '.a:candidates[0].action__path
 endfunction
 call unite#custom_action('file', 'my_tabopen', my_action)
+"}}}
 
-"----------------------------------
-" vimshell
-"----------------------------------
+" vimshell"{{{
 let g:vimshell_interactive_update_time = 10
 let g:vimshell_prompt_expr =
       \ 'escape(fnamemodify(getcwd(), ":~").">", "\\[]()?! ")." "'
@@ -1157,20 +1172,13 @@ let g:vimshell_prompt_pattern = '^\%(\f\|\\.\)\+> '
 
 nnoremap <silent> vs :VimShell<CR>
 nnoremap <silent> vsc :VimShellCreate<CR>
-nnoremap <silent> vp :VimShellPop<CR>
+nnoremap <silent> vp :VimShellPop<CR>"}}}
 
-"------------------------------------
-" Ref
-"------------------------------------
+" Ref"{{{
 " let g:ref_phpmanual_path = $HOME.'/.vim/php_manual_ja/php-chunked-xhtml'
+"}}}
 
-"-----------------------------------
-" YankRing
-"-----------------------------------
-" let g:yankring_manual_clipboard_check = 0
-"-----------------------------------
-" YankRound
-"-----------------------------------
+" YankRound"{{{
 let g:yankround_use_region_hl = 1
 nmap p <Plug>(yankround-p)
 nmap P <Plug>(yankround-P)
@@ -1180,10 +1188,9 @@ nmap <C-p> <Plug>(yankround-prev)
 nmap <C-n> <Plug>(yankround-next)
 " nmap <C-n> :<C-u>call yankround#prev()<Bar>exe "normal! =`]"<CR>
 " nmap <C-n> :<C-u>call yankround#next()<Bar>exe "normal! =`]"<CR>
+"}}}
 
-"----------------------------------
-" syntastic
-"----------------------------------
+" syntastic"{{{
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
@@ -1196,11 +1203,9 @@ let g:syntastic_mode_map = {
  \}
 let g:syntastic_javascript_checkers = ['jshint']
 " let g:syntastic_phpcs_disable = 1
+"}}}
 
-
-"----------------------------------
-" textmanip
-"----------------------------------
+" textmanip"{{{
 " 選択したテキストの移動
 let g:textmanip_enable_mappings = 0
 xmap <C-j> <Plug>(textmanip-move-down)
@@ -1213,10 +1218,9 @@ xmap <Space>d <Plug>(textmanip-duplicate-down)
 nmap <Space>d <Plug>(textmanip-duplicate-down)
 xmap <Space>D <Plug>(textmanip-duplicate-up)
 nmap <Space>D <Plug>(textmanip-duplicate-up)
+"}}}
 
-"----------------------------------
-" quickrun
-"----------------------------------
+" quickrun"{{{
 " Rspec
 let g:quickrun_config = {}
 let g:quickrun_config['ruby.rspec'] = {
@@ -1262,20 +1266,18 @@ function! RSpecQuickrun()
   nnoremap <expr><silent><buffer><Leader>lr "<Esc>:QuickRun ruby.rspec -cmdopt \"-l" .  line('.') . "\"<CR>"
 endfunction
 au BufReadPost *_spec.rb call RSpecQuickrun()
+"}}}
 
-"----------------------------------
-" indent_guides
-"----------------------------------
+" indent_guides"{{{
 let g:indent_guides_auto_colors = 0
 hi IndentGuidesOdd  ctermbg=234
 hi IndentGuidesEven ctermbg=236
 let g:indent_guides_start_level = 2
 let g:indent_guides_guide_size = 1
 let g:indent_guides_enable_on_vim_startup = 1
+"}}}
 
-"----------------------------------
-" ctrlp
-"----------------------------------
+" ctrlp"{{{
 " let g:ctrlp_map = '<c-c>'
 " let g:ctrip_use_migemo = 1
 " let g:ctrip_clear_cache_on_exit = 0
@@ -1285,10 +1287,9 @@ let g:indent_guides_enable_on_vim_startup = 1
 " let g:ctrlp_prompt_mappings = {
 "     \ 'AcceptSelection("t")': ['<c-a>'],
 "     \ }
+"}}}
 
-"----------------------------------
-" vim-gitgutter
-"----------------------------------
+" vim-gitgutter"{{{
 let g:gitgutter_enabled = 0
 let g:gitgutter_highlight_lines = 1
 nmap gh <Plug>GitGutterNextHunk
@@ -1298,21 +1299,25 @@ nnoremap <silent> <Leader>gl :<C-u>GitGutterLineHighlightsToggle<CR>
 let g:gitgutter_sign_added = '✚'
 let g:gitgutter_sign_modified = '➜'
 let g:gitgutter_sign_removed = '✘'
+"}}}
 
-" gundo
+" gundo"{{{
 nnoremap <space>u :<C-U>GundoToggle<CR>
+"}}}
 
-" easymotion
+" easymotion"{{{
 let g:EasyMotion_keys='hjklasdfgyuiopqwertnmzxcvbHJKLASDFGYUIOPQWERTNMZXCVB'
 let g:EasyMotion_leader_key="'"
 let g:EasyMotion_grouping=1
 hi EasyMotionTraget ctermbg=none ctermfg=red
 hi EasyMotionShade ctermbg=none ctermfg=blue
+"}}}
 
-" vim-over
+" vim-over"{{{
 nnoremap <silent> <Leader>s :OverCommandLine<CR>%s/
+"}}}
 
-" startify
+" startify"{{{
 " startifyのヘッダー部分に表示する文字列を設定する(dateコマンドを実行して日付を設定している)
 let g:startify_custom_header =
   \ map(split(system('date'), '\n'), '"   ". v:val') + ['','']
@@ -1322,6 +1327,9 @@ let g:startify_custom_indices = ['a', 's', 'd', 'f', 'g', 'h', 'r', 'i', 'o', 'b
 let g:startify_bookmarks = [
   \ '~/.vimrc'
   \ ]
+"}}}
 
-" switch vim
+" switch vim"{{{
 nnoremap <silent> <Leader>c :Switch<CR>
+"}}}
+"}}}

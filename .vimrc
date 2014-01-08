@@ -258,58 +258,58 @@ command!
 if !has('gui_running') && $TMUX !=# ''
   augroup Tmux
     autocmd!
-    autocmd VimEnter,VimLeave * silent !tmux set status
+    autocmd VimEnter,VimLeave * silent !tmux setw status
   augroup END
 endif
 
 "}}}
 
 " Basic Settings {{{
-set backspace=indent,eol,start				" 全て Backspace で削除可能にする
-set nocompatible			" viに互換しない
-"set fffs=unix				" 改行コードをFLにする(default: unix,dis)
-set noinsertmode			" デフォルトモードをインサートにしない
-set wrap				" 行の端まで到達したら折り返す
-set nolinebreak				" ホワイト・スペースで折り返さない
-set formatoptions=q			" gq コマンド以外では自動改行しない
-set smartindent				" オートインデント
-set noerrorbells			" エラー時にベルを鳴らさない
-set novisualbell			" ヴィジュアルベルを使わない
-set cmdheight=1				" コマンドラインの高さ
-set shortmess=t				" 'Press RETURN or enter command to continue' を表示しない
-set history=50				" 記憶するコマンド数
-set number				" 行番号を表示
-" set relativenumber " 相対行を表示
-set showmode				"
-set wildmenu				" コマンド入力中の補完候補をステータスラインに表示
+set backspace=indent,eol,start  " 全て Backspace で削除可能にする
+set nocompatible                " viに互換しない
+" set fffs=unix                 " 改行コードをFLにする(default: unix,dis)
+set noinsertmode                " デフォルトモードをインサートにしない
+set wrap                        " 行の端まで到達したら折り返す
+set nolinebreak                 " ホワイト・スペースで折り返さない
+set formatoptions=q             " gq コマンド以外では自動改行しない
+set smartindent                 " オートインデント
+set noerrorbells                " エラー時にベルを鳴らさない
+set novisualbell                " ヴィジュアルベルを使わない
+set cmdheight=1                 " コマンドラインの高さ
+set shortmess=t                 " 'Press RETURN or enter command to continue' を表示しない
+set history=50                  " 記憶するコマンド数
+set number                      " 行番号を表示
+" set relativenumber            " 相対行を表示
+set showmode                    "
+set wildmenu                    " コマンド入力中の補完候補をステータスラインに表示
 set wildmode=longest,list,full
-set wildignore=*.o,*.so		" 補完候補から除外するファイル
+set wildignore=*.o,*.so         " 補完候補から除外するファイル
 
 " タブストップ
-set tabstop=2				" タブ幅
-set shiftwidth=2			" インデント幅
-set shiftround          " '<'や'>'でインデントする際に'shiftwidth'の倍数に丸める
+set tabstop=2                   " タブ幅
+set shiftwidth=2                " インデント幅
+set shiftround                  " '<'や'>'でインデントする際に'shiftwidth'の倍数に丸める
 set smarttab
 set expandtab
-"set noexpandtab				" オートインデント時に挿入タブをスペースに変換しない
+" set noexpandtab               " オートインデント時に挿入タブをスペースに変換しない
 
-"set infercase           " 補完時に大文字小文字を区別しない
-"set virtualedit=all     " カーソルを文字が存在しない部分でも動けるようにする
-set hidden              " バッファを閉じる代わりに隠す（Undo履歴を残すため）
-set switchbuf=useopen   " 新しく開く代わりにすでに開いてあるバッファを開く
-set ruler				" ルーラーを表示
-set showcmd				" 実行したコマンドを表示
-set showmatch				" 対応する括弧に一時的に移動
+" set infercase                 " 補完時に大文字小文字を区別しない
+" set virtualedit=all           " カーソルを文字が存在しない部分でも動けるようにする
+set hidden                      " バッファを閉じる代わりに隠す（Undo履歴を残すため）
+set switchbuf=useopen           " 新しく開く代わりにすでに開いてあるバッファを開く
+set ruler                       " ルーラーを表示
+set showcmd                     " 実行したコマンドを表示
+set showmatch                   " 対応する括弧に一時的に移動
 set matchpairs& matchpairs+=<:> " 対応括弧に'<'と'>'のペアを追加
-"set title				" タイトルを表示
-set laststatus=2			" 常にステータス行を表示
-set ignorecase				" 大文字・小文字を無視
-set smartcase				" 検索キーワードに大文字が含まれていれば大文字小文字を区別
-set incsearch	" サーチをインクリメンタルにする
-set hlsearch				" 検索キーワードをハイライトする
-set wrapscan				" ファイルの最後に来たら最初から検索
-set magic				" 正規表現使用時に magic モードにする
-set list				" タブや改行などを別の文字に区別する
+" set title                     " タイトルを表示
+set laststatus=2                " 常にステータス行を表示
+set ignorecase                  " 大文字・小文字を無視
+set smartcase                   " 検索キーワードに大文字が含まれていれば大文字小文字を区別
+set incsearch                   " サーチをインクリメンタルにする
+set hlsearch                    " 検索キーワードをハイライトする
+set wrapscan                    " ファイルの最後に来たら最初から検索
+set magic                       " 正規表現使用時に magic モードにする
+set list                        " タブや改行などを別の文字に区別する
 " set listchars=tab:»-,trail:-,extends:»,precedes:«,nbsp:%,eol:↲
 if !has('multi_byte')
   set listchars=tab:^I,extends:>,precedes:<,nbsp:%
@@ -324,14 +324,14 @@ else
   endtry
 endif
 
-"set listchars=tab:-\ ,extends:<	" タブや改行などの代替文字設定(ex. tab:>-,extends:<.trail:-,eol:< )
-set textwidth=0         " 自動的に改行が入るのを無効化
-set keywordprg=man\ -a			" キーワードのヘルプコマンドの設定(default: man or man\ -s)
-"set lazyredraw				" マクロ実行中は画面を更新しない
+"set listchars=tab:-\ ,extends:<" タブや改行などの代替文字設定(ex. tab:>-,extends:<.trail:-,eol:< )
+set textwidth=0                 " 自動的に改行が入るのを無効化
+set keywordprg=man\ -a          " キーワードのヘルプコマンドの設定(default: man or man\ -s)
+"set lazyredraw                 " マクロ実行中は画面を更新しない
 " set statusline=%<%f\ %m%r%h%w%y%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%{fugitive#statusline()}%=%b\ 0x%B\ \ %l,%c%V%8P
 	" ステータス行のフォーマット
-"set cursorline				" カーソル行に下線を表示(* vim7)
-set cursorcolumn			" カーソル列をハイライト表示(* vim7)
+set cursorline                  " カーソル行に下線を表示(* vim7)
+set cursorcolumn                " カーソル列をハイライト表示(* vim7)
 cnoremap <expr> / getcmdtype() == '/' ? '\/' : '/'
 cnoremap <expr> ? getcmdtype() == '?' ? '\?' : '?'
 
@@ -480,7 +480,7 @@ imap <c-l> <Right>
 
 " 上の行のインデントを見て勝手にあわせてくれる"{{{
 noremap p p=`]
-noremap == `[=`]
+noremap `= `[=`]
 "}}}
 
 " for, if, while などがある行にカーソルを置いて、これを実行すると、そのブロックを選択する。
@@ -538,13 +538,41 @@ cmap w!! w !sudo tee > /dev/null %
 " inoremap ] ]<left>
 " inoremap ) )<left>
 " inoremap > ><left>
+
+" mark settings {{{
+nnoremap [Mark] <Nop>
+nmap m [Mark]
+
+if !exists('g:markrement_char')
+  let g:markrement_char = [
+        \     'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
+        \     'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
+        \ ]
+endif
+nnoremap <silent>[Mark]m :<C-u>call <SID>AutoMarkrement()<CR>
+function! s:AutoMarkrement()
+  if !exists('b:markrement_pos')
+    let b:markrement_pos = 0
+  else
+    let b:markrement_pos = (b:markrement_pos + 1) % len(g:markrement_char)
+  endif
+  execute 'mark' g:markrement_char[b:markrement_pos]
+  echo 'marked' g:markrement_char[b:markrement_pos]
+endfunction
+
+nnoremap [Mark]n ]`
+nnoremap [Mark]p [`
+
+nnoremap [Mark]l :<C-u>marks<CR>
+" }}}
+
 "}}}
 
 " plug-ins"{{{
 
 " vim-lightline {{{
 let g:lightline = {
-      \ 'colorscheme': 'Tomorrow_Night',
+      \ 'colorscheme': 'jellybeans',
       \ 'mode_map': {'c': 'NORMAL'},
       \   'active': {
       \     'left': [
@@ -1016,7 +1044,7 @@ nnoremap <silent> <Leader>a :<C-u>Unite -buffer-name=files buffer file_mru bookm
 nnoremap <silent> <Leader>o :<C-u>Unite outline<CR>
 nnoremap <silent> <Leader>O :<C-u>Unite -no-quit outline<CR>
 " マーク一覧
-nnoremap <silent> <Leader>m :<C-u>Unite mark<CR>
+nnoremap <silent> <Leader>m :<C-u>Unite -quick-match mark<CR>
 " ライン
 nnoremap <silent> <Leader>/ :<C-u>Unite line<CR>
 nnoremap <silent> <Leader>? :<C-u>Unite -no-quit line<CR>

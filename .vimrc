@@ -108,7 +108,6 @@ NeoBundle 'skwp/vim-rspec'
 NeoBundle 'romanvbabenko/rails.vim'
 
 NeoBundle 'thinca/vim-ref.git'
-NeoBundle 'taichouchou2/vim-ref-ri'
 
 NeoBundle 'neocomplcache'
 NeoBundle 'Shougo/neocomplete.vim'
@@ -140,6 +139,7 @@ NeoBundle "kana/vim-textobj-function"
 NeoBundle "kana/vim-textobj-indent"
 NeoBundle 'terryma/vim-expand-region'
 NeoBundle 'kana/vim-textobj-entire'
+NeoBundle 'gcmt/wildfire.vim'
 
 NeoBundle 'rking/ag.vim'
 
@@ -237,6 +237,7 @@ NeoBundle 'mattn/emmet-vim'
 NeoBundle 'html5.vim'
 NeoBundle 'https://github.com/hail2u/vim-css3-syntax.git'
 
+NeoBundle "itchyny/calendar.vim"
 
 syntax enable
 filetype plugin indent on
@@ -255,12 +256,12 @@ command!
 \ autocmd<bang> vimrc <args>
 
 
-if !has('gui_running') && $TMUX !=# ''
-  augroup Tmux
-    autocmd!
-    autocmd VimEnter,VimLeave * silent !tmux setw status
-  augroup END
-endif
+" if !has('gui_running') && $TMUX !=# ''
+"   augroup Tmux
+"     autocmd!
+"     autocmd VimEnter,VimLeave * silent !tmux setw status
+"   augroup END
+" endif
 
 "}}}
 
@@ -1359,5 +1360,11 @@ let g:startify_bookmarks = [
 
 " switch vim"{{{
 nnoremap <silent> <Leader>c :Switch<CR>
+"}}}
+
+" calendar {{{
+let g:calendar_google_calendar = 1
+let g:calendar_google_task = 1
+let g:calendar_google_event_download = 1
 "}}}
 "}}}

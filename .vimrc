@@ -217,7 +217,7 @@ NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'gitv'
 NeoBundle 'extradite.vim'
 NeoBundle 'git-commit'
-NeoBundle 'airblade/vim-gitgutter'
+NeoBundle 'sgur/vim-gitgutter'
 NeoBundle 'tyru/open-browser.vim'
 NeoBundle 'tyru/open-browser-github.vim'
 
@@ -331,8 +331,8 @@ set keywordprg=man\ -a          " キーワードのヘルプコマンドの設�
 "set lazyredraw                 " マクロ実行中は画面を更新しない
 " set statusline=%<%f\ %m%r%h%w%y%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%{fugitive#statusline()}%=%b\ 0x%B\ \ %l,%c%V%8P
 	" ステータス行のフォーマット
-set cursorline                  " カーソル行に下線を表示(* vim7)
-set cursorcolumn                " カーソル列をハイライト表示(* vim7)
+" set cursorline                  " カーソル行に下線を表示(* vim7)
+" set cursorcolumn                " カーソル列をハイライト表示(* vim7)
 cnoremap <expr> / getcmdtype() == '/' ? '\/' : '/'
 cnoremap <expr> ? getcmdtype() == '?' ? '\?' : '?'
 
@@ -459,13 +459,13 @@ endfunction
 
 " 行の最初に移動"{{{
 " noremap 1 ^
-noremap <C-a> ^
+" noremap <C-a> ^
 inoremap <C-a> <home>
 "}}}
 
 " 行末に移動"{{{
 " noremap 9 $
-noremap <C-e> $
+" noremap <C-e> $
 inoremap <C-e> <end>
 "}}}
 
@@ -565,6 +565,55 @@ nnoremap [Mark]n ]`
 nnoremap [Mark]p [`
 
 nnoremap [Mark]l :<C-u>marks<CR>
+" }}}
+
+
+" tab settinfs {{{
+" Anywhere SID.
+function! s:SID_PREFIX()
+  return matchstr(expand('<sfile>'), '<SNR>\d\+_\zeSID_PREFIX$')
+endfunction
+
+" Set tabline.
+function! s:my_tabline()  "{{{
+  let s = ''
+  for i in range(1, tabpagenr('$'))
+    let bufnrs = tabpagebuflist(i)
+    let bufnr = bufnrs[tabpagewinnr(i) - 1]  " first window, first appears
+    let no = i  " display 0-origin tabpagenr.
+    let mod = getbufvar(bufnr, '&modified') ? '!' : ' '
+    let title = fnamemodify(bufname(bufnr), ':t')
+    let title = '[' . title . ']'
+    let s .= '%'.i.'T'
+    let s .= '%#' . (i == tabpagenr() ? 'TabLineSel' : 'TabLine') . '#'
+    let s .= no . ':' . title
+    let s .= mod
+    let s .= '%#TabLineFill# '
+  endfor
+  let s .= '%#TabLineFill#%T%=%#TabLine#'
+  return s
+endfunction "}}}
+let &tabline = '%!'. s:SID_PREFIX() . 'my_tabline()'
+set showtabline=2 " 常にタブラインを表示
+
+" The prefix key.
+nnoremap    [Tag]   <Nop>
+nmap    t [Tag]
+" Tab jump
+for n in range(1, 9)
+  execute 'nnoremap <silent> [Tag]'.n  ':<C-u>tabnext'.n.'<CR>'
+endfor
+" t1 で1番左のタブ、t2 で1番左から2番目のタブにジャンプ
+
+map <silent> [Tag]c :tablast <bar> tabnew<CR>
+" tc 新しいタブを一番右に作る
+map <silent> [Tag]x :tabclose<CR>
+" tx タブを閉じる
+map <silent> [Tag]n :tabnext<CR>
+" tn 次のタブ
+map <silent> [Tag]p :tabprevious<CR>
+" tp 前のタブ
+
 " }}}
 
 "}}}
@@ -1201,7 +1250,8 @@ let g:vimshell_prompt_pattern = '^\%(\f\|\\.\)\+> '
 
 nnoremap <silent> vs :VimShell<CR>
 nnoremap <silent> vsc :VimShellCreate<CR>
-nnoremap <silent> vp :VimShellPop<CR>"}}}
+nnoremap <silent> vp :VimShellPop<CR>
+"}}}
 
 " Ref"{{{
 " let g:ref_phpmanual_path = $HOME.'/.vim/php_manual_ja/php-chunked-xhtml'

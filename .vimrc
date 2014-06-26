@@ -1,4 +1,6 @@
 set nocompatible
+" set rtp+=$GOROOT/misc/vim
+" exe "set rtp+=".globpath($GOPATH, "src/github.com/nsf/gocode/vim")
 
 " auto encoding {{{
 set encoding=utf-8    " デフォルトエンコーディング
@@ -87,16 +89,12 @@ endif
 
 " colorscheme
 NeoBundle 'jellybeans.vim'
-"NeoBundle 'railscasts'
-NeoBundle 'desert256.vim'
-"NeoBundle 'leo256'
-" Bundle 'Railscasts-Theme-GUIand256color'
 NeoBundle 'molokai'
-"NeoBundle 'git://github.com/altercation/vim-colors-solarized.git'
-"NeoBundle 'vim-scripts/tir_black'
 NeoBundle 'w0ng/vim-hybrid'
-NeoBundle 'itchyny/landscape.vim'
 NeoBundle '29decibel/codeschool-vim-theme'
+NeoBundle 'ciaranm/inkpot'
+NeoBundle 'jpo/vim-railscasts-theme'
+NeoBundle 'jnurmine/Zenburn'
 
 " ruby
 NeoBundle 'vim-ruby/vim-ruby'
@@ -106,6 +104,7 @@ NeoBundle 'ruby-matchit'
 NeoBundle 'taichouchou2/vim-rsense'
 NeoBundle 'skwp/vim-rspec'
 NeoBundle 'romanvbabenko/rails.vim'
+NeoBundle 'slim-template/vim-slim'
 
 NeoBundle 'thinca/vim-ref.git'
 
@@ -227,6 +226,8 @@ NeoBundle 'tyru/open-browser-github.vim'
 NeoBundle 'pangloss/vim-javascript'
 NeoBundle 'jQuery'
 NeoBundle 'kchmck/vim-coffee-script.git'
+NeoBundle 'digitaltoad/vim-jade'
+NeoBundle 'briancollins/vim-jst'
 
 " php
 " NeoBundle 'https://github.com/beyondwords/vim-twig.git'
@@ -237,7 +238,7 @@ NeoBundle 'mattn/emmet-vim'
 NeoBundle 'html5.vim'
 NeoBundle 'https://github.com/hail2u/vim-css3-syntax.git'
 
-NeoBundle "itchyny/calendar.vim"
+" NeoBundle "itchyny/calendar.vim"
 
 syntax enable
 filetype plugin indent on
@@ -268,7 +269,7 @@ command!
 " Basic Settings {{{
 set backspace=indent,eol,start  " 全て Backspace で削除可能にする
 set nocompatible                " viに互換しない
-" set fffs=unix                 " 改行コードをFLにする(default: unix,dis)
+" set fffs=unix                 " 改行コードをLFにする(default: unix,dis)
 set noinsertmode                " デフォルトモードをインサートにしない
 set wrap                        " 行の端まで到達したら折り返す
 set nolinebreak                 " ホワイト・スペースで折り返さない
@@ -341,6 +342,7 @@ set modifiable
 set t_Co=256
 
 set directory=~/tmp/
+set undodir=~/tmp/undo
 
 set mouse=a
 set ttymouse=xterm2
@@ -364,7 +366,8 @@ syntax on
 autocmd! BufRead,BufNewFile *.htmlt set filetype=smarty
 
 " colorscheme molokai
-colorscheme hybrid
+" colorscheme hybrid
+colorscheme railscasts
 " colorscheme jellybeans
 " hi Normal ctermbg=none
 
@@ -467,6 +470,7 @@ inoremap <C-a> <home>
 " noremap 9 $
 " noremap <C-e> $
 inoremap <C-e> <end>
+vnoremap $ $h
 "}}}
 
 " インサートモード中のカーソル操作"{{{
@@ -866,7 +870,8 @@ else
   " neocomplcache
   " ========================
   " 補完ウィンドウの設定
-  set completeopt=menuone
+  " set completeopt=menuone
+  set completeopt=menu,preview
   " NeoComplCacheを有効にする
   " let g:neocomplcache_enable_at_startup = 1
   " 表示候補の数
@@ -1062,7 +1067,7 @@ let g:unite_source_history_yank_enable = 1
 " Use ag in unite grep source
 if executable('ag')
   let g:unite_source_grep_command       = 'ag'
-  let g:unite_source_grep_default_opts  = '--nocolor --nogroup --hidden'
+  let g:unite_source_grep_default_opts  = '--nocolor --nogroup --column --hidden'
         \ . " --ignore='*.vimsessions*'"
         \ . " --ignore='*.idea*'"
         \ . " --ignore='.zeus.sock'"
@@ -1413,8 +1418,8 @@ nnoremap <silent> <Leader>c :Switch<CR>
 "}}}
 
 " calendar {{{
-let g:calendar_google_calendar = 1
-let g:calendar_google_task = 1
-let g:calendar_google_event_download = 1
+" let g:calendar_google_calendar = 1
+" let g:calendar_google_task = 1
+" let g:calendar_google_event_download = 1
 "}}}
 "}}}

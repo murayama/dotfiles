@@ -19,3 +19,10 @@ if [ -d ${HOME}/.rbenv  ] ; then
   eval "$(rbenv init -)"
   source ~/.rbenv/completions/rbenv.zsh
 fi
+
+if [ -d ${HOME}/.go ] ; then
+  PATH=${HOME}/.go/bin:${PATH}
+  export GOPATH=~/.go
+  export PATH
+fi
+

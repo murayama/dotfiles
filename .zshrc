@@ -279,3 +279,8 @@ alias php="/usr/local/php5/bin/php"
 PS1="$PS1"'$([ -n "$TMUX" ] && tmux setenv TMUXPWD_$(tmux display -p "#D" | tr -d %) "$PWD")'
 
 # alias tmux='tmuxx'
+if [ -f /Applications/MacVim.app/Contents/MacOS/Vim ]; then
+  alias vi='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'
+  alias vim='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'
+fi
+

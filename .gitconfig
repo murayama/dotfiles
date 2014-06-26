@@ -30,6 +30,8 @@
   logs = log --stat
   logone = log --pretty=oneline
   f = flow
+  stash = stash -u -k
+  stashpop = stash pop --index
 [i18n]
   commitencoding = utf-8
   logoutputencoding = utf-8
@@ -45,6 +47,7 @@
 	tool = vimdiff
 [merge]
 	tool = vimdiff
+  conflictstyle = diff3
 	; ff = false
 ; [pull]
 ; 	rebase = true

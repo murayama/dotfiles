@@ -1218,7 +1218,7 @@ nnoremap <silent> <Leader>e :<C-u>VimFilerBufferDir<CR>
 nnoremap <space>f :VimFiler -buffer-name=explorer -split -simple -winwidth=45 -toggle -no-quit<CR>
 
 autocmd! FileType vimfiler call g:my_vimfiler_settings()
-function! g:my_vimfiler_settings()
+function! s:my_vimfiler_settings()
   nmap <buffer><expr><CR> vimfiler#smart_cursor_map("\<Plug>(vimfiler_expand_tree)", "\<Plug>(vimfiler_edit_file)")
   nnoremap <buffer>s :call vimfiler#mappings#do_action('my_split')<CR>
   nnoremap <buffer>v :call vimfiler#mappings#do_action('my_vsplit')<CR>

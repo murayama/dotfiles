@@ -119,7 +119,6 @@ NeoBundle 'thinca/vim-quickrun'
 " NeoBundle 'vim-scripts/AnsiEsc.vim'
 NeoBundle 'sudo.vim'
 " NeoBundle 'AutoClose'
-NeoBundle 'camelcasemotion'
 NeoBundle 'scrooloose/syntastic'
 NeoBundle 'tComment'
 NeoBundle 'tpope/vim-markdown'
@@ -128,6 +127,7 @@ NeoBundle 't9md/vim-textmanip'
 NeoBundle 'Lokaltog/vim-easymotion'
 NeoBundle 'nathanaelkane/vim-indent-guides'
 NeoBundle 'osyo-manga/vim-over'
+" NeoBundle 'terryma/vim-multiple-cursors'
 
 " text object
 NeoBundle 'tpope/vim-surround'
@@ -139,6 +139,7 @@ NeoBundle "kana/vim-textobj-indent"
 NeoBundle 'terryma/vim-expand-region'
 NeoBundle 'kana/vim-textobj-entire'
 NeoBundle 'gcmt/wildfire.vim'
+NeoBundle 'camelcasemotion'
 
 NeoBundle 'rking/ag.vim'
 
@@ -152,12 +153,13 @@ NeoBundle 'AndrewRadev/splitjoin.vim'
 
 " unite
 NeoBundle 'basyura/unite-rails'
-NeoBundle 'h1mesuke/unite-outline'
+NeoBundle 'Shougo/unite-outline'
 NeoBundle 'tacroe/unite-mark'
 NeoBundle 'tsukkee/unite-tag'
 NeoBundle 'sgur/unite-qf'
 NeoBundle 'h1mesuke/vim-alignta'
 NeoBundle 'ujihisa/unite-rake'
+NeoBundle 'Shougo/neomru.vim'
 
 NeoBundleLazy 'Shougo/unite.vim', {
       \   'autoload': {
@@ -215,10 +217,13 @@ NeoBundle 'thinca/vim-qfreplace.git'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'gitv'
 NeoBundle 'extradite.vim'
-NeoBundle 'git-commit'
+" NeoBundle 'git-commit'
 NeoBundle 'sgur/vim-gitgutter'
-NeoBundle 'tyru/open-browser.vim'
-NeoBundle 'tyru/open-browser-github.vim'
+" NeoBundle 'tyru/open-browser.vim'
+" NeoBundle 'tyru/open-browser-github.vim'
+NeoBundle 'rhysd/committia.vim'
+NeoBundle 'idanarye/vim-merginal'
+NeoBundle 'AndrewRadev/gapply.vim'
 
 
 " javascript
@@ -343,6 +348,7 @@ set t_Co=256
 
 set directory=~/tmp/
 set undodir=~/tmp/undo
+set backupdir=~/tmp/backup
 
 set mouse=a
 set ttymouse=xterm2
@@ -665,7 +671,7 @@ function! MyReadonly()
 endfunction
 
 function! MyFilename()
-  return ('' != MyReadonly() ? MyReadonly() . ' ' : '') .
+ return ('' != MyReadonly() ? MyReadonly() . ' ' : '') .
         \ (&ft == 'vimfiler' ? vimfiler#get_status_string() :
         \  &ft == 'unite' ? unite#get_status_string() :
         \  &ft == 'vimshell' ? substitute(b:vimshell.current_dir,expand('~'),'~','') :
@@ -1217,7 +1223,7 @@ nnoremap <silent> <Leader>e :<C-u>VimFilerBufferDir<CR>
 
 nnoremap <space>f :VimFiler -buffer-name=explorer -split -simple -winwidth=45 -toggle -no-quit<CR>
 
-autocmd! FileType vimfiler call g:my_vimfiler_settings()
+autocmd! FileType vimfiler call s:my_vimfiler_settings()
 function! s:my_vimfiler_settings()
   nmap <buffer><expr><CR> vimfiler#smart_cursor_map("\<Plug>(vimfiler_expand_tree)", "\<Plug>(vimfiler_edit_file)")
   nnoremap <buffer>s :call vimfiler#mappings#do_action('my_split')<CR>
@@ -1395,6 +1401,7 @@ let g:EasyMotion_leader_key="'"
 let g:EasyMotion_grouping=1
 hi EasyMotionTraget ctermbg=none ctermfg=red
 hi EasyMotionShade ctermbg=none ctermfg=blue
+nmap s <Plug>(easymotion-s2)
 "}}}
 
 " vim-over"{{{

@@ -379,14 +379,14 @@ autocmd! BufRead,BufNewFile *.htmlt set filetype=smarty
 
 " colorscheme molokai
 " colorscheme hybrid
-colorscheme railscasts
-" colorscheme jellybeans
+" colorscheme railscasts
+colorscheme jellybeans
 " hi Normal ctermbg=none
 
 " PHP code fold
-let php_folding=1
-au Syntax php set fdm=syntax foldlevel=5
-au Syntax html set fdm=indent foldlevel=4
+" let php_folding=1
+" au Syntax php set fdm=syntax foldlevel=5
+" au Syntax html set fdm=indent foldlevel=4
 
 autocmd! BufNewFile,BufRead *.php set ts=2 sw=2 expandtab
 autocmd! BufNewFile,BufRead *.php5 set ts=2 sw=2 noexpandtab
@@ -887,9 +887,9 @@ else
   " NeoComplCacheを有効にする
   " let g:neocomplcache_enable_at_startup = 1
   " 表示候補の数
-  let g:neocomplcache_max_list = 20
+  let g:neocomplcache_max_list = 10
   " 自動補完を行う入力数
-  let g:neocomplcache_auto_completion_start_length = 2
+  let g:neocomplcache_auto_completion_start_length = 3
   " 手動補完時に補完を行う入力数を制御
   let g:neocomplcache_manual_completion_start_length = 3
   "バッファや辞書ファイル中で、補完の対象となるキーワードの最小長さ。初期値は4。

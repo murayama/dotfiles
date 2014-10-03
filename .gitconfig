@@ -24,7 +24,7 @@
 	co = checkout
 	br = branch -v
   sb = show-branch
-	ci = commit
+	ci = commit --allow-empty
 	st = !git status -s && echo --- branch && git branch -v && echo --- stash && git stash list | cat
   logp = log -p
   logs = log --stat

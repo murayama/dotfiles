@@ -125,9 +125,12 @@ NeoBundle 'tpope/vim-markdown'
 
 NeoBundle 't9md/vim-textmanip'
 NeoBundle 'Lokaltog/vim-easymotion'
-NeoBundle 'nathanaelkane/vim-indent-guides'
+" NeoBundle 'nathanaelkane/vim-indent-guides'
+NeoBundle 'Yggdroot/indentLine'
 NeoBundle 'osyo-manga/vim-over'
 " NeoBundle 'terryma/vim-multiple-cursors'
+NeoBundle 'junegunn/vim-easy-align'
+NeoBundle 'kana/vim-smartword'
 
 " text object
 NeoBundle 'tpope/vim-surround'
@@ -138,7 +141,7 @@ NeoBundle "kana/vim-textobj-function"
 NeoBundle "kana/vim-textobj-indent"
 NeoBundle 'terryma/vim-expand-region'
 NeoBundle 'kana/vim-textobj-entire'
-NeoBundle 'gcmt/wildfire.vim'
+" NeoBundle 'gcmt/wildfire.vim'
 NeoBundle 'camelcasemotion'
 
 NeoBundle 'rking/ag.vim'
@@ -157,9 +160,12 @@ NeoBundle 'Shougo/unite-outline'
 NeoBundle 'tacroe/unite-mark'
 NeoBundle 'tsukkee/unite-tag'
 NeoBundle 'sgur/unite-qf'
-NeoBundle 'h1mesuke/vim-alignta'
+" NeoBundle 'h1mesuke/vim-alignta'
 NeoBundle 'ujihisa/unite-rake'
 NeoBundle 'Shougo/neomru.vim'
+
+" ctrlp
+NeoBundle 'ctrlpvim/ctrlp.vim'
 
 NeoBundleLazy 'Shougo/unite.vim', {
       \   'autoload': {
@@ -240,7 +246,7 @@ NeoBundle 'briancollins/vim-jst'
 
 " html css
 NeoBundle 'mattn/emmet-vim'
-NeoBundle 'html5.vim'
+" NeoBundle 'html5.vim'
 NeoBundle 'https://github.com/hail2u/vim-css3-syntax.git'
 
 " NeoBundle "itchyny/calendar.vim"
@@ -859,8 +865,8 @@ au FileType php vmap <buffer><C-_>c :TCommentAs php_surround<CR>
 if has('lua') "&& v:version > 703 && has('patch825')
     let s:hooks = neobundle#get_hooks("neocomplete.vim")
     function! s:hooks.on_source(bundle)
-        let g:acp_enableAtStartup = 0
-        let g:neocomplet#enable_smart_case = 1
+      let g:acp_enableAtStartup = 0
+      let g:neocomplet#enable_smart_case = 1
         " NeoCompleteを有効化
         NeoCompleteEnable
     endfunction
@@ -1081,6 +1087,9 @@ if executable('ag')
 endif
 let g:unite_source_buffer_time_format = ''
 
+" call unite#filters#matcher_default#use(['matcher_fuzzy'])
+call unite#filters#sorter_default#use(['sorter_rank'])
+
 
 " タブ一覧
 nnoremap <silent> <Leader>t :<C-u>Unite tab<CR>
@@ -1120,7 +1129,7 @@ nnoremap <silent> <Leader>VGR :<C-u>Unite -no-quit vimgrep<CR>
 
 " like ctrlp
 " nnoremap <silent> <Leader>p :<C-u>Unite -buffer-name=files -start-insert buffer file_rec/async:!<cr>
-nnoremap <silent> <Leader>p :<C-u>Unite -start-insert file_rec/async:!<cr>
+nnoremap <silent> <Leader>p :<C-u>Unite -buffer-name=files -start-insert buffer file_rec/async:!<cr>
 
 " rails controller
 nnoremap <silent> <Leader>rc :<C-u>Unite rails/controller<CR>
@@ -1183,34 +1192,34 @@ call unite#custom#substitute('files', '^p:', '~/projects/*')
 "}}}
 
 " Alignta"{{{
-let g:unite_source_alignta_preset_arguments = [
-      \ ["Align at '='", '=>\='],
-      \ ["Align at ':'", '01 :'],
-      \ ["Align at '|'", '|'   ],
-      \ ["Align at ')'", '0 )' ],
-      \ ["Align at ']'", '0 ]' ],
-      \ ["Align at '}'", '}'   ],
-      \]
-
-let s:comment_leadings = '^\s*\("\|#\|/\*\|//\|<!--\)'
-let g:unite_source_alignta_preset_options = [
-      \ ["Justify Left",      '<<' ],
-      \ ["Justify Center",    '||' ],
-      \ ["Justify Right",     '>>' ],
-      \ ["Justify None",      '==' ],
-      \ ["Shift Left",        '<-' ],
-      \ ["Shift Right",       '->' ],
-      \ ["Shift Left  [Tab]", '<--'],
-      \ ["Shift Right [Tab]", '-->'],
-      \ ["Margin 0:0",        '0'  ],
-      \ ["Margin 0:1",        '01' ],
-      \ ["Margin 1:0",        '10' ],
-      \ ["Margin 1:1",        '1'  ],
-      \
-      \ 'v/' . s:comment_leadings,
-      \ 'g/' . s:comment_leadings,
-      \]
-unlet s:comment_leadings
+" let g:unite_source_alignta_preset_arguments = [
+"       \ ["Align at '='", '=>\='],
+"       \ ["Align at ':'", '01 :'],
+"       \ ["Align at '|'", '|'   ],
+"       \ ["Align at ')'", '0 )' ],
+"       \ ["Align at ']'", '0 ]' ],
+"       \ ["Align at '}'", '}'   ],
+"       \]
+"
+" let s:comment_leadings = '^\s*\("\|#\|/\*\|//\|<!--\)'
+" let g:unite_source_alignta_preset_options = [
+"       \ ["Justify Left",      '<<' ],
+"       \ ["Justify Center",    '||' ],
+"       \ ["Justify Right",     '>>' ],
+"       \ ["Justify None",      '==' ],
+"       \ ["Shift Left",        '<-' ],
+"       \ ["Shift Right",       '->' ],
+"       \ ["Shift Left  [Tab]", '<--'],
+"       \ ["Shift Right [Tab]", '-->'],
+"       \ ["Margin 0:0",        '0'  ],
+"       \ ["Margin 0:1",        '01' ],
+"       \ ["Margin 1:0",        '10' ],
+"       \ ["Margin 1:1",        '1'  ],
+"       \
+"       \ 'v/' . s:comment_leadings,
+"       \ 'g/' . s:comment_leadings,
+"       \]
+" unlet s:comment_leadings
 "}}}
 
 " VimFiler"{{{
@@ -1359,24 +1368,25 @@ au BufReadPost *_spec.rb call RSpecQuickrun()
 "}}}
 
 " indent_guides"{{{
-let g:indent_guides_auto_colors = 0
-hi IndentGuidesOdd  ctermbg=234
-hi IndentGuidesEven ctermbg=236
-let g:indent_guides_start_level = 2
-let g:indent_guides_guide_size = 1
-let g:indent_guides_enable_on_vim_startup = 1
+" let g:indent_guides_auto_colors = 0
+" hi IndentGuidesOdd  ctermbg=234
+" hi IndentGuidesEven ctermbg=236
+" let g:indent_guides_start_level = 2
+" let g:indent_guides_guide_size = 1
+" let g:indent_guides_enable_on_vim_startup = 1
 "}}}
 
 " ctrlp"{{{
-" let g:ctrlp_map = '<c-c>'
-" let g:ctrip_use_migemo = 1
-" let g:ctrip_clear_cache_on_exit = 0
-" let g:ctrip_mruf_max = 500
-" let g:ctrip_open_new_file = 1
-" let g:ctrlp_show_hidden = 1
-" let g:ctrlp_prompt_mappings = {
-"     \ 'AcceptSelection("t")': ['<c-a>'],
-"     \ }
+" let g:ctrlp_map = '<Nop>'
+let g:ctrip_clear_cache_on_exit = 0
+let g:ctrip_mruf_max = 500
+let g:ctrip_open_new_file = 'r'
+let g:ctrlp_show_hidden = 1
+let g:ctrlp_working_path_mode = 'ra'
+let g:ctrlp_extensions = ['tag', 'quickfix', 'dir', 'line', 'mixed']
+let g:ctrlp_prompt_mappings = {
+    \ 'AcceptSelection("t")': ['<c-w>'],
+    \ }
 "}}}
 
 " vim-gitgutter"{{{
@@ -1429,4 +1439,22 @@ nnoremap <silent> <Leader>c :Switch<CR>
 " let g:calendar_google_task = 1
 " let g:calendar_google_event_download = 1
 "}}}
+
+" indentLine "{{{
+let g:indentLine_faster = 1
+let g:indentLine_color_term = 237
+" let g:indentLine_char = '︙'
+"}}}
+
+" vim-smartword {{{
+nmap w   <Plug>(smartword-w)
+nmap b   <Plug>(smartword-b)
+nmap e   <Plug>(smartword-e)
+"}}}
+
+" vim-easy-align {{{
+vmap <Enter> <Plug>(EasyAlign)
+nmap <Leader>a <Plug>(EasyAlign)
+"}}}
+
 "}}}

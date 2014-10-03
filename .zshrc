@@ -264,6 +264,11 @@ alias r="rails"
 
 alias lv="lv -c"
 
+# git log and peco
+alias -g C='`git log --oneline | peco | cut -d" " -f1`'
+# git reflog and peco
+alias -g R='`git reflog | peco | cut -d" " -f1`'
+
 # [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 # [[ -s "$HOME/.rvm/scripts/rvm" ]] && "$HOME/.rvm/scripts/rvm"
 

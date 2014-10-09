@@ -1230,7 +1230,8 @@ let g:vimfiler_safe_mode_by_default = 0
 " <Leader>eで現在開いているバッファのディレクトリを開く
 nnoremap <silent> <Leader>e :<C-u>VimFilerBufferDir<CR>
 
-nnoremap <space>f :VimFiler -buffer-name=explorer -split -simple -winwidth=45 -toggle -no-quit<CR>
+" nnoremap <space>f :VimFiler -buffer-name=explorer -split -simple -winwidth=45 -toggle -no-quit<CR>
+nnoremap <space>f :VimFilerExplorer -direction=botright<CR>
 
 autocmd! FileType vimfiler call s:my_vimfiler_settings()
 function! s:my_vimfiler_settings()

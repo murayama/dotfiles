@@ -45,6 +45,7 @@
 	trustExitCode = true
 [diff]
 	tool = vimdiff
+  algorithm = histogram
 [merge]
 	tool = vimdiff
   conflictstyle = diff3

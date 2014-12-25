@@ -239,6 +239,7 @@ NeoBundle 'jQuery'
 NeoBundle 'kchmck/vim-coffee-script.git'
 NeoBundle 'digitaltoad/vim-jade'
 NeoBundle 'briancollins/vim-jst'
+NeoBundle 'wavded/vim-stylus'
 
 " php
 " NeoBundle 'https://github.com/beyondwords/vim-twig.git'
@@ -313,6 +314,7 @@ set switchbuf=useopen           " 新しく開く代わりにすでに開いて�
 set ruler                       " ルーラーを表示
 set showcmd                     " 実行したコマンドを表示
 set showmatch                   " 対応する括弧に一時的に移動
+set matchtime=1
 set matchpairs& matchpairs+=<:> " 対応括弧に'<'と'>'のペアを追加
 " set title                     " タイトルを表示
 set laststatus=2                " 常にステータス行を表示
@@ -345,6 +347,8 @@ set keywordprg=man\ -a          " キーワードのヘルプコマンドの設�
 	" ステータス行のフォーマット
 " set cursorline                  " カーソル行に下線を表示(* vim7)
 " set cursorcolumn                " カーソル列をハイライト表示(* vim7)
+set display=lastline
+set pumheight=10
 cnoremap <expr> / getcmdtype() == '/' ? '\/' : '/'
 cnoremap <expr> ? getcmdtype() == '?' ? '\?' : '?'
 
@@ -392,14 +396,15 @@ autocmd! BufNewFile,BufRead *.php set ts=2 sw=2 expandtab
 autocmd! BufNewFile,BufRead *.php5 set ts=2 sw=2 noexpandtab
 
 " ruby code fold
-let ruby_folding=1
-au Syntax ruby set fdm=syntax foldlevel=3
-au Syntax eruby set fdm=indent foldlevel=3
-au Syntax html set fdm=indent foldlevel=3
-set foldlevel=3
+" let ruby_folding=1
+" au Syntax ruby set fdm=syntax foldlevel=3
+" au Syntax eruby set fdm=indent foldlevel=3
+" au Syntax html set fdm=indent foldlevel=3
+" set foldlevel=3
 
 autocmd! BufNewFile,BufRead *.rb set ts=2 sw=2 fenc=utf-8 expandtab
 autocmd! BufNewFile,BufRead *.js set ts=2 sw=2 fenc=utf-8 expandtab
+autocmd! BufNewFile,BufRead *.ect set filetype=jst
 
 " vim fold
 let vim_folding=1

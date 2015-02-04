@@ -68,11 +68,11 @@ function echo_rprompt () {
             branch="%F{blue}$branch%f"
         fi
 
-        print -n "[%25<..<"
+        print -n "[%50<..<"
         print -n "%F{yellow}$vcs_info_msg_1_%F"
         print -n "%<<]"
 
-        print -n "[%15<..<"
+        print -n "[%40<..<"
         print -nD "%F{yellow}$repos%f"
         print -n "@$branch"
         print -n "%<<]"

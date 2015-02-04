@@ -26,3 +26,5 @@ if [ -d ${HOME}/.go ] ; then
   export PATH
 fi
 
+# swift
+export PATH=/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin:$PATH

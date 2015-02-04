@@ -122,6 +122,8 @@ NeoBundle 'sudo.vim'
 NeoBundle 'scrooloose/syntastic'
 NeoBundle 'tComment'
 NeoBundle 'tpope/vim-markdown'
+NeoBundle 'kannokanno/previm'
+NeoBundle 'glidenote/memolist.vim'
 
 NeoBundle 't9md/vim-textmanip'
 NeoBundle 'Lokaltog/vim-easymotion'
@@ -163,9 +165,11 @@ NeoBundle 'sgur/unite-qf'
 " NeoBundle 'h1mesuke/vim-alignta'
 NeoBundle 'ujihisa/unite-rake'
 NeoBundle 'Shougo/neomru.vim'
+NeoBundle 'Shougo/neosnippet'
+NeoBundle 'Shougo/neosnippet-snippets'
 
 " ctrlp
-NeoBundle 'ctrlpvim/ctrlp.vim'
+"NeoBundle 'ctrlpvim/ctrlp.vim'
 
 NeoBundleLazy 'Shougo/unite.vim', {
       \   'autoload': {
@@ -173,7 +177,6 @@ NeoBundleLazy 'Shougo/unite.vim', {
       \   }
       \ }
 
-NeoBundleLazy 'Shougo/neosnippet'
 
 if has('lua')
   NeoBundleLazy 'Shougo/neocomplete', {
@@ -404,7 +407,6 @@ autocmd! BufNewFile,BufRead *.php5 set ts=2 sw=2 noexpandtab
 
 autocmd! BufNewFile,BufRead *.rb set ts=2 sw=2 fenc=utf-8 expandtab
 autocmd! BufNewFile,BufRead *.js set ts=2 sw=2 fenc=utf-8 expandtab
-autocmd! BufNewFile,BufRead *.ect set filetype=jst
 
 " vim fold
 let vim_folding=1
@@ -993,11 +995,11 @@ endif
 "}}}
 
 " neosnippet"{{{
-let g:neosnippet#snippets_directory='~/.vim/snippets'
 
 " Plugin key-mappings.
-" imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-" smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>     <Plug>(neosnippet_expand_target)
 
 " SuperTab like snippets behavior.
 imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
@@ -1011,6 +1013,9 @@ smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
 if has('conceal')
   set conceallevel=2 concealcursor=i
 endif
+
+
+let g:neosnippet#snippets_directory='~/.vim/snippets'
 
 autocmd BufEnter * if exists("b:rails_root") && !(expand("%") =~ "\.erb$") | NeoComplCacheSetFileType ruby.rails | endif
 autocmd BufEnter * if (expand("%") =~ "_spec\.rb$") || (expand("%") =~ "^spec.*\.rb$") | NeoComplCacheSetFileType ruby.rspec | endif
@@ -1462,5 +1467,21 @@ nmap e   <Plug>(smartword-e)
 vmap <Enter> <Plug>(EasyAlign)
 nmap <Leader>a <Plug>(EasyAlign)
 "}}}
+
+" previm {{{
+let g:previm_open_cmd = 'open -a Google\ Chrome'
+" }}}
+
+" memolist {{{
+nnoremap <Leader>mn  :MemoNew<CR>
+nnoremap <Leader>ml  :MemoList<CR>
+nnoremap <Leader>mg  :MemoGrep<CR>
+let g:memolist_memo_suffix = 'md'
+let g:memolist_path = '~/Dropbox/memo/'
+let g:memolist_template_dir_path = '~/Dropbox/memo'
+let g:memolist_unite        = 1
+let g:memolist_unite_source = "file_rec"
+let g:memolist_unite_option = "-start-insert"
+" }}}
 
 "}}}

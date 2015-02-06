@@ -1050,105 +1050,102 @@ function! s:bundle.hooks.on_source(bundle)
   " call unite#filters#matcher_default#use(['matcher_fuzzy'])
   call unite#filters#sorter_default#use(['sorter_rank'])
 
-
-  " タブ一覧
-  nnoremap <silent> <Leader>t :<C-u>Unite tab<CR>
-  " バッファ一覧
-  nnoremap <silent> <Leader>. :<C-u>Unite -quick-match buffer<CR>
-  " ファイル一覧
-  nnoremap <silent> <Leader>u :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
-  nnoremap <silent> <Leader>f :<C-u>Unite -buffer-name=files file<CR>
-  " ブックマーク一覧
-  nnoremap <silent> <Leader>b :<C-u>Unite bookmark<CR>
-  " 最近使用したファイル一覧
-  nnoremap <silent> <Leader>r :<C-u>Unite file_mru<CR>
-  " レジスタ一覧
-  " nnoremap <silent> <Leader>y :<C-u>Unite -buffer-name=register register<CR>
-  " nnoremap <silent> <Leader>y :<C-u>Unite history/yank<CR>
-  nnoremap <silent> <Leader>y :<C-u>Unite yankround<CR>
-  " 全部乗せ
-  nnoremap <silent> <Leader>a :<C-u>Unite -buffer-name=files buffer file_mru bookmark file<CR>
-  " ブックマークに追加
-  " nnoremap <silent> <Leader>ua :<C-u>UniteBookmarkAdd<CR>
-  " アウトライン
-  nnoremap <silent> <Leader>o :<C-u>Unite outline<CR>
-  nnoremap <silent> <Leader>O :<C-u>Unite -no-quit outline<CR>
-  " マーク一覧
-  nnoremap <silent> <Leader>m :<C-u>Unite -quick-match mark<CR>
-  " ライン
-  nnoremap <silent> <Leader>/ :<C-u>Unite line<CR>
-  nnoremap <silent> <Leader>? :<C-u>Unite -no-quit line<CR>
-  " quickfix
-  nnoremap <silent> <Leader>qf :<C-u>Unite -no-quit qf<CR>
-  " grep
-  nnoremap <silent> <Leader>gr :<C-u>Unite grep:.<CR>
-  nnoremap <silent> <Leader>GR :<C-u>Unite -no-quit grep:.<CR>
-  " vimgrep
-  nnoremap <silent> <Leader>vgr :<C-u>Unite vimgrep<CR>
-  nnoremap <silent> <Leader>VGR :<C-u>Unite -no-quit vimgrep<CR>
-
-  " like ctrlp
-  " nnoremap <silent> <Leader>p :<C-u>Unite -buffer-name=files -start-insert buffer file_rec/async:!<cr>
-  nnoremap <silent> <Leader>p :<C-u>Unite -buffer-name=files -start-insert buffer file_rec/async:!<cr>
-
-  " rails controller
-  nnoremap <silent> <Leader>rc :<C-u>Unite rails/controller<CR>
-  " rails helper
-  nnoremap <silent> <Leader>rh :<C-u>Unite rails/helper<CR>
-  " rails model
-  nnoremap <silent> <Leader>rm :<C-u>Unite rails/model<CR>
-  " rails view
-  nnoremap <silent> <Leader>rv :<C-u>Unite rails/view<CR>
-  " rails javascripts
-  nnoremap <silent> <Leader>rj :<C-u>Unite rails/javascript<CR>
-  " rails stylesheet
-  nnoremap <silent> <Leader>rs :<C-u>Unite rails/stylesheet<CR>
-  " rails bundle gem
-  nnoremap <silent> <Leader>rg :<C-u>Unite rails/bundled_gem<CR>
-
-  " Unite tag
-  autocmd BufEnter *
-    \   if empty(&buftype)
-    \|      nnoremap <buffer> <C-]> :<C-u>UniteWithCursorWord -immediately tag<CR>
-    \|  endif
-
-  " rubyリファレンス
-  nnoremap <silent> <Leader>rb :<C-u>Unite ref/refe<CR>
-  " phpマニアル
-  " nnoremap <silent> <Leader>ph :<C-u>Unite ref/phpmanual<CR>
-
-  "uniteを開いている間のキーマッピング
-  augroup vimrc
-    autocmd FileType unite call s:unite_my_settings()
-  augroup END
-  function! s:unite_my_settings()
-    "ESCでuniteを終了
-    nmap <buffer> <ESC> <Plug>(unite_exit)
-    "入力モードのときjjでノーマルモードに移動
-    imap <buffer> jj <Plug>(unite_insert_leave)
-    "入力モードのときctrl+wでバックスラッシュも削除
-    imap <buffer> <C-w> <Plug>(unite_delete_backward_path)
-    "sでsplit
-    nnoremap <silent><buffer><expr> s unite#smart_map('s', unite#do_action('split'))
-    inoremap <silent><buffer><expr> s unite#smart_map('s', unite#do_action('split'))
-    "vでvsplit
-    nnoremap <silent><buffer><expr> v unite#smart_map('v', unite#do_action('vsplit'))
-    inoremap <silent><buffer><expr> v unite#smart_map('v', unite#do_action('vsplit'))
-    "fでvimfiler
-    nnoremap <silent><buffer><expr> f unite#smart_map('f', unite#do_action('vimfiler'))
-    inoremap <silent><buffer><expr> f unite#smart_map('f', unite#do_action('vimfiler'))
-    "pでpreview
-    nnoremap <silent><buffer><expr> p unite#smart_map('p', unite#do_action('preview'))
-    inoremap <silent><buffer><expr> p unite#smart_map('p', unite#do_action('preview'))
-  endfunction
-
-
   call unite#custom#substitute('files', '^@@', '\=fnamemodify(expand("#"), ":p:h")."/*"', 2)
   call unite#custom#substitute('files', '^@', '\=getcwd()."/*"', 1)
   call unite#custom#substitute('files', '^\\', '~/*')
 
   call unite#custom#substitute('files', '^v:', '~/.vim/*')
   call unite#custom#substitute('files', '^p:', '~/projects/*')
+endfunction
+" タブ一覧
+nnoremap <silent> <Leader>t :<C-u>Unite tab<CR>
+" バッファ一覧
+nnoremap <silent> <Leader>. :<C-u>Unite -quick-match buffer<CR>
+" ファイル一覧
+nnoremap <silent> <Leader>u :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
+nnoremap <silent> <Leader>f :<C-u>Unite -buffer-name=files file<CR>
+" ブックマーク一覧
+nnoremap <silent> <Leader>b :<C-u>Unite bookmark<CR>
+" 最近使用したファイル一覧
+nnoremap <silent> <Leader>r :<C-u>Unite file_mru<CR>
+" レジスタ一覧
+" nnoremap <silent> <Leader>y :<C-u>Unite -buffer-name=register register<CR>
+" nnoremap <silent> <Leader>y :<C-u>Unite history/yank<CR>
+nnoremap <silent> <Leader>y :<C-u>Unite yankround<CR>
+" 全部乗せ
+nnoremap <silent> <Leader>a :<C-u>Unite -buffer-name=files buffer file_mru bookmark file<CR>
+" ブックマークに追加
+" nnoremap <silent> <Leader>ua :<C-u>UniteBookmarkAdd<CR>
+" アウトライン
+nnoremap <silent> <Leader>o :<C-u>Unite outline<CR>
+nnoremap <silent> <Leader>O :<C-u>Unite -no-quit outline<CR>
+" マーク一覧
+nnoremap <silent> <Leader>m :<C-u>Unite -quick-match mark<CR>
+" ライン
+nnoremap <silent> <Leader>/ :<C-u>Unite line<CR>
+nnoremap <silent> <Leader>? :<C-u>Unite -no-quit line<CR>
+" quickfix
+nnoremap <silent> <Leader>qf :<C-u>Unite -no-quit qf<CR>
+" grep
+nnoremap <silent> <Leader>gr :<C-u>Unite grep:.<CR>
+nnoremap <silent> <Leader>GR :<C-u>Unite -no-quit grep:.<CR>
+" vimgrep
+nnoremap <silent> <Leader>vgr :<C-u>Unite vimgrep<CR>
+nnoremap <silent> <Leader>VGR :<C-u>Unite -no-quit vimgrep<CR>
+
+" like ctrlp
+" nnoremap <silent> <Leader>p :<C-u>Unite -buffer-name=files -start-insert buffer file_rec/async:!<cr>
+nnoremap <silent> <Leader>p :<C-u>Unite -buffer-name=files -start-insert buffer file_rec/async:!<cr>
+
+" rails controller
+nnoremap <silent> <Leader>rc :<C-u>Unite rails/controller<CR>
+" rails helper
+nnoremap <silent> <Leader>rh :<C-u>Unite rails/helper<CR>
+" rails model
+nnoremap <silent> <Leader>rm :<C-u>Unite rails/model<CR>
+" rails view
+nnoremap <silent> <Leader>rv :<C-u>Unite rails/view<CR>
+" rails javascripts
+nnoremap <silent> <Leader>rj :<C-u>Unite rails/javascript<CR>
+" rails stylesheet
+nnoremap <silent> <Leader>rs :<C-u>Unite rails/stylesheet<CR>
+" rails bundle gem
+nnoremap <silent> <Leader>rg :<C-u>Unite rails/bundled_gem<CR>
+
+" Unite tag
+autocmd BufEnter *
+  \   if empty(&buftype)
+  \|      nnoremap <buffer> <C-]> :<C-u>UniteWithCursorWord -immediately tag<CR>
+  \|  endif
+
+" rubyリファレンス
+nnoremap <silent> <Leader>rb :<C-u>Unite ref/refe<CR>
+" phpマニアル
+" nnoremap <silent> <Leader>ph :<C-u>Unite ref/phpmanual<CR>
+
+"uniteを開いている間のキーマッピング
+augroup vimrc
+  autocmd FileType unite call s:unite_my_settings()
+augroup END
+function! s:unite_my_settings()
+  "ESCでuniteを終了
+  nmap <buffer> <ESC> <Plug>(unite_exit)
+  "入力モードのときjjでノーマルモードに移動
+  imap <buffer> jj <Plug>(unite_insert_leave)
+  "入力モードのときctrl+wでバックスラッシュも削除
+  imap <buffer> <C-w> <Plug>(unite_delete_backward_path)
+  "sでsplit
+  nnoremap <silent><buffer><expr> s unite#smart_map('s', unite#do_action('split'))
+  inoremap <silent><buffer><expr> s unite#smart_map('s', unite#do_action('split'))
+  "vでvsplit
+  nnoremap <silent><buffer><expr> v unite#smart_map('v', unite#do_action('vsplit'))
+  inoremap <silent><buffer><expr> v unite#smart_map('v', unite#do_action('vsplit'))
+  "fでvimfiler
+  nnoremap <silent><buffer><expr> f unite#smart_map('f', unite#do_action('vimfiler'))
+  inoremap <silent><buffer><expr> f unite#smart_map('f', unite#do_action('vimfiler'))
+  "pでpreview
+  nnoremap <silent><buffer><expr> p unite#smart_map('p', unite#do_action('preview'))
+  inoremap <silent><buffer><expr> p unite#smart_map('p', unite#do_action('preview'))
 endfunction
 "}}}
 
@@ -1184,47 +1181,45 @@ endfunction
 "}}}
 
 " VimFiler"{{{
-let s:bundle = neobundle#get('vimfiler')
-function! s:bundle.hooks.on_source(bundle)
-  " vimデフォルトのエクスプローラーをVimFilerに置き換える
-  let g:vimfiler_as_default_explorer = 1
-  " セーフモードを無効にした状態で起動する
-  let g:vimfiler_safe_mode_by_default = 0
-  " <Leader>eで現在開いているバッファのディレクトリを開く
-  nnoremap <silent> <Leader>e :<C-u>VimFilerBufferDir<CR>
+" vimデフォルトのエクスプローラーをVimFilerに置き換える
+let g:vimfiler_as_default_explorer = 1
+" セーフモードを無効にした状態で起動する
+let g:vimfiler_safe_mode_by_default = 0
 
-  " nnoremap <space>f :VimFiler -buffer-name=explorer -split -simple -winwidth=45 -toggle -no-quit<CR>
-  nnoremap <space>f :VimFilerExplorer -direction=botright<CR>
-
-  autocmd! FileType vimfiler call s:my_vimfiler_settings()
-  function! s:my_vimfiler_settings()
-    nmap <buffer><expr><CR> vimfiler#smart_cursor_map("\<Plug>(vimfiler_expand_tree)", "\<Plug>(vimfiler_edit_file)")
-    nnoremap <buffer>s :call vimfiler#mappings#do_action('my_split')<CR>
-    nnoremap <buffer>v :call vimfiler#mappings#do_action('my_vsplit')<CR>
-    nnoremap <buffer>E :call vimfiler#mappings#do_action('my_tabopen')<CR>
-  endfunction
-
-  let my_action = { 'is_selectable' : 1 }
-  function! my_action.func(candidates)
-    wincmd p
-    exec 'split '.a:candidates[0].action__path
-  endfunction
-  call unite#custom_action('file', 'my_split', my_action)
-
-  let my_action = { 'is_selectable' : 1 }
-  function! my_action.func(candidates)
-    wincmd p
-    exec 'vsplit '.a:candidates[0].action__path
-  endfunction
-  call unite#custom_action('file', 'my_vsplit', my_action)
-
-  let my_action = { 'is_selectable' : 1 }
-  function! my_action.func(candidates)
-    wincmd p
-    exec 'tabnew '.a:candidates[0].action__path
-  endfunction
-  call unite#custom_action('file', 'my_tabopen', my_action)
+autocmd! FileType vimfiler call s:my_vimfiler_settings()
+function! s:my_vimfiler_settings()
+  nmap <buffer><expr><CR> vimfiler#smart_cursor_map("\<Plug>(vimfiler_expand_tree)", "\<Plug>(vimfiler_edit_file)")
+  nnoremap <buffer>s :call vimfiler#mappings#do_action('my_split')<CR>
+  nnoremap <buffer>v :call vimfiler#mappings#do_action('my_vsplit')<CR>
+  nnoremap <buffer>E :call vimfiler#mappings#do_action('my_tabopen')<CR>
 endfunction
+
+" <Leader>eで現在開いているバッファのディレクトリを開く
+nnoremap <silent> <Leader>e :<C-u>VimFilerBufferDir<CR>
+
+" nnoremap <space>f :VimFiler -buffer-name=explorer -split -simple -winwidth=45 -toggle -no-quit<CR>
+nnoremap <space>f :VimFilerExplorer -direction=botright<CR>
+
+let my_action = { 'is_selectable' : 1 }
+function! my_action.func(candidates)
+  wincmd p
+  exec 'split '.a:candidates[0].action__path
+endfunction
+call unite#custom_action('file', 'my_split', my_action)
+
+let my_action = { 'is_selectable' : 1 }
+function! my_action.func(candidates)
+  wincmd p
+  exec 'vsplit '.a:candidates[0].action__path
+endfunction
+call unite#custom_action('file', 'my_vsplit', my_action)
+
+let my_action = { 'is_selectable' : 1 }
+function! my_action.func(candidates)
+  wincmd p
+  exec 'tabnew '.a:candidates[0].action__path
+endfunction
+call unite#custom_action('file', 'my_tabopen', my_action)
 "}}}
 
 " vimshell"{{{

@@ -1,0 +1,4 @@
+*.rb diff=ruby
+*.php diff=php
+*.html diff=html
+*.ctp diff=html

@@ -714,11 +714,13 @@ function! MyGitGutter()
         \ ]
   let hunks = GitGutterGetHunkSummary()
   let ret = []
-  for i in [0, 1, 2]
-    if hunks[i] > 0
-      call add(ret, symbols[i] . hunks[i])
-    endif
-  endfor
+  if len(hunks) > 3
+    for i in [0, 1, 2]
+      if hunks[i] > 0
+        call add(ret, symbols[i] . hunks[i])
+      endif
+    endfor
+  endif
   return join(ret, ' ')
 endfunction
 
@@ -850,8 +852,8 @@ au FileType php vmap <buffer><C-_>c :TCommentAs php_surround<CR>
 "}}}
 
 " NeoComplete "{{{
-let s:bundle = neobundle#get('neocomplete')
-function! s:bundle.hooks.on_source(bundle)
+" let s:bundle = neobundle#get('neocomplete')
+" function! s:bundle.hooks.on_source(bundle)
   let g:acp_enableAtStartup = 0
   let g:neocomplete#enable_at_startup = 1
 
@@ -883,9 +885,9 @@ function! s:bundle.hooks.on_source(bundle)
   " <CR>: close popup and save indent.
   inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
   function! s:my_cr_function()
-    return neocomplete#close_popup() . "\<CR>"
+    " return neocomplete#close_popup() . "\<CR>"
     " For no inserting <CR> key.
-    "return pumvisible() ? neocomplete#close_popup() : "\<CR>"
+    return pumvisible() ? neocomplete#close_popup() : "\<CR>"
   endfunction
   " <TAB>: completion.
   inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
@@ -898,18 +900,8 @@ function! s:bundle.hooks.on_source(bundle)
   " Close popup by <Space>.
   "inoremap <expr><Space> pumvisible() ? neocomplete#close_popup() : "\<Space>"
 
-  " For cursor moving in insert mode(Not recommended)
-  "inoremap <expr><Left>  neocomplete#close_popup() . "\<Left>"
-  "inoremap <expr><Right> neocomplete#close_popup() . "\<Right>"
-  "inoremap <expr><Up>    neocomplete#close_popup() . "\<Up>"
-  "inoremap <expr><Down>  neocomplete#close_popup() . "\<Down>"
-  " Or set this.
-  "let g:neocomplete#enable_cursor_hold_i = 1
-  " Or set this.
-  "let g:neocomplete#enable_insert_char_pre = 1
-
   " AutoComplPop like behavior.
-  "let g:neocomplete#enable_auto_select = 1
+  let g:neocomplete#enable_auto_select = 1
 
   " Shell like behavior(not recommended).
   "set completeopt+=longest
@@ -937,7 +929,7 @@ function! s:bundle.hooks.on_source(bundle)
   " let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 
   let g:neocomplete#sources#omni#input_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
-endfunction
+" endfunction
 "}}}
 
 " neosnippet"{{{
@@ -965,8 +957,8 @@ function! s:bundle.hooks.on_source(bundle)
 
   let g:neosnippet#snippets_directory='~/.vim/snippets'
 
-  autocmd BufEnter * if exists("b:rails_root") && !(expand("%") =~ "\.erb$") | NeoComplCacheSetFileType ruby.rails | endif
-  autocmd BufEnter * if (expand("%") =~ "_spec\.rb$") || (expand("%") =~ "^spec.*\.rb$") | NeoComplCacheSetFileType ruby.rspec | endif
+  " autocmd BufEnter * if exists("b:rails_root") && !(expand("%") =~ "\.erb$") | NeoComplCacheSetFileType ruby.rails | endif
+  " autocmd BufEnter * if (expand("%") =~ "_spec\.rb$") || (expand("%") =~ "^spec.*\.rb$") | NeoComplCacheSetFileType ruby.rspec | endif
 
   " ========================
   " neocomplcache-snippets-complete
@@ -1028,16 +1020,18 @@ function! s:bundle.hooks.on_source(bundle)
   let g:unite_enable_start_insert=1
   " let g:unite_enable_split_vertically = 1 "縦分割で開く
   " let g:unite_winwidth = 40 "横幅40で開く
-  let g:unite_split_rule='botright'
+  " let g:unite_split_rule='botright'
 
   let g:unite_source_rec_max_cache_files = 5000
   " let g:unite_source_rec_min_cache_files = 1
 
+  call unite#custom#source( 'buffer', 'converters', ['converter_file_directory'])
   call unite#custom#source('file_rec/async', 'ignore_pattern', '\(png\|gif\|jpeg\|jpg\|.git\)$')
   let g:unite_source_history_yank_enable = 1
 
   " Use ag in unite grep source
   if executable('ag')
+    let g:unite_source_rec_async_command='ag --nocolor --nogroup -g ""'
     let g:unite_source_grep_command       = 'ag'
     let g:unite_source_grep_default_opts  = '--nocolor --nogroup --column --hidden'
           \ . " --ignore='*.vimsessions*'"
@@ -1095,7 +1089,10 @@ nnoremap <silent> <Leader>VGR :<C-u>Unite -no-quit vimgrep<CR>
 
 " like ctrlp
 " nnoremap <silent> <Leader>p :<C-u>Unite -buffer-name=files -start-insert buffer file_rec/async:!<cr>
-nnoremap <silent> <Leader>p :<C-u>Unite -buffer-name=files -start-insert buffer file_rec/async:!<cr>
+" nnoremap <silent> <Leader>p :<C-u>Unite -buffer-name=files -start-insert buffer file_rec/async:!<cr>
+nnoremap <silent> <Leader>e :<C-u>Unite -buffer-name=files -start-insert buffer file_rec/async:!<cr>
+nnoremap <silent> <Leader>s :split<CR> :<C-u>Unite -buffer-name=files -start-insert buffer  file_rec/async:!<cr>
+nnoremap <silent> <Leader>v :vsplit<CR> :<C-u>Unite -buffer-name=files -start-insert buffer file_rec/async:!<cr>
 
 " rails controller
 nnoremap <silent> <Leader>rc :<C-u>Unite rails/controller<CR>
@@ -1123,6 +1120,9 @@ nnoremap <silent> <Leader>rb :<C-u>Unite ref/refe<CR>
 " phpマニアル
 " nnoremap <silent> <Leader>ph :<C-u>Unite ref/phpmanual<CR>
 
+" reset
+nnoremap <space>r <Plug>(unite_restart)
+
 "uniteを開いている間のキーマッピング
 augroup vimrc
   autocmd FileType unite call s:unite_my_settings()
@@ -1149,36 +1149,6 @@ function! s:unite_my_settings()
 endfunction
 "}}}
 
-" Alignta"{{{
-" let g:unite_source_alignta_preset_arguments = [
-"       \ ["Align at '='", '=>\='],
-"       \ ["Align at ':'", '01 :'],
-"       \ ["Align at '|'", '|'   ],
-"       \ ["Align at ')'", '0 )' ],
-"       \ ["Align at ']'", '0 ]' ],
-"       \ ["Align at '}'", '}'   ],
-"       \]
-"
-" let s:comment_leadings = '^\s*\("\|#\|/\*\|//\|<!--\)'
-" let g:unite_source_alignta_preset_options = [
-"       \ ["Justify Left",      '<<' ],
-"       \ ["Justify Center",    '||' ],
-"       \ ["Justify Right",     '>>' ],
-"       \ ["Justify None",      '==' ],
-"       \ ["Shift Left",        '<-' ],
-"       \ ["Shift Right",       '->' ],
-"       \ ["Shift Left  [Tab]", '<--'],
-"       \ ["Shift Right [Tab]", '-->'],
-"       \ ["Margin 0:0",        '0'  ],
-"       \ ["Margin 0:1",        '01' ],
-"       \ ["Margin 1:0",        '10' ],
-"       \ ["Margin 1:1",        '1'  ],
-"       \
-"       \ 'v/' . s:comment_leadings,
-"       \ 'g/' . s:comment_leadings,
-"       \]
-" unlet s:comment_leadings
-"}}}
 
 " VimFiler"{{{
 " vimデフォルトのエクスプローラーをVimFilerに置き換える
@@ -1195,7 +1165,7 @@ function! s:my_vimfiler_settings()
 endfunction
 
 " <Leader>eで現在開いているバッファのディレクトリを開く
-nnoremap <silent> <Leader>e :<C-u>VimFilerBufferDir<CR>
+" nnoremap <silent> <Leader>e :<C-u>VimFilerBufferDir<CR>
 
 " nnoremap <space>f :VimFiler -buffer-name=explorer -split -simple -winwidth=45 -toggle -no-quit<CR>
 nnoremap <space>f :VimFilerExplorer -direction=botright<CR>
@@ -1353,8 +1323,8 @@ let g:ctrlp_prompt_mappings = {
 "}}}
 
 " vim-gitgutter"{{{
-let g:gitgutter_enabled = 0
-let g:gitgutter_highlight_lines = 1
+let g:gitgutter_enabled = 1
+" let g:gitgutter_highlight_lines = 1
 nmap gh <Plug>GitGutterNextHunk
 nmap gH <Plug>GitGutterPrevHunk
 nnoremap <silent> <Leader>gg :<C-u>GitGutterToggle<CR>
@@ -1378,7 +1348,7 @@ nmap s <Plug>(easymotion-s2)
 "}}}
 
 " vim-over"{{{
-nnoremap <silent> <Leader>s :OverCommandLine<CR>%s/
+nnoremap <space>s :OverCommandLine<CR>%s/
 "}}}
 
 " startify"{{{
@@ -1421,7 +1391,8 @@ nmap <Leader>a <Plug>(EasyAlign)
 "}}}
 
 " previm {{{
-let g:previm_open_cmd = 'open -a Google\ Chrome'
+" let g:previm_open_cmd = 'open -a Google\ Chrome'
+let g:previm_open_cmd = 'open -a Firefox'
 " }}}
 
 " memolist {{{

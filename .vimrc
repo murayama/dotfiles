@@ -1,6 +1,8 @@
 set nocompatible
-" set rtp+=$GOROOT/misc/vim
-" exe "set rtp+=".globpath($GOPATH, "src/github.com/nsf/gocode/vim")
+" set rtp+=$GOROOT/misc/vi
+exe "set rtp+=".globpath($GOPATH, "src/github.com/nsf/gocode/vim")
+exe "set rtp+=".globpath($GOPATH, "src/github.com/mattn/gom/misc/vim")
+autocmd Filetype go SetGomEnv
 
 " auto encoding {{{
 set encoding=utf-8    " デフォルトエンコーディング
@@ -67,6 +69,7 @@ endif
 "}}}
 
 " NeoBundle {{{
+
 if has('vim_starting')
   set runtimepath+=~/.vim/neobundle.vim/
 endif
@@ -97,22 +100,21 @@ NeoBundle 'vim-ruby/vim-ruby'
 NeoBundle 'tpope/vim-rails'
 NeoBundle 'tpope/vim-endwise'
 NeoBundle 'ruby-matchit'
-NeoBundle 'taichouchou2/vim-rsense'
+" NeoBundle 'taichouchou2/vim-rsense'
 NeoBundle 'skwp/vim-rspec'
 NeoBundle 'romanvbabenko/rails.vim'
 NeoBundle 'slim-template/vim-slim'
 
 NeoBundle 'thinca/vim-ref.git'
 
-NeoBundle 'ujihisa/neco-look'
 
 " NeoBundle 'YankRing.vim'
 NeoBundle 'LeafCage/yankround.vim'
 NeoBundle 'matchit.zip'
 NeoBundle 'thinca/vim-quickrun'
-" NeoBundle 'vim-scripts/AnsiEsc.vim'
+NeoBundle 'vim-scripts/AnsiEsc.vim'
 NeoBundle 'sudo.vim'
-" NeoBundle 'AutoClose'
+" NeoBundle 'Townk/vim-autoclose'
 NeoBundle 'scrooloose/syntastic'
 NeoBundle 'tComment'
 NeoBundle 'tpope/vim-markdown'
@@ -125,6 +127,10 @@ NeoBundle 'Yggdroot/indentLine'
 NeoBundle 'osyo-manga/vim-over'
 NeoBundle 'junegunn/vim-easy-align'
 NeoBundle 'kana/vim-smartword'
+NeoBundle 'haya14busa/incsearch.vim'
+NeoBundle 'haya14busa/incsearch-fuzzy.vim'
+NeoBundle 'haya14busa/incsearch-easymotion.vim'
+" NeoBundle 'bronson/vim-trailing-whitespace'
 
 " text object
 NeoBundle 'tpope/vim-surround'
@@ -142,7 +148,7 @@ NeoBundle 'rking/ag.vim'
 
 NeoBundle 'itchyny/lightline.vim'
 
-NeoBundle 'mhinz/vim-startify'
+" NeoBundle 'mhinz/vim-startify'
 
 NeoBundle 'AndrewRadev/linediff.vim'
 NeoBundle 'AndrewRadev/switch.vim'
@@ -211,7 +217,8 @@ NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'gitv'
 NeoBundle 'extradite.vim'
 " NeoBundle 'git-commit'
-NeoBundle 'sgur/vim-gitgutter'
+" NeoBundle 'sgur/vim-gitgutter'
+NeoBundle 'airblade/vim-gitgutter'
 " NeoBundle 'tyru/open-browser.vim'
 " NeoBundle 'tyru/open-browser-github.vim'
 NeoBundle 'rhysd/committia.vim'
@@ -227,6 +234,9 @@ NeoBundle 'kchmck/vim-coffee-script.git'
 NeoBundle 'digitaltoad/vim-jade'
 NeoBundle 'briancollins/vim-jst'
 NeoBundle 'wavded/vim-stylus'
+NeoBundle 'GutenYe/json5.vim'
+NeoBundle 'nicklasos/vim-jsx-riot'
+NeoBundleLazy 'othree/yajs.vim', {'autoload':{'filetypes':['javascript']}}
 
 " php
 " NeoBundle 'https://github.com/beyondwords/vim-twig.git'
@@ -236,6 +246,22 @@ NeoBundle 'wavded/vim-stylus'
 NeoBundle 'mattn/emmet-vim'
 " NeoBundle 'html5.vim'
 NeoBundle 'https://github.com/hail2u/vim-css3-syntax.git'
+NeoBundle 'cakebaker/scss-syntax.vim'
+
+NeoBundle 'fatih/vim-go'
+
+NeoBundle 'editorconfig/editorconfig-vim'
+
+" actionscript syntax
+NeoBundle 'jeroenbourgois/vim-actionscript'
+
+" ansible yaml syntax
+NeoBundle 'chase/vim-ansible-yaml'
+
+" jinja2 syntax
+NeoBundle 'Glench/Vim-Jinja2-Syntax'
+
+NeoBundle 'nicklasos/vim-jsx-riot'
 
 syntax enable
 filetype plugin indent on
@@ -312,12 +338,12 @@ set magic                       " 正規表現使用時に magic モードにす
 set list                        " タブや改行などを別の文字に区別する
 " set listchars=tab:»-,trail:-,extends:»,precedes:«,nbsp:%,eol:↲
 if !has('multi_byte')
-  set listchars=tab:^I,extends:>,precedes:<,nbsp:%
+  set listchars=tab:^I,extends:>,precedes:<,nbsp:%,trail:.
 else
   try
-    set listchars=tab:▸\ ,extends:»,precedes:«,nbsp:%
+    set listchars=tab:▸\ ,extends:»,precedes:«,nbsp:%,trail:.
   catch
-    set listchars=tab:^I,extends:>,precedes:<,nbsp:%
+    set listchars=tab:^I,extends:>,precedes:<,nbsp:%,trail:.
     let g:vimfiler_tree_leaf_icon = '|'
     let g:vimfiler_tree_opened_icon = '-'
     let g:vimfiler_tree_closed_icon = '+'
@@ -348,6 +374,22 @@ set backupdir=~/tmp/backup
 set mouse=a
 set ttymouse=xterm2
 
+let g:Foldtext_enable=1
+set foldmethod=syntax
+set foldlevel=3
+set foldnestmax=5
+set foldcolumn=4
+
+augroup foldmethod-syntax
+  autocmd!
+  autocmd InsertEnter * if &l:foldmethod ==# 'syntax'
+  \                   |   setlocal foldmethod=manual
+  \                   | endif
+  autocmd InsertLeave * if &l:foldmethod ==# 'manual'
+  \                   |   setlocal foldmethod=syntax
+  \                   | endif
+augroup END
+
 " auto write
 " set autowrite
 " set updatetime=500
@@ -367,15 +409,15 @@ syntax on
 autocmd! BufRead,BufNewFile *.htmlt set filetype=smarty
 
 " colorscheme molokai
-colorscheme hybrid
+" colorscheme hybrid
 " colorscheme railscasts
-" colorscheme jellybeans
-" hi Normal ctermbg=none
+colorscheme jellybeans
 
 " PHP code fold
 " let php_folding=1
 " au Syntax php set fdm=syntax foldlevel=5
 " au Syntax html set fdm=indent foldlevel=4
+hi FoldColumn ctermfg=Black
 
 autocmd! BufNewFile,BufRead *.php set ts=2 sw=2 expandtab
 autocmd! BufNewFile,BufRead *.php5 set ts=2 sw=2 noexpandtab
@@ -387,12 +429,20 @@ autocmd! BufNewFile,BufRead *.php5 set ts=2 sw=2 noexpandtab
 " au Syntax html set fdm=indent foldlevel=3
 " set foldlevel=3
 
-autocmd! BufNewFile,BufRead *.rb set ts=2 sw=2 fenc=utf-8 expandtab
-autocmd! BufNewFile,BufRead *.js set ts=2 sw=2 fenc=utf-8 expandtab
+autocmd! BufNewFile,BufRead *.html set ts=4 sw=4 fenc=utf-8 expandtab fdm=indent
+autocmd! BufNewFile,BufRead *.erb set ts=2 sw=2 fenc=utf-8 expandtab fdm=indent
+autocmd! BufNewFile,BufRead *.rb set ts=2 sw=2 fenc=utf-8 expandtab fdm=indent
+autocmd! BufNewFile,BufRead *.js set ts=2 sw=2 fenc=utf-8 expandtab fdm=indent
+
+autocmd! BufNewFile,BufRead *.scss set filetype=scss.css fdm=indent
+
+autocmd! BufNewFile,BufRead *.tag set ft=javascript fdm=indent
 
 " vim fold
 let vim_folding=1
 au Syntax vim set fdm=marker foldlevel=0
+
+au Syntax sshconfig set fdm=marker foldlevel=0
 
 
 "}}}
@@ -544,6 +594,9 @@ cmap w!! w !sudo tee > /dev/null %
 " inoremap ] ]<left>
 " inoremap ) )<left>
 " inoremap > ><left>
+" inoremap {<Enter> {}<Left><CR><ESC><S-o>
+" inoremap [<Enter> []<Left><ESC><S-o>
+" inoremap (<Enter> ()<Left><ESC><S-o>
 
 " mark settings {{{
 nnoremap [Mark] <Nop>
@@ -651,18 +704,21 @@ let g:lightline = {
       \     'mode': 'MyMode',
       \     'syntastic': 'SyntasticStatuslineFlag',
       \     'charcode': 'MyCharCode',
-      \     'gitgutter': 'MyGitGutter',
+      \     'gitgutter': 'MyGitGutter'
       \   },
-      \   'separator': {'left': '⮀', 'right': '⮂'},
-      \   'subseparator': {'left': '⮁', 'right': '⮃'},
       \ }
+
+if has('multi_byte')
+    let g:lightline.separator = {'left': '', 'right':''}
+    let g:lightline.subseparator = {'left': '', 'right': ''}
+endif
 
 function! MyModified()
   return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
 endfunction
 
 function! MyReadonly()
-  return &ft !~? 'help\|vimfiler\|gundo' && &ro ? '⭤' : ''
+  return &ft !~? 'help\|vimfiler\|gundo' && &ro ? '' : ''
 endfunction
 
 function! MyFilename()
@@ -678,7 +734,7 @@ function! MyFugitive()
   try
     if &ft !~? 'vimfiler\|gundo' && exists('*fugitive#head')
       let _ = fugitive#head()
-      return strlen(_) ? '⭠ '._ : ''
+      return strlen(_) ? ' ' ._ : ''
     endif
   catch
   endtry
@@ -760,6 +816,7 @@ function! MyCharCode()
   return "'". char ."' ". nr
 endfunction
 "}}}
+"
 
 " Zen-Coding setting {{{
 "let g:user_zen_expandabbr_key='<c-e>'
@@ -809,8 +866,8 @@ autocmd User Rails call SetUpRailsSetting()
 "}}}
 
 " rsense {{{
-let g:rsenseUseOmniFunc = 1
-let g:rsenseHome = expand('~/.vim/ref/rsense-0.3')
+" let g:rsenseUseOmniFunc = 1
+" let g:rsenseHome = expand('~/.vim/ref/rsense-0.3')
 
 " function! SetUpRubySetting()
 "   setlocal completefunc=RSenseCompleteFunction
@@ -889,13 +946,23 @@ au FileType php vmap <buffer><C-_>c :TCommentAs php_surround<CR>
     " For no inserting <CR> key.
     return pumvisible() ? neocomplete#close_popup() : "\<CR>"
   endfunction
+
+  " inoremap <silent> <Esc> <C-r>=<SID>my_esc_function()<CR>
+  " function! s:my_esc_function()
+  "   return pumvisible() ? neocomplete#close_popup() : "\<Esc>"
+  " endfunction
+
   " <TAB>: completion.
   inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
   " <C-h>, <BS>: close popup and delete backword char.
   inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
   inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
   inoremap <expr><C-y>  neocomplete#close_popup()
-  inoremap <expr><C-e>  neocomplete#cancel_popup()
+  " inoremap <expr><C-e>  neocomplete#cancel_popup()
+  inoremap <silent> <C-e> <C-r>=<SID>my_ctle_function()<CR>
+  function! s:my_ctle_function()
+    return pumvisible() ? neocomplete#cancel_popup() : "\<end>"
+  endfunction
 
   " Close popup by <Space>.
   "inoremap <expr><Space> pumvisible() ? neocomplete#close_popup() : "\<Space>"
@@ -928,7 +995,8 @@ au FileType php vmap <buffer><C-_>c :TCommentAs php_surround<CR>
   " https://github.com/c9s/perlomni.vim
   " let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 
-  let g:neocomplete#sources#omni#input_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
+  " let g:neocomplete#sources#omni#input_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
+  let g:neocomplete#sources#omni#input_patterns.ruby = ''
 " endfunction
 "}}}
 
@@ -1168,7 +1236,19 @@ endfunction
 " nnoremap <silent> <Leader>e :<C-u>VimFilerBufferDir<CR>
 
 " nnoremap <space>f :VimFiler -buffer-name=explorer -split -simple -winwidth=45 -toggle -no-quit<CR>
-nnoremap <space>f :VimFilerExplorer -direction=botright<CR>
+" nnoremap <space>f :VimFilerExplorer -direction=botright -project<CR>
+nnoremap <space>f :VimFilerExplorer -direction=topleft -project<CR>
+" autocmd VimEnter * VimFilerExplorer -direction=botright -project
+
+function! s:vimfiler_width_expr()
+  let w = vimfiler#get_context().winwidth
+  return w == winwidth(0) ? w * 2 : w
+endfunction
+autocmd FileType vimfiler
+      \ nmap <buffer> <SID>(vimfiler_redraw_screen) <Plug>(vimfiler_redraw_screen)|
+      \ nnoremap <buffer><script> <C-W>> 35<C-W>><SID>(vimfiler_redraw_screen)|
+      \ nnoremap <buffer><script> <C-W>< 35<C-W><<SID>(vimfiler_redraw_screen)|
+      \ nnoremap <buffer><script> <C-W>\| 70<C-W>\|<SID>(vimfiler_redraw_screen)
 
 let my_action = { 'is_selectable' : 1 }
 function! my_action.func(candidates)
@@ -1226,14 +1306,23 @@ nmap <C-n> <Plug>(yankround-next)
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
-let g:syntastic_enable_signs = 1
+let g:syntastic_always_populate_loc_list = 1
+" let g:syntastic_enable_signs = 1
 let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
 let g:syntastic_mode_map = {
  \ 'mode' : 'active',
  \ 'active_filetypes' : [],
  \ 'passive_filetypes' : ['html','php','ruby']
  \}
 let g:syntastic_javascript_checkers = ['jshint']
+let g:syntastic_eruby_ruby_quiet_messages =
+    \ {'regex': 'possibly useless use of a variable in void context'}
+let g:syntastic_scss_sass_quiet_messages = 
+    \ {'regex': '\vUndefined (mixin|variable)|File to import not found or unreadable'}
+    " \ {'regex': 'File to import not found or unreadable'}
+    " \ {'regex': 'Undefined \(mixin\|variable\)'}
 " let g:syntastic_phpcs_disable = 1
 "}}}
 
@@ -1323,15 +1412,18 @@ let g:ctrlp_prompt_mappings = {
 "}}}
 
 " vim-gitgutter"{{{
-let g:gitgutter_enabled = 1
+" let g:gitgutter_enabled = 1
 " let g:gitgutter_highlight_lines = 1
 nmap gh <Plug>GitGutterNextHunk
 nmap gH <Plug>GitGutterPrevHunk
 nnoremap <silent> <Leader>gg :<C-u>GitGutterToggle<CR>
 nnoremap <silent> <Leader>gl :<C-u>GitGutterLineHighlightsToggle<CR>
-let g:gitgutter_sign_added = '✚'
-let g:gitgutter_sign_modified = '➜'
-let g:gitgutter_sign_removed = '✘'
+" let g:gitgutter_sign_added = '+'
+" let g:gitgutter_sign_modified = '→'
+" let g:gitgutter_sign_removed = 'x'
+" let g:gitgutter_sign_added = '✚'
+" let g:gitgutter_sign_modified = '➜'
+" let g:gitgutter_sign_removed = '✘'
 "}}}
 
 " gundo"{{{
@@ -1342,6 +1434,7 @@ nnoremap <space>u :<C-U>GundoToggle<CR>
 let g:EasyMotion_keys='hjklasdfgyuiopqwertnmzxcvbHJKLASDFGYUIOPQWERTNMZXCVB'
 let g:EasyMotion_leader_key="'"
 let g:EasyMotion_grouping=1
+let g:EasyMotion_do_mapping = 0
 hi EasyMotionTraget ctermbg=none ctermfg=red
 hi EasyMotionShade ctermbg=none ctermfg=blue
 nmap s <Plug>(easymotion-s2)
@@ -1353,14 +1446,14 @@ nnoremap <space>s :OverCommandLine<CR>%s/
 
 " startify"{{{
 " startifyのヘッダー部分に表示する文字列を設定する(dateコマンドを実行して日付を設定している)
-let g:startify_custom_header =
-  \ map(split(system('date'), '\n'), '"   ". v:val') + ['','']
-" デフォルトだと、最近使ったファイルの先頭は数字なので、使用するアルファベットを指定
-let g:startify_custom_indices = ['a', 's', 'd', 'f', 'g', 'h', 'r', 'i', 'o', 'b']
-" よく使うファイルをブックマークとして登録しておく
-let g:startify_bookmarks = [
-  \ '~/.vimrc'
-  \ ]
+" let g:startify_custom_header =
+"   \ map(split(system('date'), '\n'), '"   ". v:val') + ['','']
+" " デフォルトだと、最近使ったファイルの先頭は数字なので、使用するアルファベットを指定
+" let g:startify_custom_indices = ['a', 's', 'd', 'f', 'g', 'h', 'r', 'i', 'o', 'b']
+" " よく使うファイルをブックマークとして登録しておく
+" let g:startify_bookmarks = [
+"   \ '~/.vimrc'
+"   \ ]
 "}}}
 
 " switch vim"{{{
@@ -1387,18 +1480,18 @@ nmap e   <Plug>(smartword-e)
 
 " vim-easy-align {{{
 vmap <Enter> <Plug>(EasyAlign)
-nmap <Leader>a <Plug>(EasyAlign)
+" nmap <Leader>a <Plug>(EasyAlign)
 "}}}
 
 " previm {{{
-" let g:previm_open_cmd = 'open -a Google\ Chrome'
-let g:previm_open_cmd = 'open -a Firefox'
+let g:previm_open_cmd = 'open -a Google\ Chrome'
+" let g:previm_open_cmd = 'open -a Firefox'
 " }}}
 
 " memolist {{{
-nnoremap <Leader>mn  :MemoNew<CR>
-nnoremap <Leader>ml  :MemoList<CR>
-nnoremap <Leader>mg  :MemoGrep<CR>
+nnoremap <Leader>mn  :split<CR> :<C-u>MemoNew<CR>
+nnoremap <Leader>ml  :split<CR> :<C-u>MemoList<CR>
+nnoremap <Leader>mg  :split<CR> :<C-u>MemoGrep<CR>
 let g:memolist_memo_suffix = 'md'
 let g:memolist_path = '~/Dropbox/memo/'
 let g:memolist_template_dir_path = '~/Dropbox/memo'
@@ -1407,4 +1500,28 @@ let g:memolist_unite_source = "file_rec"
 let g:memolist_unite_option = "-start-insert"
 " }}}
 
+" incsearch {{{
+let g:incsearch#auto_nohlsearch = 1
+map /  <Plug>(incsearch-forward)
+map ?  <Plug>(incsearch-backward)
+map g/ <Plug>(incsearch-stay)
+map n  <Plug>(incsearch-nohl-n)
+map N  <Plug>(incsearch-nohl-N)
+map *  <Plug>(incsearch-nohl-*)
+map #  <Plug>(incsearch-nohl-#)
+map g* <Plug>(incsearch-nohl-g*)
+map g# <Plug>(incsearch-nohl-g#)
+" fuzzy search
+" map z/ <Plug>(incsearch-fuzzy-/)
+" map z? <Plug>(incsearch-fuzzy-?)
+" map zg/ <Plug>(incsearch-fuzzy-stay)
+" fuzzy spell search
+" map z/ <Plug>(incsearch-fuzzyspell-/)
+" map z? <Plug>(incsearch-fuzzyspell-?)
+" map zg/ <Plug>(incsearch-fuzzyspell-stay)
+" with easy motion
+map z/ <Plug>(incsearch-easymotion-/)
+map z? <Plug>(incsearch-easymotion-?)
+map zg/ <Plug>(incsearch-easymotion-stay)
+" }}}
 "}}}

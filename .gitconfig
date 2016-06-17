@@ -11,9 +11,9 @@
 [color]
 	ui = auto
 [pager]
-  log = diff-highlight | less
-  show = diff-highlight | less
-  diff = diff-highlight | less
+  # log = diff-highlight | less
+  # show = diff-highlight | less
+  # diff = diff-highlight | less
 
 #[diff]
 #  external = git_diff_wrapper
@@ -25,13 +25,18 @@
 	br = branch -v
   sb = show-branch
 	ci = commit --allow-empty
+  cia = commit --amend
 	st = !git status -s -b && echo --- branch && git branch -v && echo --- stash && git stash list | cat
   logp = log -p
   logs = log --stat
-  logone = log --pretty=oneline
+  logone = log --decorate --pretty=oneline
   f = flow
   stash = stash -u -k
   stashpop = stash pop --index
+  remotes = remote -v
+  newbrunch = checkout -b
+  delbrunch = branch -d
+  pruneremote = remote prune
 [i18n]
   commitencoding = utf-8
   logoutputencoding = utf-8
@@ -47,10 +52,14 @@
 	tool = vimdiff
   algorithm = histogram
 [merge]
-	tool = vimdiff
+	tool = vimdiff2
   conflictstyle = diff3
 	; ff = false
 ; [pull]
 ; 	rebase = true
 [hub]
 	host = git.logiclogic.jp
+[ghq]
+  root = ~/project
+[push]
+	default = matching

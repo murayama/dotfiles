@@ -276,8 +276,6 @@ function git_diff() {
   git diff --no-ext-diff -w "$@" | vim -R -
 }
 
-### Added by the Heroku Toolbelt
-export PATH="/usr/local/heroku/bin:$PATH"
 
 alias php="/usr/local/php5/bin/php"
 
@@ -289,3 +287,74 @@ if [ -f /Applications/MacVim.app/Contents/MacOS/Vim ]; then
   alias vim='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'
 fi
 
+# peco
+function peco-lscd {
+  cd "$( ls -1d */ | peco )"
+}
+zle -N peco-lscd
+bindkey '^l' peco-lscd
+
+function peco-src {
+  local selected_dir=$(ghq list -p | peco --query "$LBUFFER")
+  if [ -n "$selected_dir" ]; then
+    BUFFER="cd ${selected_dir}"
+    zle accept-line
+  fi
+  zle clear-screen
+}
+zle -N peco-src
+bindkey '^p' peco-src
+
+function peco-select-history() {
+    local tac
+    if which tac > /dev/null; then
+        tac="tac"
+    else
+        tac="tail -r"
+    fi
+    BUFFER=$(\history -n 1 | \
+        eval $tac | \
+        peco --query "$LBUFFER")
+    CURSOR=$#BUFFER
+    zle clear-screen
+}
+zle -N peco-select-history
+bindkey '^r' peco-select-history
+
+function peco-pkill() {
+    for pid in `ps aux | peco | awk '{ print $2 }'`
+    do
+        kill $pid
+        echo "Killed ${pid}"
+    done
+}
+zle -N peco-pkill
+alias pk="peco-pkill"
+
+fpath=(/usr/local/share/zsh-completions $fpath)
+### Added by the Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"
+export PATH=$HOME/.nodebrew/current/bin:$PATH
+#=============================
+# rbenv
+#=============================
+if [ -d ${HOME}/.rbenv  ] ; then
+  PATH=${HOME}/.rbenv/bin:${PATH}
+  export PATH
+  eval "$(rbenv init -)"
+  source ~/.rbenv/completions/rbenv.zsh
+fi
+
+if [ -d ${HOME}/.go ] ; then
+  PATH=${HOME}/.go/bin:${PATH}
+  export GOPATH=~/.go
+  export PATH
+fi
+
+# swift
+export PATH=/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin:$PATH
+export PATH="$HOME/Library/Python/2.7/bin:$PATH"
+#export EDITOR=/Applications/MacVim.app/Contents/MacOS/Vim
+#alias vi='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"' 
+#alias vim='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'
+export LC_ALL='ja_JP.UTF-8'

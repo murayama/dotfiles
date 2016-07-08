@@ -1,0 +1,370 @@
+[[plugins]]
+repo = 'Shougo/dein.vim'
+
+[[plugins]]
+repo = 'Shougo/vimproc'
+hook_post_update = '''
+  if dein#util#_is_windows()
+    let cmd = 'tools\\update-dll-mingw'
+  elseif dein#util#_is_cygwin()
+    let cmd = 'make -f make_cygwin.mak'
+  elseif executable('gmake')
+    let cmd = 'gmake'
+  else
+    let cmd = 'make'
+  endif
+  let g:dein#plugin.build = cmd
+'''
+
+[[plugins]]
+repo = 'Shougo/vimfiler'
+depends = 'unite.vim'
+hook_add = "source ~/.vim/rc/plugins/vimfiler.rc.vim"
+
+# colorschema
+[[plugins]]
+repo = 'nanotech/jellybeans.vim'
+hook_add = '''
+au VimEnter * nested colorscheme jellybeans
+'''
+
+[[plugins]]
+repo = 'vim-scripts/ruby-matchit'
+
+[[plugins]]
+repo = 'skwp/vim-rspec'
+
+# ruby
+[[plugins]]
+repo = 'vim-ruby/vim-ruby'
+on_map = '<Plug>'
+on_ft = 'ruby'
+hook_add = '''
+let g:rubycomplete_buffer_loading = 1
+let g:rubycomplete_classes_in_global = 1
+let g:rubycomplete_rails = 1
+'''
+
+[[plugins]]
+repo = 'romanvbabenko/rails.vim'
+
+[[plugins]]
+repo = 'slim-template/vim-slim'
+
+[[plugins]]
+repo = 'thinca/vim-ref.git'
+
+[[plugins]]
+repo = 'vim-scripts/matchit.zip'
+
+[[plugins]]
+repo = 'thinca/vim-quickrun'
+
+[[plugins]]
+repo = 'vim-scripts/AnsiEsc.vim'
+
+[[plugins]]
+repo = 'vim-scripts/sudo.vim'
+
+[[plugins]]
+repo = 'scrooloose/syntastic'
+hook_add = 'source ~/.vim/rc/plugins/syntastic.rc.vim'
+
+[[plugins]]
+repo = 'vim-scripts/tComment'
+hook_add = 'source ~/.vim/rc/plugins/tcomment.rc.vim'
+
+[[plugins]]
+repo = 'kannokanno/previm'
+hook_add = 'let g:previm_open_cmd = "open -a Google\ Chrome"'
+
+[[plugins]]
+repo = 'glidenote/memolist.vim'
+hook_add = '''
+nnoremap <Leader>mn  :split<CR> :<C-u>MemoNew<CR>
+nnoremap <Leader>ml  :split<CR> :<C-u>MemoList<CR>
+nnoremap <Leader>mg  :split<CR> :<C-u>MemoGrep<CR>
+let g:memolist_memo_suffix = 'md'
+let g:memolist_path = '~/Dropbox/memo/'
+let g:memolist_template_dir_path = '~/Dropbox/memo'
+let g:memolist_unite        = 1
+let g:memolist_unite_source = "file_rec"
+let g:memolist_unite_option = "-start-insert"
+'''
+
+[[plugins]]
+repo = 't9md/vim-textmanip'
+hook_add = '''
+" 選択したテキストの移動
+let g:textmanip_enable_mappings = 0
+xmap <C-j> <Plug>(textmanip-move-down)
+xmap <C-k> <Plug>(textmanip-move-up)
+xmap <C-h> <Plug>(textmanip-move-left)
+xmap <C-l> <Plug>(textmanip-move-right)
+
+" 行の複製
+xmap <Space>d <Plug>(textmanip-duplicate-down)
+nmap <Space>d <Plug>(textmanip-duplicate-down)
+xmap <Space>D <Plug>(textmanip-duplicate-up)
+nmap <Space>D <Plug>(textmanip-duplicate-up)
+'''
+
+[[plugins]]
+repo = 'Lokaltog/vim-easymotion'
+hook_add = '''
+let g:EasyMotion_keys='hjklasdfgyuiopqwertnmzxcvbHJKLASDFGYUIOPQWERTNMZXCVB'
+let g:EasyMotion_grouping=1
+let g:EasyMotion_do_mapping = 0
+hi EasyMotionTraget ctermbg=none ctermfg=red
+hi EasyMotionShade ctermbg=none ctermfg=blue
+nmap s <Plug>(easymotion-overwin-f2)
+'''
+
+[[plugins]]
+repo = 'Yggdroot/indentLine'
+hook_add = '''
+let g:indentLine_faster = 1
+let g:indentLine_color_term = 237
+'''
+
+[[plugins]]
+repo = 'osyo-manga/vim-over'
+hook_add = 'nnoremap <space>s :OverCommandLine<CR>%s/'
+
+[[plugins]]
+repo = 'junegunn/vim-easy-align'
+hook_add = 'vmap <Enter> <Plug>(EasyAlign)'
+
+[[plugins]]
+repo = 'kana/vim-smartword'
+hook_add = '''
+nmap w   <Plug>(smartword-w)
+nmap b   <Plug>(smartword-b)
+nmap e   <Plug>(smartword-e)
+'''
+
+[[plugins]]
+repo = 'haya14busa/incsearch.vim'
+hook_add = '''
+let g:incsearch#auto_nohlsearch = 1
+map /  <Plug>(incsearch-forward)
+map ?  <Plug>(incsearch-backward)
+map g/ <Plug>(incsearch-stay)
+map n  <Plug>(incsearch-nohl-n)
+map N  <Plug>(incsearch-nohl-N)
+map *  <Plug>(incsearch-nohl-*)
+map #  <Plug>(incsearch-nohl-#)
+map g* <Plug>(incsearch-nohl-g*)
+map g# <Plug>(incsearch-nohl-g#)
+" fuzzy search
+" map z/ <Plug>(incsearch-fuzzy-/)
+" map z? <Plug>(incsearch-fuzzy-?)
+" map zg/ <Plug>(incsearch-fuzzy-stay)
+" fuzzy spell search
+" map z/ <Plug>(incsearch-fuzzyspell-/)
+" map z? <Plug>(incsearch-fuzzyspell-?)
+" map zg/ <Plug>(incsearch-fuzzyspell-stay)
+" with easy motion
+map z/ <Plug>(incsearch-easymotion-/)
+map z? <Plug>(incsearch-easymotion-?)
+map zg/ <Plug>(incsearch-easymotion-stay)
+'''
+
+[[plugins]]
+depends = ['incsearch.vim']
+repo = 'haya14busa/incsearch-fuzzy.vim'
+
+[[plugins]]
+depends = ['incsearch.vim']
+repo = 'haya14busa/incsearch-easymotion.vim'
+
+# text object
+[[plugins]]
+repo = 'tpope/vim-surround'
+
+[[plugins]]
+repo = 'kana/vim-textobj-user'
+
+[[plugins]]
+repo = 'nelstrom/vim-textobj-rubyblock'
+
+[[plugins]]
+repo = 'kana/vim-textobj-line'
+
+[[plugins]]
+repo = 'kana/vim-textobj-function'
+
+[[plugins]]
+repo = 'terryma/vim-expand-region'
+
+[[plugins]]
+repo = 'kana/vim-textobj-entire'
+
+[[plugins]]
+repo = 'vim-scripts/camelcasemotion'
+
+[[plugins]]
+repo = 'rking/ag.vim'
+
+[[plugins]]
+repo = 'itchyny/lightline.vim'
+hook_add = 'source ~/.vim/rc/plugins/lightline.rc.vim'
+
+[[plugins]]
+repo = 'AndrewRadev/linediff.vim'
+
+[[plugins]]
+repo = 'AndrewRadev/switch.vim'
+hook_add = 'nnoremap <silent> <Leader>c :Switch<CR>'
+
+[[plugins]]
+repo = 'AndrewRadev/splitjoin.vim'
+
+[[plugins]]
+repo = 'Shougo/neomru.vim'
+
+[[plugins]]
+repo = 'Shougo/neosnippet-snippets'
+
+[[plugins]]
+repo = 'thinca/vim-qfreplace.git'
+
+[[plugins]]
+repo = 'tpope/vim-fugitive'
+hook_add = '''
+nnoremap <silent> <Leader>gd :<C-u>Gdiff<CR>
+nnoremap <silent> <Leader>gD :<C-u>Gdiff HEAD<CR>
+nnoremap <silent> <Leader>gs :<C-u>Gstatus<CR>
+nnoremap <silent> <Leader>ga :<C-u>Gwrite<CR>
+nnoremap <silent> <Leader>gc :<C-u>Gcommit<CR>
+nnoremap <silent> <Leader>gb :<C-u>Gblame<CR>
+nnoremap <silent> <Leader>gl :<C-u>Glog<CR>
+" extradite
+nnoremap <silent> <Leader>ge :<C-u>Extradite<CR>
+'''
+
+[[plugins]]
+repo = 'vim-scripts/gitv'
+hook_add = 'nnoremap <silent> <Leader>gh :<C-u>Gitv<CR>'
+
+[[plugins]]
+repo = 'vim-scripts/extradite.vim'
+
+[[plugins]]
+repo = 'airblade/vim-gitgutter'
+hook_add = '''
+nmap gh <Plug>GitGutterNextHunk
+nmap gH <Plug>GitGutterPrevHunk
+nnoremap <silent> <Leader>gg :<C-u>GitGutterToggle<CR>
+nnoremap <silent> <Leader>gl :<C-u>GitGutterLineHighlightsToggle<CR>
+'''
+
+[[plugins]]
+repo = 'rhysd/committia.vim'
+
+[[plugins]]
+repo = 'idanarye/vim-merginal'
+
+[[plugins]]
+repo = 'AndrewRadev/gapply.vim'
+
+[[plugins]]
+repo = 'pangloss/vim-javascript'
+
+[[plugins]]
+repo = 'vim-scripts/jQuery'
+
+[[plugins]]
+repo = 'kchmck/vim-coffee-script.git'
+
+[[plugins]]
+repo = 'digitaltoad/vim-jade'
+
+[[plugins]]
+repo = 'briancollins/vim-jst'
+
+[[plugins]]
+repo = 'wavded/vim-stylus'
+
+[[plugins]]
+repo = 'GutenYe/json5.vim'
+
+[[plugins]]
+repo = 'nicklasos/vim-jsx-riot'
+
+[[plugins]]
+repo = 'mattn/emmet-vim'
+
+[[plugins]]
+repo = 'hail2u/vim-css3-syntax'
+
+[[plugins]]
+repo = 'cakebaker/scss-syntax.vim'
+
+[[plugins]]
+repo = 'fatih/vim-go'
+
+[[plugins]]
+repo = 'editorconfig/editorconfig-vim'
+
+[[plugins]]
+repo = 'jeroenbourgois/vim-actionscript'
+
+[[plugins]]
+repo = 'chase/vim-ansible-yaml'
+
+[[plugins]]
+repo = 'Glench/Vim-Jinja2-Syntax'
+
+[[plugins]]
+repo = 'thinca/vim-unite-history'
+on_source = 'unite.vim'
+
+[[plugins]]
+repo = 'osyo-manga/unite-filetype'
+
+[[plugins]]
+repo = 'Shougo/unite-sudo'
+
+[[plugins]]
+repo = 'cespare/vim-toml'
+on_ft = 'toml'
+
+# unite
+[[plugins]]
+repo = 'Kocha/vim-unite-tig'
+
+[[plugins]]
+repo = 'basyura/unite-rails'
+
+[[plugins]]
+repo = 'Shougo/unite-outline'
+
+[[plugins]]
+repo = 'tacroe/unite-mark'
+
+[[plugins]]
+repo = 'tsukkee/unite-tag'
+
+[[plugins]]
+repo = 'sgur/unite-qf'
+
+[[plugins]]
+repo = 'ujihisa/unite-rake'
+
+[[plugins]]
+repo = 'koron/codic-vim'
+
+[[plugins]]
+repo = 'rhysd/unite-codic.vim'
+depends = ['unite.vim', 'codic-vim']
+
+[[plugins]]
+repo = 'ujihisa/neco-look'
+
+[[plugins]]
+repo = 'Shougo/neco-syntax'
+
+[[plugins]]
+repo = 'bronson/vim-trailing-whitespace'
+hook_add = 'let g:extra_whitespace_ignored_filetypes = ["vimfiler"]'

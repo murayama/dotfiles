@@ -1,15 +1,12 @@
 [core]
-	pager = lv -c
+  pager = lv -c
   editor = vim -c \"set fenc=utf-8\"
-  excludesfile = /fractal/home/n-murayama/.gitignore
   attributesfile = ~/.gitattributes_global
 [user]
-#	name = Norichika.Murayama
-#	email = mura869@gmail.com
   name = murayama
   email = murayama@logiclogic.jp
 [color]
-	ui = auto
+  ui = auto
 [pager]
   # log = diff-highlight | less
   # show = diff-highlight | less
@@ -20,13 +17,13 @@
 #[pager]
 #  diff =
 [alias]
-	graph = log --graph --all --pretty=format:'%Cgreen%h%Creset %cn %s %Cred%d%Creset'
-	co = checkout
-	br = branch -v
+  graph = log --graph --all --pretty=format:'%Cgreen%h%Creset %cn %s %Cred%d%Creset'
+  co = checkout
+  br = branch -v
   sb = show-branch
-	ci = commit --allow-empty
+  ci = commit --allow-empty
   cia = commit --amend
-	st = !git status -s -b && echo --- branch && git branch -v && echo --- stash && git stash list | cat
+  st = !git status -s -b && echo --- branch && git branch -v && echo --- stash && git stash list | cat
   logp = log -p
   logs = log --stat
   logone = log --decorate --pretty=oneline
@@ -43,23 +40,23 @@
 [http]
   sslVerify = false
 [difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
+  cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+  path = 
 [mergetool "sourcetree"]
-	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-	trustExitCode = true
+  cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+  trustExitCode = true
 [diff]
-	tool = vimdiff
+  tool = vimdiff
   algorithm = histogram
 [merge]
-	tool = vimdiff2
+  tool = vimdiff2
   conflictstyle = diff3
-	; ff = false
+  ; ff = false
 ; [pull]
 ; 	rebase = true
 [hub]
-	host = git.logiclogic.jp
+  host = git.logiclogic.jp
 [ghq]
   root = ~/project
 [push]
-	default = matching
+  default = matching

@@ -13,7 +13,7 @@ if &runtimepath !~# '/dein.vim'
 endif
 
 if dein#load_state(s:dein_dir)
-  call dein#begin(s:dein_dir)
+  call dein#begin(s:dein_dir, [expand('<sfile>')] + split(glob('~/.vim/rc/*.toml'), '\n'))
 
   " プラグインリストを収めた TOML ファイル
   let g:rc_dir    = expand('~/.vim/rc')
@@ -27,6 +27,8 @@ if dein#load_state(s:dein_dir)
   " 設定終了
   call dein#end()
   call dein#save_state()
+  " call dein#call_hook('source')
+  " call dein#call_hook('post_source')
 endif
 
 " vimprocだけは最初にインストールしてほしい
@@ -34,18 +36,11 @@ if dein#check_install(['vimproc'])
   call dein#install(['vimproc'])
 endif
 " もし、未インストールものものがあったらインストール
-if !has('vim_starting') && dein#check_install()
+"if !has('vim_starting') && dein#check_install()
+if dein#check_install()
   call dein#install()
 endif
 
 call map(dein#check_clean(), "delete(v:val, 'rf')")
 
-
-if has('vim_starting')
-  call dein#call_hook('source')
-  call dein#call_hook('post_source')
-
-  syntax enable
-  filetype plugin indent on
-endif
 " }}}

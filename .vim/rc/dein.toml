@@ -17,9 +17,33 @@ hook_post_update = '''
 '''
 
 [[plugins]]
+repo = 'Shougo/unite.vim'
+depends = 'neomru.vim'
+hook_add = "source ~/.vim/rc/plugins/unite.rc.vim"
+
+[[plugins]]
 repo = 'Shougo/vimfiler'
 depends = 'unite.vim'
 hook_add = "source ~/.vim/rc/plugins/vimfiler.rc.vim"
+
+[[plugins]]
+repo = 'scrooloose/nerdtree'
+hook_add = "source ~/.vim/rc/plugins/nerdtree.rc.vim"
+
+[[plugins]]
+repo = 'jistr/vim-nerdtree-tabs'
+depends = 'nerdtree'
+
+[[plugins]]
+repo = 'Xuyuanp/nerdtree-git-plugin'
+depends = 'nerdtree'
+
+[[plugins]]
+repo = 'rhysd/accelerated-jk'
+hook_add = '''
+nmap j <Plug>(accelerated_jk_gj)
+nmap k <Plug>(accelerated_jk_gk)
+'''
 
 # colorschema
 [[plugins]]
@@ -44,6 +68,9 @@ let g:rubycomplete_buffer_loading = 1
 let g:rubycomplete_classes_in_global = 1
 let g:rubycomplete_rails = 1
 '''
+
+[[plugins]]
+repo = 'todesking/ruby_hl_lvar.vim'
 
 [[plugins]]
 repo = 'romanvbabenko/rails.vim'
@@ -71,12 +98,8 @@ repo = 'scrooloose/syntastic'
 hook_add = 'source ~/.vim/rc/plugins/syntastic.rc.vim'
 
 [[plugins]]
-repo = 'vim-scripts/tComment'
-hook_add = 'source ~/.vim/rc/plugins/tcomment.rc.vim'
-
-[[plugins]]
 repo = 'kannokanno/previm'
-hook_add = 'let g:previm_open_cmd = "open -a Google\ Chrome"'
+hook_add = "let g:previm_open_cmd = 'open -a Google\ Chrome'"
 
 [[plugins]]
 repo = 'glidenote/memolist.vim'
@@ -305,6 +328,9 @@ repo = 'cakebaker/scss-syntax.vim'
 repo = 'fatih/vim-go'
 
 [[plugins]]
+repo = 'elixir-lang/vim-elixir'
+
+[[plugins]]
 repo = 'editorconfig/editorconfig-vim'
 
 [[plugins]]
@@ -329,6 +355,9 @@ repo = 'Shougo/unite-sudo'
 [[plugins]]
 repo = 'cespare/vim-toml'
 on_ft = 'toml'
+
+[[plugins]]
+repo = 'mustache/vim-mustache-handlebars'
 
 # unite
 [[plugins]]
@@ -366,5 +395,13 @@ repo = 'ujihisa/neco-look'
 repo = 'Shougo/neco-syntax'
 
 [[plugins]]
-repo = 'bronson/vim-trailing-whitespace'
-hook_add = 'let g:extra_whitespace_ignored_filetypes = ["vimfiler"]'
+repo = 'ntpeters/vim-better-whitespace'
+hook_add = '''
+let g:better_whitespace_filetypes_blacklist=['vimfiler', 'diff', 'gitcommit', 'unite', 'qf', 'help']
+'''
+
+[[plugins]]
+repo = 'tyru/caw.vim'
+
+[[plugins]]
+repo = 'sunaku/vim-ruby-minitest'

@@ -351,10 +351,15 @@ if [ -d ${HOME}/.go ] ; then
   export PATH
 fi
 
+if which exenv > /dev/null; then eval "$(exenv init -)"; fi
+
 # swift
 export PATH=/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin:$PATH
 export PATH="$HOME/Library/Python/2.7/bin:$PATH"
+export PATH="$HOME/.exenv/bin:$PATH"
 #export EDITOR=/Applications/MacVim.app/Contents/MacOS/Vim
 #alias vi='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"' 
 #alias vim='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'
 export LC_ALL='ja_JP.UTF-8'
+
+eval "$(direnv hook zsh)"

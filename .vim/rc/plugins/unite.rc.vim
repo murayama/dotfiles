@@ -64,3 +64,73 @@ function! s:unite_my_settings() abort
   nnoremap <silent><buffer><expr> p unite#smart_map('p', unite#do_action('preview'))
   inoremap <silent><buffer><expr> p unite#smart_map('p', unite#do_action('preview'))
 endfunction
+
+" タブ一覧
+nnoremap <silent> <Leader>t :<C-u>Unite tab -auto-resize -select=`tabpagenr()-1`<CR>
+" ウインドウ一覧
+nnoremap <silent> <Leader>w :<C-u>Unite window:all<CR>
+" バッファ一覧
+nnoremap <silent> <Leader>. :<C-u>Unite -quick-match buffer<CR>
+" ファイル一覧
+nnoremap <silent> <Leader>u :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
+nnoremap <silent> <Leader>f :<C-u>Unite -buffer-name=files file<CR>
+" ブックマーク一覧
+nnoremap <silent> <Leader>b :<C-u>Unite bookmark<CR>
+" 最近使用したファイル一覧
+nnoremap <silent> <Leader>r :<C-u>Unite file_mru<CR>
+" レジスタ一覧
+" nnoremap <silent> <Leader>y :<C-u>Unite -buffer-name=register register<CR>
+" nnoremap <silent> <Leader>y :<C-u>Unite history/yank<CR>
+nnoremap <silent> <Leader>y :<C-u>Unite -buffer-name=register -default-action=append register history/yank<CR>
+" 全部乗せ
+nnoremap <silent> <Leader>a :<C-u>Unite -buffer-name=files buffer file_mru bookmark file<CR>
+" ブックマークに追加
+" nnoremap <silent> <Leader>ua :<C-u>UniteBookmarkAdd<CR>
+" アウトライン
+nnoremap <silent> <Leader>o :<C-u>Unite outline -no-start-insert -resume<CR>
+nnoremap <silent> <Leader>O :<C-u>Unite outline -no-quit -no-start-insert -resume<CR>
+" マーク一覧
+nnoremap <silent> <Leader>m :<C-u>Unite -quick-match mark<CR>
+" ライン
+nnoremap <silent> <Leader>/ :<C-u>Unite line -buffer-name=search%`bufnr('%')`<CR>
+nnoremap <silent> <Leader>? :<C-u>Unite line -no-quit -buffer-name=search%`bufnr('%')`<CR>
+nnoremap <silent> * :<C-u>UniteWithCursorWord -buffer-name=search%`bufnr('%')` line:forward:wrap<CR>
+" quickfix
+nnoremap <silent> <Leader>qf :<C-u>Unite -no-quit qf<CR>
+" grep
+nnoremap <silent> <Leader>g :<C-u>Unite grep -buffer-name=grep`tabpagenr()` -auto-preview -resume<CR>
+nnoremap <silent> <Leader>G :<C-u>Unite grep -no-quit -buffer-name=grep`tabpagenr()` -auto-preview -resume<CR>
+" vimgrep
+nnoremap <silent> <Leader>vg :<C-u>Unite vimgrep -buffer-name=grep`tabpagenr()` -auto-preview -resume<CR>
+nnoremap <silent> <Leader>VG :<C-u>Unite vimgrep -no-quit -buffer-name=grep`tabpagenr()` -auto-preview -resume<CR>
+" Unite tig
+nnoremap <silent> <Leader>ut :<C-u>Unite tig -no-split<CR>
+
+" like ctrlp
+" nnoremap <silent> <Leader>p :<C-u>Unite -buffer-name=files -start-insert buffer file_rec/async:!<cr>
+" nnoremap <silent> <Leader>p :<C-u>Unite -buffer-name=files -start-insert buffer file_rec/async:!<cr>
+nnoremap <silent> <Leader>e :<C-u>Unite -buffer-name=files -start-insert buffer file_rec/async:!<cr>
+nnoremap <silent> <Leader>s :split<CR> :<C-u>Unite -buffer-name=files -start-insert buffer  file_rec/async:!<cr>
+nnoremap <silent> <Leader>v :vsplit<CR> :<C-u>Unite -buffer-name=files -start-insert buffer file_rec/async:!<cr>
+
+" rails controller
+nnoremap <silent> <Leader>rc :<C-u>Unite rails/controller<CR>
+" rails helper
+nnoremap <silent> <Leader>rh :<C-u>Unite rails/helper<CR>
+" rails model
+nnoremap <silent> <Leader>rm :<C-u>Unite rails/model<CR>
+" rails view
+nnoremap <silent> <Leader>rv :<C-u>Unite rails/view<CR>
+" rails javascripts
+nnoremap <silent> <Leader>rj :<C-u>Unite rails/javascript<CR>
+" rails stylesheet
+nnoremap <silent> <Leader>rs :<C-u>Unite rails/stylesheet<CR>
+" rails bundle gem
+nnoremap <silent> <Leader>rg :<C-u>Unite rails/bundled_gem<CR>
+" rubyリファレンス
+nnoremap <silent> <Leader>rb :<C-u>Unite ref/refe<CR>
+" phpマニアル
+" nnoremap <silent> <Leader>ph :<C-u>Unite ref/phpmanual<CR>
+
+" reset
+nnoremap <space>r <Plug>(unite_restart)

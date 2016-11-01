@@ -28,8 +28,12 @@ command!
 
 "}}}
 
-source ~/.vim/rc/encoding.vim
 source ~/.vim/rc/dein.vim
+
+syntax enable
+filetype plugin indent on
+
+source ~/.vim/rc/encoding.vim
 source ~/.vim/rc/basic.vim
 source ~/.vim/rc/syntax.vim
 source ~/.vim/rc/map.vim

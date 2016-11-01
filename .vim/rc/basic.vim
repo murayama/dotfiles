@@ -72,6 +72,7 @@ set pumheight=10
 cnoremap <expr> / getcmdtype() == '/' ? '\/' : '/'
 cnoremap <expr> ? getcmdtype() == '?' ? '\?' : '?'
 
+set ambiwidth=double
 
 set modifiable
 set t_Co=256

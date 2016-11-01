@@ -24,12 +24,12 @@ command! Sjis Cp932
 "}}}
 
 " 折り返し行関係なく上下移動する {{{
-nnoremap j gj
-onoremap j gj
-xnoremap j gj
-nnoremap k gk
-onoremap k gk
-xnoremap k gk
+" nnoremap j gj
+" onoremap j gj
+" xnoremap j gj
+" nnoremap k gk
+" onoremap k gk
+" xnoremap k gk
 "}}}
 
 " 分割ウィンドウの移動 {{{

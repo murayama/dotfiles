@@ -26,17 +26,29 @@ repo = 'Shougo/vimfiler'
 depends = 'unite.vim'
 hook_add = "source ~/.vim/rc/plugins/vimfiler.rc.vim"
 
-[[plugins]]
-repo = 'scrooloose/nerdtree'
-hook_add = "source ~/.vim/rc/plugins/nerdtree.rc.vim"
+# [[plugins]]
+# repo = 'ctrlpvim/ctrlp.vim'
+# hook_add = "source ~/.vim/rc/plugins/ctrlp.rc.vim"
+#
+# [[plugins]]
+# repo = 'tacahiroy/ctrlp-funky'
+# depends = 'ctrlp.vim'
+#
+# [[plugins]]
+# repo = 'suy/vim-ctrlp-commandline'
+# depends = 'ctrlp.vim'
 
-[[plugins]]
-repo = 'jistr/vim-nerdtree-tabs'
-depends = 'nerdtree'
-
-[[plugins]]
-repo = 'Xuyuanp/nerdtree-git-plugin'
-depends = 'nerdtree'
+# [[plugins]]
+# repo = 'scrooloose/nerdtree'
+# hook_add = "source ~/.vim/rc/plugins/nerdtree.rc.vim"
+#
+# [[plugins]]
+# repo = 'jistr/vim-nerdtree-tabs'
+# depends = 'nerdtree'
+#
+# [[plugins]]
+# repo = 'Xuyuanp/nerdtree-git-plugin'
+# depends = 'nerdtree'
 
 [[plugins]]
 repo = 'rhysd/accelerated-jk'
@@ -278,8 +290,8 @@ repo = 'airblade/vim-gitgutter'
 hook_add = '''
 nmap gh <Plug>GitGutterNextHunk
 nmap gH <Plug>GitGutterPrevHunk
-nnoremap <silent> <Leader>gg :<C-u>GitGutterToggle<CR>
-nnoremap <silent> <Leader>gl :<C-u>GitGutterLineHighlightsToggle<CR>
+"nnoremap <silent> <Leader>gg :<C-u>GitGutterToggle<CR>
+"nnoremap <silent> <Leader>gl :<C-u>GitGutterLineHighlightsToggle<CR>
 '''
 
 [[plugins]]
@@ -380,6 +392,9 @@ repo = 'sgur/unite-qf'
 
 [[plugins]]
 repo = 'ujihisa/unite-rake'
+
+[[plugins]]
+repo = 'lambdalisue/unite-grep-vcs'
 
 [[plugins]]
 repo = 'koron/codic-vim'

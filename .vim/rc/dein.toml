@@ -3,18 +3,19 @@ repo = 'Shougo/dein.vim'
 
 [[plugins]]
 repo = 'Shougo/vimproc'
-hook_post_update = '''
-  if dein#util#_is_windows()
-    let cmd = 'tools\\update-dll-mingw'
-  elseif dein#util#_is_cygwin()
-    let cmd = 'make -f make_cygwin.mak'
-  elseif executable('gmake')
-    let cmd = 'gmake'
-  else
-    let cmd = 'make'
-  endif
-  let g:dein#plugin.build = cmd
-'''
+build = 'make'
+# hook_post_update = '''
+#   if dein#util#_is_windows()
+#     let cmd = 'tools\\update-dll-mingw'
+#   elseif dein#util#_is_cygwin()
+#     let cmd = 'make -f make_cygwin.mak'
+#   elseif executable('gmake')
+#     let cmd = 'gmake'
+#   else
+#     let cmd = 'make'
+#   endif
+#   let g:dein#plugin.build = cmd
+# '''
 
 [[plugins]]
 repo = 'Shougo/unite.vim'
@@ -50,6 +51,7 @@ hook_add = "source ~/.vim/rc/plugins/vimfiler.rc.vim"
 # repo = 'Xuyuanp/nerdtree-git-plugin'
 # depends = 'nerdtree'
 
+# jkの移動を加速
 [[plugins]]
 repo = 'rhysd/accelerated-jk'
 hook_add = '''
@@ -63,6 +65,18 @@ repo = 'nanotech/jellybeans.vim'
 hook_add = '''
 au VimEnter * nested colorscheme jellybeans
 '''
+
+[[plugins]]
+repo = 'w0ng/vim-hybrid'
+# hook_add = '''
+# au VimEnter * nested colorscheme hybrid
+# '''
+
+[[plugins]]
+repo = 'chriskempson/vim-tomorrow-theme'
+# hook_add = '''
+# au VimEnter * nested colorscheme Tomorrow-Night-Eighties
+# '''
 
 [[plugins]]
 repo = 'vim-scripts/ruby-matchit'
@@ -81,8 +95,11 @@ let g:rubycomplete_classes_in_global = 1
 let g:rubycomplete_rails = 1
 '''
 
+# [[plugins]]
+# repo = 'todesking/ruby_hl_lvar.vim'
+
 [[plugins]]
-repo = 'todesking/ruby_hl_lvar.vim'
+repo = 'noprompt/vim-yardoc'
 
 [[plugins]]
 repo = 'romanvbabenko/rails.vim'
@@ -164,7 +181,7 @@ let g:indentLine_color_term = 237
 
 [[plugins]]
 repo = 'osyo-manga/vim-over'
-hook_add = 'nnoremap <space>s :OverCommandLine<CR>%s/'
+hook_add = 'nnoremap <silent> <Leader>ov :OverCommandLine<CR>'
 
 [[plugins]]
 repo = 'junegunn/vim-easy-align'
@@ -292,6 +309,8 @@ nmap gh <Plug>GitGutterNextHunk
 nmap gH <Plug>GitGutterPrevHunk
 "nnoremap <silent> <Leader>gg :<C-u>GitGutterToggle<CR>
 "nnoremap <silent> <Leader>gl :<C-u>GitGutterLineHighlightsToggle<CR>
+nmap <Leader>ha <Plug>GitGutterStageHunk
+nmap <Leader>hr <Plug>GitGutterUndoHunk
 '''
 
 [[plugins]]
@@ -305,6 +324,21 @@ repo = 'AndrewRadev/gapply.vim'
 
 [[plugins]]
 repo = 'pangloss/vim-javascript'
+hook_add = '''
+let g:javascript_plugin_flow = 1
+'''
+
+[[plugins]]
+repo = 'othree/yajs.vim'
+
+[[plugins]]
+repo = 'maxmellon/vim-jsx-pretty'
+
+[[plugins]]
+repo = 'othree/javascript-libraries-syntax.vim'
+
+[[plugins]]
+repo = 'othree/es.next.syntax.vim'
 
 [[plugins]]
 repo = 'vim-scripts/jQuery'
@@ -317,6 +351,10 @@ repo = 'digitaltoad/vim-jade'
 
 [[plugins]]
 repo = 'briancollins/vim-jst'
+
+[[plugins]]
+repo = 'flowtype/vim-flow'
+on_ft = ['javascript', 'javascript.jsx']
 
 [[plugins]]
 repo = 'wavded/vim-stylus'
@@ -335,6 +373,12 @@ repo = 'hail2u/vim-css3-syntax'
 
 [[plugins]]
 repo = 'cakebaker/scss-syntax.vim'
+
+# [[plugins]]
+# repo = 'vim-jp/vim-go-extra'
+
+# [[plugins]]
+# repo = 'dgryski/vim-godef'
 
 [[plugins]]
 repo = 'fatih/vim-go'
@@ -370,6 +414,9 @@ on_ft = 'toml'
 
 [[plugins]]
 repo = 'mustache/vim-mustache-handlebars'
+hook_add = '''
+let g:mustache_abbreviations = 1
+'''
 
 # unite
 [[plugins]]
@@ -415,6 +462,7 @@ hook_add = '''
 let g:better_whitespace_filetypes_blacklist=['vimfiler', 'diff', 'gitcommit', 'unite', 'qf', 'help']
 '''
 
+# comment out
 [[plugins]]
 repo = 'tyru/caw.vim'
 

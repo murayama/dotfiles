@@ -1,10 +1,10 @@
 [core]
   pager = lv -c
-  editor = vim -c \"set fenc=utf-8\"
+  editor = nvim -c \"set fenc=utf-8\"
   attributesfile = ~/.gitattributes_global
 [user]
-  name = murayama
-  email = murayama@logiclogic.jp
+	name = murayama
+	email = murayama@logiclogic.jp
 [color]
   ui = auto
 [pager]
@@ -23,6 +23,7 @@
   sb = show-branch
   ci = commit --allow-empty
   cia = commit --amend
+  s = status
   st = !git status -s -b && echo --- branch && git branch -v && echo --- stash && git stash list | cat
   logp = log -p
   logs = log --stat
@@ -34,11 +35,13 @@
   newbrunch = checkout -b
   delbrunch = branch -d
   pruneremote = remote prune
+  ag = !git ls-files | xargs ag
+  fetchp = fetch -p
 [i18n]
   commitencoding = utf-8
   logoutputencoding = utf-8
 [http]
-  sslVerify = false
+  sslVerify = true
 [difftool "sourcetree"]
   cmd = opendiff \"$LOCAL\" \"$REMOTE\"
   path = 
@@ -46,17 +49,16 @@
   cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
   trustExitCode = true
 [diff]
-  tool = vimdiff
+  tool = nvimdiff
   algorithm = histogram
 [merge]
-  tool = vimdiff2
+  tool = nvimdiff2
   conflictstyle = diff3
   ; ff = false
 ; [pull]
 ; 	rebase = true
-[hub]
-  host = git.logiclogic.jp
 [ghq]
-  root = ~/project
+  root = ~/src
+  # root = ~/.go/src
 [push]
   default = matching

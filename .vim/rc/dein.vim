@@ -34,6 +34,7 @@ endif
 " vimprocだけは最初にインストールしてほしい
 if dein#check_install(['vimproc'])
   call dein#install(['vimproc'])
+  "  call dein#add('Shougo/vimproc', 'build': 'make'})
 endif
 " もし、未インストールものものがあったらインストール
 "if !has('vim_starting') && dein#check_install()

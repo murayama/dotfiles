@@ -7,6 +7,8 @@ let g:neocomplete#disable_auto_complete = 0
 let g:neocomplete#enable_smart_case = 1
 let g:neocomplete#enable_camel_case = 1
 
+let g:neocomplete#auto_complete_delay = 30
+
 " Use fuzzy completion
 let g:neocomplete#enable_fuzzy_completion = 1
 
@@ -14,62 +16,71 @@ let g:neocomplete#auto_completion_start_length = 2
 let g:neocomplete#manual_completion_start_length = 0
 let g:neocomplete#min_keyword_length = 3
 let g:neocomplete#enable_auto_select = 1
+let g:neocomplete#enable_auto_delimiter = 1
+let g:neocomplete#max_list = 100
 let g:neocomplete#enable_cursor_hold_i = 0
 
-let g:neocomplete#sources#dictionary#dictionaries = {
-      \ 'default' : '',
-      \ 'vimshell' : $HOME.'/.vimshell_hist',
-      \ 'scheme' : $HOME.'/.gosh_completions'
-      \ }
-
-let g:neocomplete#enable_auto_delimiter = 1
-let g:neocomplete#disable_auto_select_buffer_name_pattern = 
-  \ '\[Command Line\]'
-
-let g:neocomplete#max_list = 100
-
-" Enable heavy omni completion.
 if !exists('g:neocomplete#sources#omni#input_patterns')
   let g:neocomplete#sources#omni#input_patterns = {}
 endif
 
-if !exists('g:neocomplete#sources#omni#functions')
-  let g:neocomplete#sources#omni#functions = {}
-endif
 
-if !exists('g:neocomplete#force_omni_input_patterns')
-  let g:neocomplete#force_omni_input_patterns = {}
-endif
-
-let g:neocomplete#enable_auto_close_preview = 1
+let g:marching_enable_neocomplete = 1
 
 let g:neocomplete#sources#omni#input_patterns.python =
       \ '[^. *\t]\.\w*\|\h\w*'
 
-let g:neocomplete#sources#omni#functions.go =
-      \ 'gocomplete#Complete'
+" let g:neocomplete#sources#dictionary#dictionaries = {
+"       \ 'default' : '',
+"       \ 'vimshell' : $HOME.'/.vimshell_hist',
+"       \ 'scheme' : $HOME.'/.gosh_completions'
+"       \ }
+"
+" let g:neocomplete#disable_auto_select_buffer_name_pattern = 
+"   \ '\[Command Line\]'
+"
 
-let g:neocomplete#sources#omni#input_patterns.php =
-      \'\h\w*\|[^. \t]->\%(\h\w*\)\?\|\h\w*::\%(\h\w*\)\?'
 
-let g:neocomplete#sources#omni#input_patterns.lua =
-      \ '\w\+[.:]\|require\s*(\?["'']\w*'
+if !exists('g:neocomplete#delimiter_patterns')
+  let g:neocomplete#delimiter_patterns= {}
+endif
+let g:neocomplete#delimiter_patterns.ruby = ['::']
 
-let g:neocomplete#ignore_source_files = []
+if !exists('g:neocomplete#same_filetypes')
+  let g:neocomplete#same_filetypes = {}
+endif
+let g:neocomplete#same_filetypes.ruby = 'eruby'
 
-let g:neocomplete#sources#vim#complete_functions = {
-      \ 'Ref' : 'ref#complete',
-      \ 'Unite' : 'unite#complete_source',
-      \ 'VimShellExecute' :
-      \      'vimshell#vimshell_execute_complete',
-      \ 'VimShellInteractive' :
-      \      'vimshell#vimshell_execute_complete',
-      \ 'VimShellTerminal' :
-      \      'vimshell#vimshell_execute_complete',
-      \ 'VimShell' : 'vimshell#complete',
-      \ 'VimFiler' : 'vimfiler#complete',
-      \ 'Vinarise' : 'vinarise#complete',
-      \}
+" Enable heavy omni completion.
+" if !exists('g:neocomplete#sources#omni#input_patterns')
+"   let g:neocomplete#sources#omni#input_patterns = {}
+" endif
+" "
+" let g:neocomplete#enable_auto_close_preview = 1
+" "
+" let g:neocomplete#sources#omni#functions.go =
+"       \ 'gocomplete#Complete'
+"
+" let g:neocomplete#sources#omni#input_patterns.go = '\h\w\.\w*'
+
+" let g:neocomplete#sources#omni#input_patterns.lua =
+"       \ '\w\+[.:]\|require\s*(\?["'']\w*'
+"
+" let g:neocomplete#ignore_source_files = []
+
+" let g:neocomplete#sources#vim#complete_functions = {
+"       \ 'Ref' : 'ref#complete',
+"       \ 'Unite' : 'unite#complete_source',
+"       \ 'VimShellExecute' :
+"       \      'vimshell#vimshell_execute_complete',
+"       \ 'VimShellInteractive' :
+"       \      'vimshell#vimshell_execute_complete',
+"       \ 'VimShellTerminal' :
+"       \      'vimshell#vimshell_execute_complete',
+"       \ 'VimShell' : 'vimshell#complete',
+"       \ 'VimFiler' : 'vimfiler#complete',
+"       \ 'Vinarise' : 'vinarise#complete',
+"       \}
 call neocomplete#custom#source('look', 'min_pattern_length', 4)
 " call neocomplete#custom#source('_', 'sorters', [])
 call neocomplete#custom#source('_', 'converters',

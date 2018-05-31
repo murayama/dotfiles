@@ -38,6 +38,8 @@ let g:vimfiler_marked_file_icon = '✓'
 "   " nnoremap <buffer>E :call vimfiler#mappings#do_action('my_tabopen')<CR>
 " endfunction
 
+nnoremap <space>s :VimFilerSplit -horizontal -find<CR>
+nnoremap <space>v :VimFilerSplit -find<CR>
 nnoremap <space>f :VimFilerExplorer -direction=topleft -project -find<CR>
 
 function! s:vimfiler_width_expr()

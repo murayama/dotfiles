@@ -104,8 +104,8 @@ nnoremap <silent> <Leader>a :<C-u>Unite -buffer-name=files buffer file_mru bookm
 " nnoremap <silent> <Leader>ua :<C-u>UniteBookmarkAdd<CR>
 
 " アウトライン
-nnoremap <silent> <Leader>o :<C-u>Unite outline -start-insert -resume<CR>
-nnoremap <silent> <Leader>O :<C-u>Unite outline -no-quit -start-insert -resume<CR>
+nnoremap <silent> <Leader>o :<C-u>Unite outline -start-insert<CR>
+nnoremap <silent> <Leader>O :<C-u>Unite outline -no-quit -start-insert<CR>
 
 " マーク一覧
 nnoremap <silent> <Leader>m :<C-u>Unite -quick-match mark<CR>

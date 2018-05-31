@@ -12,18 +12,32 @@
 autoload colors
 colors
 
+export ZPLUG_HOME=/usr/local/opt/zplug
+source $ZPLUG_HOME/init.zsh
+
+# zplug "yous/vanilli.sh"
+# zplug "zsh-users/zsh-completions"
+# zplug "zsh-users/zsh-syntax-highlighting"
+# zplug "zsh-users/zsh-history-substring-search"
+# zplug "plugins/git", from:oh-my-zsh
+# zplug "themes/bira.zsh-theme", from:oh-my-zsh, as:theme
+
+zplug check || zplug install
+
+zplug load
+
+
 local GREEN=$'%{\e[32m%}'
 local CYAN=$'%{\e[36m%}'
 local YELLOW=$'%{\e[33m%}'
 
-#PROMPT="%{${CYAN}%}[%n@%m] %(!.#.$) %{${reset_color}%}"
 PROMPT="%{${GREEN}%}[%n@%m %1~]${WINDOW:+"[$WINDOW]"} %(!.#.$) %{${reset_color}%}"
+#PROMPT="%{${CYAN}%}[%n@%m] %(!.#.$) %{${reset_color}%}"
 # PROMPT2="%{${fg[blue]}%}%_> %{${reset_color}%}"
 # SPROMPT="%{${fg[red]}%}correct: %R -> %r [nyae]? %{${reset_color}%}"
 # RPROMPT="%{${YELLOW}%}[%~]%{${reset_color}%}"
 
-autoload -Uz vcs_info
-zstyle ':vcs_info:*' enable git 
+autoload -Uz vcs_info # zstyle ':vcs_info:*' enable git 
 
 # 下のformatsの値をそれぞれの変数に入れてくれる機能の、変数の数の最大。
 # デフォルトだと2くらいなので、指定しておかないと、下のformatsがほぼ動かない。
@@ -269,6 +283,8 @@ alias -g C='`git log --oneline | peco | cut -d" " -f1`'
 # git reflog and peco
 alias -g R='`git reflog | peco | cut -d" " -f1`'
 
+# alias git=hub
+alias ghe='GITHUB_HOST=github.logica.io hub'
 # [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 # [[ -s "$HOME/.rvm/scripts/rvm" ]] && "$HOME/.rvm/scripts/rvm"
 
@@ -314,9 +330,10 @@ function peco-select-history() {
     fi
     BUFFER=$(\history -n 1 | \
         eval $tac | \
+        awk '!a[$0]++' | \
         peco --query "$LBUFFER")
     CURSOR=$#BUFFER
-    zle clear-screen
+    #zle clear-screen
 }
 zle -N peco-select-history
 bindkey '^r' peco-select-history
@@ -331,22 +348,60 @@ function peco-pkill() {
 zle -N peco-pkill
 alias pk="peco-pkill"
 
+function agvim() {
+  vim $(ag $@ | peco --query "$LBUFFER" | awk -F : '{print "-c " $2 " " $1}')
+}
+
+function _ssh_hosts {
+  # compadd `fgrep 'Host ' ~/.ssh/config | awk '{print $2}' | sort`;
+    compadd `egrep -i '^Host\s+.+' $HOME/.ssh/config $(find $HOME/.ssh/conf.d -type f 2>/dev/null) | command egrep -v '[*?]' | awk '{print $2}' | sort`
+
+}
+
 fpath=(/usr/local/share/zsh-completions $fpath)
+
+# fzf via Homebrew
+if [ -e /usr/local/opt/fzf/shell/completion.zsh ]; then
+  source /usr/local/opt/fzf/shell/key-bindings.zsh
+  source /usr/local/opt/fzf/shell/completion.zsh
+fi
+ 
+# fzf via local installation
+if [ -e ~/.fzf ]; then
+  _append_to_path ~/.fzf/bin
+  source ~/.fzf/shell/key-bindings.zsh
+  source ~/.fzf/shell/completion.zsh
+fi
+ 
+# fzf + ag configuration
+if _has fzf && _has ag; then
+  export FZF_DEFAULT_COMMAND='ag --nocolor -g ""'
+  export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+  export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND"
+  export FZF_DEFAULT_OPTS='
+  --color fg:242,bg:236,hl:65,fg+:15,bg+:239,hl+:108
+  --color info:108,prompt:109,spinner:108,pointer:168,marker:168
+  '
+fi
+
+export PATH="/usr/local/opt/erlang@19/bin/:$PATH"
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
-export PATH=$HOME/.nodebrew/current/bin:$PATH
 #=============================
-# rbenv
+# anyenv
 #=============================
-if [ -d ${HOME}/.rbenv  ] ; then
-  PATH=${HOME}/.rbenv/bin:${PATH}
-  export PATH
-  eval "$(rbenv init -)"
-  source ~/.rbenv/completions/rbenv.zsh
+if [ -d $HOME/.anyenv ] ; then
+  export PATH="$HOME/.anyenv/bin:$PATH"
+  eval "$(anyenv init -)"
+  for D in `\ls $HOME/.anyenv/envs`
+  do
+    export PATH="$HOME/.anyenv/envs/$D/shims:$PATH"
+  done
 fi
 
 if [ -d ${HOME}/.go ] ; then
   PATH=${HOME}/.go/bin:${PATH}
+  export GOROOT=$( go env GOROOT )
   export GOPATH=~/.go
   export PATH
 fi
@@ -357,9 +412,16 @@ if which exenv > /dev/null; then eval "$(exenv init -)"; fi
 export PATH=/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin:$PATH
 export PATH="$HOME/Library/Python/2.7/bin:$PATH"
 export PATH="$HOME/.exenv/bin:$PATH"
+export EDITOR=vim
 #export EDITOR=/Applications/MacVim.app/Contents/MacOS/Vim
 #alias vi='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"' 
 #alias vim='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'
 export LC_ALL='ja_JP.UTF-8'
 
 eval "$(direnv hook zsh)"
+export TERM=xterm-256color
+
+alias vi="nvim"
+
+alias ctags="`brew --prefix`/bin/ctags"
+

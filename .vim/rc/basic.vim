@@ -66,7 +66,7 @@ set keywordprg=man\ -a          " キーワードのヘルプコマンドの設�
 " set statusline=%<%f\ %m%r%h%w%y%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%{fugitive#statusline()}%=%b\ 0x%B\ \ %l,%c%V%8P
 	" ステータス行のフォーマット
 set cursorline                  " カーソル行に下線を表示(* vim7)
-" set cursorcolumn                " カーソル列をハイライト表示(* vim7)
+set cursorcolumn                " カーソル列をハイライト表示(* vim7)
 set display=lastline
 set pumheight=10
 cnoremap <expr> / getcmdtype() == '/' ? '\/' : '/'
@@ -81,14 +81,15 @@ set directory=~/tmp/
 set undodir=~/tmp/undo
 set backupdir=~/tmp/backup
 
-set mouse=a
-set ttymouse=xterm2
+" set mouse=a
+" set ttymouse=xterm2
 
 let g:Foldtext_enable=1
 set foldmethod=syntax
-set foldlevel=3
+set foldlevel=4
 set foldnestmax=5
-set foldcolumn=4
+" set foldcolumn=3
+set fillchars=vert:\|
 
 augroup foldmethod-syntax
   autocmd!

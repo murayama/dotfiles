@@ -34,6 +34,15 @@ Plug 'joshdick/onedark.vim'
 " colorscheme janaha
 Plug 'mhinz/vim-janah'
 
+" colorscheme spacegrey
+Plug 'ajh17/Spacegray.vim'
+
+" colorscheme atom-dark
+Plug 'gosukiwi/vim-atom-dark'
+
+" colorscheme doracula
+Plug 'dracula/vim', {'as':'dracula'}
+
 " neoterm
 Plug 'kassio/neoterm' " config
 
@@ -47,7 +56,7 @@ Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
 Plug 'vim-scripts/ruby-matchit', { 'for': 'ruby' }
 
 " endwise
-Plug 'tpope/vim-endwise', { 'for': 'ruby' }
+Plug 'tpope/vim-endwise'
 
 " vim-yardoc
 Plug 'noprompt/vim-yardoc'
@@ -140,6 +149,10 @@ Plug 'flowtype/vim-flow', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'wavded/vim-stylus'
 Plug 'GutenYe/json5.vim', { 'for': 'json5' }
 Plug 'nicklasos/vim-jsx-riot'
+" post install (yarn install | npm install) then load plugin only for editing supported files
+Plug 'prettier/vim-prettier', {
+    \ 'do': 'yarn install',
+    \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss'] }
 
 " html/css plugins
 Plug 'mattn/emmet-vim'
@@ -149,8 +162,25 @@ Plug 'cakebaker/scss-syntax.vim'
 " go
 Plug 'fatih/vim-go'
 
+" Erlang Support
+Plug 'vim-erlang/vim-erlang-tags'
+Plug 'vim-erlang/vim-erlang-runtime'
+Plug 'vim-erlang/vim-erlang-omnicomplete'
+Plug 'vim-erlang/vim-erlang-compiler'
+
 " elixir
 Plug 'elixir-lang/vim-elixir'
+Plug 'avdgaag/vim-phoenix'
+Plug 'mmorearty/elixir-ctags'
+Plug 'mattreduce/vim-mix'
+Plug 'mhinz/vim-mix-format'
+Plug 'BjRo/vim-extest'
+Plug 'frost/vim-eh-docs'
+" Plug 'slashmili/alchemist.vim'
+Plug 'jadercorrea/elixir_generator.vim'
+
+" Elm Support
+Plug 'lambdatoast/elm.vim'
 
 " editorconfig
 Plug 'editorconfig/editorconfig-vim'
@@ -191,8 +221,15 @@ Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 " autoclose
 Plug 'Townk/vim-autoclose'
 
+" trailing-whitespace
+Plug 'bronson/vim-trailing-whitespace'
+
 "tagbar"
 Plug 'majutsushi/tagbar'
+" Plug 'hushicai/tagbar-javascript.vim'
+
+" colorizer
+Plug 'lilydjwg/colorizer'
 
 call plug#end()
 
@@ -204,25 +241,50 @@ autocmd VimEnter *
 " If you have vim >=8.0 or Neovim >= 0.1.5
 if (has("termguicolors"))
  set termguicolors
+ " let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+ " let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+endif
+if has('nvim')
+  let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 endif
 
-" For Neovim 0.1.3 and 0.1.4
-let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-
-" Theme
 syntax enable
+" Theme
 " set background=dark
 " colorscheme hybrid
 " colorscheme tender
 " colorscheme gotham256
-colorscheme onedark
+" colorscheme onedark
 " colorscheme janah
+" colorscheme spacegray
+colorscheme atom-dark-256
+" colorscheme dracula
 
 source ~/.vim/rc/encoding.vim
 source ~/.vim/rc/golang.vim
 source ~/.vim/rc/basic.vim
 source ~/.vim/rc/syntax.vim
 source ~/.vim/rc/map.vim
+
+
+" netrw
+" 上部に表示される情報を非表示
+let g:netrw_banner = 0
+" netrwは常にtree view
+let g:netrw_liststyle = 3
+" CVSと.で始まるファイルは表示しない
+" let g:netrw_list_hide = 'CVS,\(^\|\s\s\)\zs\.\S\+'
+" 'v'でファイルを開くときは右側に開く。(デフォルトが左側なので入れ替え)
+let g:netrw_altv = 1
+" 'o'でファイルを開くときは下側に開く。(デフォルトが上側なので入れ替え)
+let g:netrw_alto = 1
+" absolute width of netrw window
+let g:netrw_winsize = -28
+" sort is affecting only: directories on the top, files below
+let g:netrw_sort_sequence = '[\/]$,*'
+" open file in a new tab
+let g:netrw_browse_split = 3
+
 
 " Use deoplete.
 set completeopt+=noinsert
@@ -410,7 +472,9 @@ nmap <Space>D <Plug>(textmanip-duplicate-up)
 " Use indentLine
 " let g:indentLine_enabled = 0
 let g:indentLine_faster = 1
-let g:indentLine_color_term = 232
+" let g:indentLine_color_term = 239
+" let g:indentLine_setColors = 0
+" let g:indentLine_setConceal = 0
 
 " Use vim-easy-align
 vmap <Enter> <Plug>(EasyAlign)
@@ -447,7 +511,7 @@ map zg/ <Plug>(incsearch-easymotion-stay)
 
 " Use lightline
 let g:lightline = {
-      \ 'colorscheme': 'onedark',
+      \ 'colorscheme': 'deus',
       \ 'mode_map': {'c': 'NORMAL'},
       \   'active': {
       \     'left': [
@@ -624,10 +688,62 @@ let g:NERDTreeIndicatorMapCustom = {
     \ "Unknown"   : "?"
     \ }
 
+let g:webdevicons_enable_airline_tabline = 1
+let g:webdevicons_enable_airline_statusline = 1
+let g:WebDevIconsUnicodeGlyphDoubleWidth = 1
 let g:webdevicons_conceal_nerdtree_brackets = 1
-let g:WebDevIconsNerdTreeAfterGlyphPadding = ' '
+" let g:WebDevIconsNerdTreeAfterGlyphPadding = '   '
 
 let g:WebDevIconsUnicodeDecorateFolderNodes = 1
 let g:DevIconsEnableFoldersOpenClose = 1
 let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol = ''
 let g:DevIconsDefaultFolderOpenSymbol = ''
+
+" vim-prettier
+let g:prettier#autoformat = 0
+" autocmd BufWritePre,TextChanged,InsertLeave *.js,*.css,*.scss,*.less PrettierAsync
+autocmd BufWritePre *.js,*.css,*.scss,*.less PrettierAsync
+let g:prettier#exec_cmd_async = 1
+let g:prettier#quickfix_enabled = 1
+
+" tagbar
+" let g:tagbar_type_javascript = {
+"       \'ctagsbin' : 'jtags'
+"       \}
+"
+" Elixir Tagbar Configuration
+let g:tagbar_type_elixir = {
+    \ 'ctagstype' : 'elixir',
+    \ 'kinds' : [
+        \ 'f:functions',
+        \ 'functions:functions',
+        \ 'c:callbacks',
+        \ 'd:delegates',
+        \ 'e:exceptions',
+        \ 'i:implementations',
+        \ 'a:macros',
+        \ 'o:operators',
+        \ 'm:modules',
+        \ 'p:protocols',
+        \ 'r:records',
+        \ 't:tests'
+    \ ]
+    \ }
+
+" Fzf Configuration
+" This is the default extra key bindings
+let g:fzf_action = {
+  \ 'ctrl-t': 'tab split',
+  \ 'ctrl-x': 'split',
+  \ 'ctrl-v': 'vsplit' }
+
+" Default fzf layout
+" - down / up / left / right
+let g:fzf_layout = { 'down': '~40%' }
+
+" In Neovim, you can set up fzf window using a Vim command
+let g:fzf_layout = { 'window': 'enew' }
+let g:fzf_layout = { 'window': '-tabnew' }
+
+" mix format
+let g:mix_format_on_save = 1

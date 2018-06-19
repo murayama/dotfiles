@@ -1,4 +1,6 @@
-source ~/.zplug/init.zsh
+#source ~/.zplug/init.zsh
+export ZPLUG_HOME=/usr/local/opt/zplug
+source $ZPLUG_HOME/init.zsh
 
 # zplug
 zplug 'zplug/zplug', hook-build:'zplug --self-manage'
@@ -43,6 +45,33 @@ setopt hist_ignore_dups
 setopt share_history
 setopt extended_history
 
+# auto change directory
+#
+setopt auto_cd
+function chpwd() {ls}
+
+# auto directory pushed that you can get dirs list by cd -[tab]
+#
+setopt auto_pushd
+setopt pushd_ignore_dups
+
+# command correct edition before each completion attempt
+#
+setopt correct
+
+# compacked complete list display
+#
+setopt list_packed
+setopt list_types
+setopt magic_equal_subst
+setopt print_eight_bit
+
+# no beep sound when complete list displayed
+#
+setopt nolistbeep
+
+setopt nonomatch
+
 # completion configuration
 autoload -Uz compinit && compinit
 
@@ -74,11 +103,24 @@ fe() {
   [[ -n "$files" ]] && ${EDITOR:-nvim} "${files[@]}"
 }
 
+#=============================
+# anyenv
+#=============================
+if [ -d $HOME/.anyenv ] ; then
+  export PATH="$HOME/.anyenv/bin:$PATH"
+  eval "$(anyenv init -)"
+  for D in `\ls $HOME/.anyenv/envs`
+  do
+    export PATH="$HOME/.anyenv/envs/$D/shims:$PATH"
+  done
+fi
 
 # asdf
-. $HOME/.asdf/asdf.sh
+if [ -d $HOME/.asdf ]; then
+  . $HOME/.asdf/asdf.sh
 
-. $HOME/.asdf/completions/asdf.bash
+  . $HOME/.asdf/completions/asdf.bash
+fi
 
 export EDITOR=nvim
 
@@ -88,3 +130,10 @@ alias g=anyframe-widget-cd-ghq-repository
 alias gb=anyframe-widget-checkout-git-branch
 alias gh='hub browse $(ghq list | fzf | cut -d "/" -f 2,3)'
 alias ghe='GITHUB_HOST=github.logica.io hub'
+
+# git log and peco
+alias -g C='`git log --oneline | peco | cut -d" " -f1`'
+# git reflog and peco
+alias -g R='`git reflog | peco | cut -d" " -f1`'
+
+alias ctags="`brew --prefix`/bin/ctags"

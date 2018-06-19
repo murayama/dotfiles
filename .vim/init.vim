@@ -43,6 +43,9 @@ Plug 'gosukiwi/vim-atom-dark'
 " colorscheme doracula
 Plug 'dracula/vim', {'as':'dracula'}
 
+" colorscheme material
+Plug 'jdkanani/vim-material-theme'
+
 " neoterm
 Plug 'kassio/neoterm' " config
 
@@ -250,15 +253,16 @@ endif
 
 syntax enable
 " Theme
-" set background=dark
+set background=dark
 " colorscheme hybrid
 " colorscheme tender
 " colorscheme gotham256
 " colorscheme onedark
 " colorscheme janah
 " colorscheme spacegray
-colorscheme atom-dark-256
+" colorscheme atom-dark-256
 " colorscheme dracula
+colorscheme material-theme
 
 source ~/.vim/rc/encoding.vim
 source ~/.vim/rc/golang.vim
@@ -511,7 +515,7 @@ map zg/ <Plug>(incsearch-easymotion-stay)
 
 " Use lightline
 let g:lightline = {
-      \ 'colorscheme': 'deus',
+      \ 'colorscheme': 'material',
       \ 'mode_map': {'c': 'NORMAL'},
       \   'active': {
       \     'left': [
@@ -692,7 +696,7 @@ let g:webdevicons_enable_airline_tabline = 1
 let g:webdevicons_enable_airline_statusline = 1
 let g:WebDevIconsUnicodeGlyphDoubleWidth = 1
 let g:webdevicons_conceal_nerdtree_brackets = 1
-" let g:WebDevIconsNerdTreeAfterGlyphPadding = '   '
+let g:WebDevIconsNerdTreeAfterGlyphPadding = ' '
 
 let g:WebDevIconsUnicodeDecorateFolderNodes = 1
 let g:DevIconsEnableFoldersOpenClose = 1

@@ -78,10 +78,11 @@ autoload -Uz compinit && compinit
 zstyle ':completion:*' menu select
 
 # anyframe
-zstyle ":anyframe:selector:" use fzf
 fpath=($HOME/.zsh/anyframe(N-/) $fpath)
 autoload -Uz anyframe-init
 anyframe-init
+zstyle ":anyframe:selector:" use fzf
+zstyle ":anyframe:selector:fzf:" command 'fzf --extended'
 
 
 # fzf

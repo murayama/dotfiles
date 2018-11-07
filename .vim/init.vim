@@ -3,9 +3,16 @@ call plug#begin('~/.local/share/nvim/plugged')
 
 " deoplete
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'Shougo/deoplete-rct'
+" Plug 'Shougo/deoplete-rct'
 " Plug 'uplus/deoplete-solargraph'
 " Plug 'osyo-manga/vim-monster'
+"" Elixir
+Plug 'slashmili/alchemist.vim'
+"" javascript
+Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
+Plug 'wokalski/autocomplete-flow'
+"" golang
+Plug 'zchee/deoplete-go', { 'do': 'make'}
 
 " denite
 Plug 'Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -46,11 +53,14 @@ Plug 'dracula/vim', {'as':'dracula'}
 " colorscheme material
 Plug 'jdkanani/vim-material-theme'
 
+" colorscheme tokyo-moetro
+Plug 'koirand/tokyo-metro.vim'
+
 " neoterm
 Plug 'kassio/neoterm' " config
 
 " accelerated-jk
-Plug 'rhysd/accelerated-jk'
+" Plug 'rhysd/accelerated-jk'
 
 " vim-ruby
 Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
@@ -179,7 +189,6 @@ Plug 'mattreduce/vim-mix'
 Plug 'mhinz/vim-mix-format'
 Plug 'BjRo/vim-extest'
 Plug 'frost/vim-eh-docs'
-" Plug 'slashmili/alchemist.vim'
 Plug 'jadercorrea/elixir_generator.vim'
 
 " Elm Support
@@ -234,6 +243,11 @@ Plug 'majutsushi/tagbar'
 " colorizer
 Plug 'lilydjwg/colorizer'
 
+" plantuml
+Plug 'aklt/plantuml-syntax'
+
+" Plug 'yuttie/comfortable-motion.vim'
+
 call plug#end()
 
 autocmd VimEnter *
@@ -262,10 +276,11 @@ set background=dark
 " colorscheme spacegray
 " colorscheme atom-dark-256
 " colorscheme dracula
-colorscheme material-theme
+" colorscheme material-theme
+colorscheme tokyo-metro
 
 source ~/.vim/rc/encoding.vim
-source ~/.vim/rc/golang.vim
+" source ~/.vim/rc/golang.vim
 source ~/.vim/rc/basic.vim
 source ~/.vim/rc/syntax.vim
 source ~/.vim/rc/map.vim
@@ -292,8 +307,11 @@ let g:netrw_browse_split = 3
 
 " Use deoplete.
 set completeopt+=noinsert
+" set completeopt+=noselect
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#enable_camel_case = 1
+" Use smartcase.
+call deoplete#custom#option('smart_case', v:true)
 " <TAB>: completion.
 inoremap <silent><expr> <TAB>
       \ pumvisible() ? "\<C-n>" :
@@ -307,22 +325,10 @@ endfunction"}}}
 " <S-TAB>: completion back.
 inoremap <expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<C-h>"
 
-" <BS>: close popup and delete backword char.
+" <C-h>, <BS>: close popup and delete backword char.
 inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
-inoremap <expr><BS> deoplete#smart_close_popup()."\<C-h>"
+inoremap <expr><BS>  deoplete#smart_close_popup()."\<C-h>"
 
-" <CR>: close popup and save indent.
-" inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-" function! s:my_cr_function() abort
-"   return deoplete#close_popup() . "\<CR>"
-" endfunction
-
-" inoremap <expr><C-y> deoplete#close_popup()
-" inoremap <expr><C-e> deoplete#close_popup()
-
-" inoremap <expr><C-g> deoplete#undo_completion()
-" inoremap <expr><C-l> deoplete#complete_common_string()
-"
 " vim-mounster
 " gem install rcodetools
 " gem install fastri
@@ -331,9 +337,8 @@ inoremap <expr><BS> deoplete#smart_close_popup()."\<C-h>"
 " \   "ruby" : '[^. *\t]\.\w*\|\h\w*::',
 " \}
 
-
 " Use auto delimiter
-call deoplete#custom#set('_', 'converters', [
+call deoplete#custom#source('_', 'converters', [
       \ 'converter_remove_paren',
       \ 'converter_remove_overlap',
       \ 'converter_truncate_abbr',
@@ -341,6 +346,30 @@ call deoplete#custom#set('_', 'converters', [
       \ 'converter_auto_delimiter',
 \ ])
 
+" deoplete-go
+let deoplete#sources#go#gocode_binary='~/.go/bin/gocode'
+let g:deoplete#sources#go#package_dot = 1
+let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
+let g:deoplete#sources#go#pointer = 1
+
+" deoplete-ternjs
+let g:deoplete#sources#ternjs#tern_bin = '~/.anyenv/envs/ndenv/shims/tern'
+let g:deoplete#sources#ternjs#timeout = 1
+let g:tern#command = ["tern"]
+let g:tern#arguments = ["--persistent"]
+let g:deoplete#sources#ternjs#types = 1
+let g:deoplete#sources#ternjs#depths = 1
+let g:deoplete#sources#ternjs#filter = 0
+let g:deoplete#sources#ternjs#case_insensitive = 1
+let g:deoplete#sources#ternjs#guess = 0
+let g:deoplete#sources#ternjs#sort = 0
+let g:deoplete#sources#ternjs#expand_word_forward = 0
+let g:deoplete#sources#ternjs#omit_object_prototype = 0
+let g:deoplete#sources#ternjs#include_keywords = 1
+let g:deoplete#sources#ternjs#in_literal = 0
+let g:deoplete#sources#ternjs#filetypes = [
+                \ 'jsx',
+                \ ]
 
 " Use denite
 
@@ -425,13 +454,13 @@ nmap <silent> <Leader>* :<C-u>DeniteCursorWord -buffer-name=search -auto-highlig
 nmap <silent> <Leader>a :<C-u>Denite -buffer-name=files -highlight-mode-insert=Search buffer file_mru file<CR>
 
 " Use accelerated_jk
-nmap j <Plug>(accelerated_jk_gj)
-nmap k <Plug>(accelerated_jk_gk)
+" nmap j <Plug>(accelerated_jk_gj)
+" nmap k <Plug>(accelerated_jk_gk)
 
 " Use vim-ruby
-let g:rubycomplete_buffer_loading = 1
-let g:rubycomplete_classes_in_global = 1
-let g:rubycomplete_rails = 1
+" let g:rubycomplete_buffer_loading = 1
+" let g:rubycomplete_classes_in_global = 1
+" let g:rubycomplete_rails = 1
 
 " Use syntastic
 set statusline+=%#warningmsg#
@@ -662,11 +691,11 @@ nnoremap <silent> <space>r V:TREPLSendLine<cr>
 vnoremap <silent> <space>r V:TREPLSendSelection<cr>'>j$
 
 " Use previm
-let g:previm_open_cmd = 'open -a Google\ Chrome'
+let g:previm_open_cmd = 'open -a Vivaldi'
 
 " Use fzf
-nmap ; :Buffers
-nmap t :Files
+" nmap ; :Buffers
+" nmap t :Files
 " nmap r :Tags
 "
 " NERDTree
@@ -752,3 +781,7 @@ let g:fzf_layout = { 'window': '-tabnew' }
 
 " mix format
 let g:mix_format_on_save = 1
+
+" plantuml
+let g:plantuml_executable_script="~/dotfiles/plantuml"
+au FileType plantuml command! OpenUML :!open -a Vivaldi %

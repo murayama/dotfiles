@@ -72,6 +72,17 @@ setopt nolistbeep
 
 setopt nonomatch
 
+## Keybind configuration
+#
+# vi like keybind
+bindkey -e
+bindkey "^?"    backward-delete-char
+bindkey "^H"    backward-delete-char
+bindkey "^[[3~" delete-char
+bindkey "^[[1~" beginning-of-line
+bindkey "^[[4~" end-of-line
+
+
 # completion configuration
 autoload -Uz compinit && compinit
 
@@ -138,3 +149,6 @@ alias -g C='`git log --oneline | peco | cut -d" " -f1`'
 alias -g R='`git reflog | peco | cut -d" " -f1`'
 
 alias ctags="`brew --prefix`/bin/ctags"
+export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
+
+ulimit -u 2048

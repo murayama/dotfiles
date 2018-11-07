@@ -38,7 +38,7 @@ set matchtime=1
 set matchpairs& matchpairs+=<:> " 対応括弧に'<'と'>'のペアを追加
 " set title                     " タイトルを表示
 set laststatus=2                " 常にステータス行を表示
-set ignorecase                  " 大文字・小文字を無視
+" set ignorecase                  " 大文字・小文字を無視
 set smartcase                   " 検索キーワードに大文字が含まれていれば大文字小文字を区別
 set incsearch                   " サーチをインクリメンタルにする
 set hlsearch                    " 検索キーワードをハイライトする

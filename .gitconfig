@@ -42,17 +42,21 @@
   logoutputencoding = utf-8
 [http]
   sslVerify = true
-[difftool "sourcetree"]
-  cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-  path = 
-[mergetool "sourcetree"]
-  cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-  trustExitCode = true
 [diff]
   tool = nvimdiff
   algorithm = histogram
+[difftool "nvimdiff"]
+  cmd = "nvim -R -d -c \"wincmd l\" -d \"$LOCAL\" \"$REMOTE\""
+[mergetool "nvimdiff"]
+  cmd = "nvim -d -c \"4wincmd w | wincmd J\" \"$LOCAL\" \"$BASE\" \"$REMOTE\"  \"$MERGED\""
+# [difftool "sourcetree"]
+#   cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+#   path = 
+# [mergetool "sourcetree"]
+#   cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+#   trustExitCode = true
 [merge]
-  tool = nvimdiff2
+  tool = nvimdiff
   conflictstyle = diff3
   ; ff = false
 ; [pull]

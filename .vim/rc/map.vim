@@ -33,10 +33,10 @@ command! Sjis Cp932
 "}}}
 
 " 分割ウィンドウの移動 {{{
-map <Right> <c-w>l
-map <Left> <c-w>h
-map <Up> <c-w>k
-map <Down> <c-w>j
+map <C-l> <C-w>l
+map <C-h> <C-w>h
+map <C-k> <C-w>k
+map <C-j> <C-w>j
 "}}}
 
 " 分割ウィンドウのサイズ変更 {{{
@@ -224,4 +224,15 @@ map <silent> [Tag]p :tabprevious<CR>
 
 " }}}
 
+" 行No表示の相対と絶対をトグル {{{
+function! ToggleRelativenumber() abort
+  if &relativenumber == 1
+     setlocal norelativenumber
+     " setlocal number
+  else
+     setlocal relativenumber
+  endif
+endfunction
+nnoremap <silent> <Space>n :call ToggleRelativenumber()<cr>
+" }}}
 "}}}

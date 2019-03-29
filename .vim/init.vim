@@ -1,21 +1,21 @@
 " vim-plug
+
 call plug#begin('~/.local/share/nvim/plugged')
 
 " deoplete
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-" Plug 'Shougo/deoplete-rct'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' } " Plug 'Shougo/deoplete-rct'
 " Plug 'uplus/deoplete-solargraph'
 " Plug 'osyo-manga/vim-monster'
 "" Elixir
 Plug 'slashmili/alchemist.vim'
 "" javascript
-Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
+" Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
 Plug 'wokalski/autocomplete-flow'
 "" golang
 Plug 'zchee/deoplete-go', { 'do': 'make'}
 
 " denite
-Plug 'Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
+" Plug 'Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
 
 " neoyank
 Plug 'Shougo/neoyank.vim'
@@ -78,7 +78,7 @@ Plug 'noprompt/vim-yardoc'
 Plug 'romanvbabenko/rails.vim', { 'for': 'ruby' }
 
 " ruby_hl_lvar
-Plug 'todesking/ruby_hl_lvar.vim', { 'for': 'ruby' }
+" Plug 'todesking/ruby_hl_lvar.vim', { 'for': 'ruby' }
 
 " match.zip
 Plug 'vim-scripts/matchit.zip'
@@ -96,6 +96,7 @@ Plug 'kannokanno/previm'
 Plug 't9md/vim-textmanip'
 
 " vim-easymotion
+Plug 'easymotion/vim-easymotion'
 " vim-over
 
 " indentLine
@@ -332,7 +333,11 @@ inoremap <expr><BS>  deoplete#smart_close_popup()."\<C-h>"
 " vim-mounster
 " gem install rcodetools
 " gem install fastri
+" or
+" gem install solorgraph
+" let g:monster#completion#backend = 'solargraph'
 " let g:monster#completion#rcodetools#backend = "async_rct_complete"
+" let g:monster#completion#solargraph#backend = "async_solargraph_suggest"
 " let g:deoplete#sources#omni#input_patterns = {
 " \   "ruby" : '[^. *\t]\.\w*\|\h\w*::',
 " \}
@@ -353,105 +358,110 @@ let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const
 let g:deoplete#sources#go#pointer = 1
 
 " deoplete-ternjs
-let g:deoplete#sources#ternjs#tern_bin = '~/.anyenv/envs/ndenv/shims/tern'
-let g:deoplete#sources#ternjs#timeout = 1
-let g:tern#command = ["tern"]
-let g:tern#arguments = ["--persistent"]
-let g:deoplete#sources#ternjs#types = 1
-let g:deoplete#sources#ternjs#depths = 1
-let g:deoplete#sources#ternjs#filter = 0
-let g:deoplete#sources#ternjs#case_insensitive = 1
-let g:deoplete#sources#ternjs#guess = 0
-let g:deoplete#sources#ternjs#sort = 0
-let g:deoplete#sources#ternjs#expand_word_forward = 0
-let g:deoplete#sources#ternjs#omit_object_prototype = 0
-let g:deoplete#sources#ternjs#include_keywords = 1
-let g:deoplete#sources#ternjs#in_literal = 0
-let g:deoplete#sources#ternjs#filetypes = [
-                \ 'jsx',
-                \ ]
+" let g:deoplete#sources#ternjs#tern_bin = '~/.anyenv/envs/ndenv/shims/tern'
+" let g:deoplete#sources#ternjs#timeout = 1
+" let g:tern#command = ["tern"]
+" let g:tern#arguments = ["--persistent"]
+" let g:deoplete#sources#ternjs#types = 1
+" let g:deoplete#sources#ternjs#depths = 1
+" let g:deoplete#sources#ternjs#filter = 0
+" let g:deoplete#sources#ternjs#case_insensitive = 1
+" let g:deoplete#sources#ternjs#guess = 0
+" let g:deoplete#sources#ternjs#sort = 0
+" let g:deoplete#sources#ternjs#expand_word_forward = 0
+" let g:deoplete#sources#ternjs#omit_object_prototype = 0
+" let g:deoplete#sources#ternjs#include_keywords = 1
+" let g:deoplete#sources#ternjs#in_literal = 0
+" let g:deoplete#sources#ternjs#filetypes = [
+"                 \ 'jsx',
+"                 \ ]
+
+" deoplete-solargraph
+" let g:deoplete#sources#omni#functions.ruby = ['solar']
+" let g:deoplete#sources#omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
 
 " Use denite
 
-if executable('ag')
-  call denite#custom#var('file_rec', 'command', ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
-  call denite#custom#var('grep', 'command', ['ag'])
-  call denite#custom#var('grep', 'recursive_opts', [])
-  call denite#custom#var('grep', 'pattern_opt', [])
-  call denite#custom#var('grep', 'default_opts', ['--follow', '--no-group', '--no-color'])
-endif
+" if executable('ag')
+"   call denite#custom#var('file_rec', 'command', ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
+"   call denite#custom#var('grep', 'command', ['ag'])
+"   call denite#custom#var('grep', 'recursive_opts', [])
+"   call denite#custom#var('grep', 'pattern_opt', [])
+"   call denite#custom#var('grep', 'default_opts', ['--follow', '--no-group', '--no-color'])
+" endif
 
 " call denite#custom#source('file_old', 'converters',
 "       \ ['converter_relative_word'])
 " call denite#custom#source('buffer', 'converters', ['converter_file_directory'])
 
-call denite#custom#map(
-  \ 'insert',
-  \ '<C-j>',
-  \ '<denite:move_to_next_line>',
-  \ 'noremap'
-  \)
-
-call denite#custom#map(
-  \ 'insert',
-  \ '<C-k>',
-  \ '<denite:move_to_previous_line>',
-  \ 'noremap'
-  \)
+" call denite#custom#map(
+"   \ 'insert',
+"   \ '<C-j>',
+"   \ '<denite:move_to_next_line>',
+"   \ 'noremap'
+"   \)
+"
+" call denite#custom#map(
+"   \ 'insert',
+"   \ '<C-k>',
+"   \ '<denite:move_to_previous_line>',
+"   \ 'noremap'
+"   \)
 
 " Define alias
-call denite#custom#alias('source', 'file_rec/git', 'file_rec')
-call denite#custom#var('file_rec/git', 'command',
-      \ ['git', 'ls-files', '-co', '--exclude-standard'])
+" call denite#custom#alias('source', 'file_rec/git', 'file_rec')
+" call denite#custom#var('file_rec/git', 'command',
+"       \ ['git', 'ls-files', '-co', '--exclude-standard'])
 
 " Change ignore_globs
-call denite#custom#filter('matcher_ignore_globs', 'ignore_globs',
-      \ [ '.git/', '.ropeproject/', '__pycache__/',
-      \   'venv/', 'images/', '*.min.*', 'img/', 'fonts/',
-      \   'vendor/bundle', '.bundle', '.sass-cache',
-      \   'node_modules', 'bower_components'])
+" call denite#custom#filter('matcher_ignore_globs', 'ignore_globs',
+"       \ [ '.git/', '.ropeproject/', '__pycache__/',
+"       \   'venv/', 'images/', '*.min.*', 'img/', 'fonts/',
+"       \   'vendor/bundle', '.bundle', '.sass-cache',
+"       \   'node_modules', 'bower_components'])
 
 
-call denite#custom#option('default', {
-      \ 'auto_accel': v:true,
-      \ 'prompt': '>',
-      \ 'source_names': 'short',
-      \ })
+" call denite#custom#option('default', {
+"       \ 'auto_accel': v:true,
+"       \ 'prompt': '>',
+"       \ 'source_names': 'short',
+"       \ })
 
 
 " ファイルタイプ
 " カラースキーマ
 " ディレクトリ
+" nmap <silent> <Leader>d :<C-u>Denite directory_rec<CR>
 " ファイル
-nmap <silent> <Leader>f :<C-u>Denite file -highlight-mode-insert=Search<CR>
-nmap <silent> <Leader>u :<C-u>DeniteBufferDir -buffer-name=files -highlight-mode-insert=Search file<CR>
-nmap <silent> <Leader>p :<C-u>Denite -buffer-name=files -highlight-mode-insert=Search `finddir('.git', ';') != '' ? 'file_rec/git' : 'file_rec'`<CR>
+" nmap <silent> <Leader>f :<C-u>Denite file -highlight-mode-insert=Search<CR>
+" nmap <silent> <Leader>u :<C-u>DeniteBufferDir -buffer-name=files -highlight-mode-insert=Search file<CR>
+" nmap <silent> <Leader>p :<C-u>Denite -buffer-name=files -highlight-mode-insert=Search `finddir('.git', ';') != '' ? 'file_rec/git' : 'file_rec'`<CR>
 " ファイル（mru）
-nmap <silent> <Leader>r :<C-u>Denite file_mru -highlight-mode-insert=Search<CR>
+" nmap <silent> <Leader>r :<C-u>Denite file_mru -highlight-mode-insert=Search<CR>
 
 " コマンド
 " grep
-nmap <silent> <Leader>g :<C-u>Denite grep -highlight-mode-insert=Search<CR>
+" nmap <silent> <Leader>g :<C-u>Denite grep -highlight-mode-insert=Search<CR>
 
 " ヘルプ
-nmap <silent> <Leader>h :<C-u>Denite help -highlight-mode-insert=Search<CR>
+" nmap <silent> <Leader>h :<C-u>Denite help -highlight-mode-insert=Search<CR>
 
 " ヤンク
-nmap <silent> <Leader>y :<C-u>Denite register -highlight-mode-insert=Search neoyank<CR>
+" nmap <silent> <Leader>y :<C-u>Denite register -highlight-mode-insert=Search neoyank<CR>
 
 " バッファ
-nmap <silent> <Leader>. :<C-u>Denite buffer -highlight-mode-insert=Search<CR>
+" nmap <silent> <Leader>. :<C-u>Denite buffer -highlight-mode-insert=Search<CR>
 
 " アウトライン
-nmap <silent> <Leader>o :<C-u>Denite outline -highlight-mode-insert=Search<CR>
+" nmap <silent> <Leader>o :<C-u>Denite outline -highlight-mode-insert=Search<CR>
 
 " ライン
-nmap <silent> <Leader>/ :<C-u>Denite line -buffer-name=search%`bufnr('%')` -highlight-mode-insert=Search<CR>
+" nmap <silent> <Leader>/ :<C-u>Denite line -buffer-name=search%`bufnr('%')` -highlight-mode-insert=Search<CR>
 
 " Deniteでカーソル上のwordをBuffer内で検索
-nmap <silent> <Leader>* :<C-u>DeniteCursorWord -buffer-name=search -auto-highlight -mode=normal -highlight-mode-insert=Search line<CR>
+" nmap <silent> <Leader>* :<C-u>DeniteCursorWord -buffer-name=search -auto-highlight -mode=normal -highlight-mode-insert=Search line<CR>
 
-nmap <silent> <Leader>a :<C-u>Denite -buffer-name=files -highlight-mode-insert=Search buffer file_mru file<CR>
+" nmap <silent> <Leader>a :<C-u>Denite -buffer-name=files -highlight-mode-insert=Search buffer file_mru file<CR>
 
 " Use accelerated_jk
 " nmap j <Plug>(accelerated_jk_gj)
@@ -479,7 +489,7 @@ let g:syntastic_mode_map = {
 let g:syntastic_javascript_checkers = ['jshint']
 let g:syntastic_eruby_ruby_quiet_messages =
     \ {'regex': 'possibly useless use of a variable in void context'}
-let g:syntastic_scss_sass_quiet_messages = 
+let g:syntastic_scss_sass_quiet_messages =
     \ {'regex': '\vUndefined (mixin|variable)|File to import not found or unreadable'}
     " \ {'regex': 'File to import not found or unreadable'}
     " \ {'regex': 'Undefined \(mixin\|variable\)'}
@@ -691,13 +701,56 @@ nnoremap <silent> <space>r V:TREPLSendLine<cr>
 vnoremap <silent> <space>r V:TREPLSendSelection<cr>'>j$
 
 " Use previm
-let g:previm_open_cmd = 'open -a Vivaldi'
+let g:previm_open_cmd = 'open -a Google\ Chrome'
 
 " Use fzf
-" nmap ; :Buffers
-" nmap t :Files
-" nmap r :Tags
-"
+" プロジェクトルートをカレントディレクトリにする設定
+let g:rooter_change_directory_for_non_project_files = 'current'
+" This is the default extra key bindings
+let g:fzf_action = {
+  \ 'ctrl-o': 'tab split',
+  \ 'ctrl-x': 'split',
+  \ 'ctrl-v': 'vsplit' }
+" Default fzf layout
+" - down / up / left / right
+let g:fzf_layout = { 'down': '~40%' }
+
+" In Neovim, you can set up fzf window using a Vim command
+" let g:fzf_layout = { 'window': 'enew' }
+" let g:fzf_layout = { 'window': '-tabnew' }
+" let g:fzf_layout = { 'window': '10split enew' }
+let g:fzf_buffers_jump = 1
+
+" Insert mode completion
+imap <c-x><c-k> <plug>(fzf-complete-word)
+imap <c-x><c-f> <plug>(fzf-complete-path)
+imap <c-x><c-j> <plug>(fzf-complete-file-ag)
+imap <c-x><c-l> <plug>(fzf-complete-line)
+
+" Advanced customization using autoload functions
+inoremap <expr> <c-x><c-k> fzf#vim#complete#word({'left': '15%'})
+
+nmap <Leader>. :Buffers<CR>
+nmap <Leader>f :GFiles<CR>
+nmap <Leader>u :Files %:h<CR>
+nmap <Leader>g :Rg<Space>
+nmap <Leader>/ :BLines<CR>
+nmap <Leader>h :Helptags<CR>
+command! FZFMru call fzf#run({
+\  'source':  v:oldfiles,
+\  'sink':    'tabe',
+\  'options': '-m -x +s',
+\  'down':    '40%'})
+nnoremap <Leader>r :FZFMru<CR>
+
+" `:Rg` でカレントディレクトリ以下のgrep (ripgrep)、プレビュー付き
+if executable('rg')
+  command! -bang -nargs=* Rg
+        \ call fzf#vim#grep(
+        \   'rg --line-number --no-heading '.shellescape(<q-args>), 0,
+        \   fzf#vim#with_preview({'options': '--exact --reverse --delimiter : --nth 3..'}, 'up:50%:wrap'))
+endif
+
 " NERDTree
 " autocmd BufEnter * lcd %:p:h
 map <Space>t :NERDTreeTabsToggle<CR>
@@ -739,6 +792,11 @@ autocmd BufWritePre *.js,*.css,*.scss,*.less PrettierAsync
 let g:prettier#exec_cmd_async = 1
 let g:prettier#quickfix_enabled = 1
 let g:prettier#config#print_width = 120
+let g:prettier#config#semi = 'true'
+let g:prettier#config#bracket_spacing = 'false'
+let g:prettier#config#jsx_bracket_same_line = 'true'
+let g:prettier#config#trailing_comma = 'es5'
+
 
 " tagbar
 " let g:tagbar_type_javascript = {
@@ -763,21 +821,6 @@ let g:tagbar_type_elixir = {
         \ 't:tests'
     \ ]
     \ }
-
-" Fzf Configuration
-" This is the default extra key bindings
-let g:fzf_action = {
-  \ 'ctrl-t': 'tab split',
-  \ 'ctrl-x': 'split',
-  \ 'ctrl-v': 'vsplit' }
-
-" Default fzf layout
-" - down / up / left / right
-let g:fzf_layout = { 'down': '~40%' }
-
-" In Neovim, you can set up fzf window using a Vim command
-let g:fzf_layout = { 'window': 'enew' }
-let g:fzf_layout = { 'window': '-tabnew' }
 
 " mix format
 let g:mix_format_on_save = 1

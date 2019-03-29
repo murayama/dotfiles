@@ -13,7 +13,7 @@ set cmdheight=1                 " コマンドラインの高さ
 set shortmess=t                 " 'Press RETURN or enter command to continue' を表示しない
 set history=50                  " 記憶するコマンド数
 set number                      " 行番号を表示
-" set relativenumber            " 相対行を表示
+set relativenumber            " 相対行を表示
 set showmode                    "
 set wildmenu                    " コマンド入力中の補完候補をステータスラインに表示
 set wildmode=longest,list,full
@@ -38,13 +38,14 @@ set matchtime=1
 set matchpairs& matchpairs+=<:> " 対応括弧に'<'と'>'のペアを追加
 " set title                     " タイトルを表示
 set laststatus=2                " 常にステータス行を表示
-" set ignorecase                  " 大文字・小文字を無視
+set ignorecase                  " 大文字・小文字を無視
 set smartcase                   " 検索キーワードに大文字が含まれていれば大文字小文字を区別
 set incsearch                   " サーチをインクリメンタルにする
 set hlsearch                    " 検索キーワードをハイライトする
 set wrapscan                    " ファイルの最後に来たら最初から検索
 set magic                       " 正規表現使用時に magic モードにする
 set list                        " タブや改行などを別の文字に区別する
+set inccommand=split
 " set listchars=tab:»-,trail:-,extends:»,precedes:«,nbsp:%,eol:↲
 if !has('multi_byte')
   set listchars=tab:^I,extends:>,precedes:<,nbsp:%,trail:.

@@ -2,26 +2,15 @@
 
 call plug#begin('~/.local/share/nvim/plugged')
 
-" deoplete
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' } " Plug 'Shougo/deoplete-rct'
-" Plug 'uplus/deoplete-solargraph'
-" Plug 'osyo-manga/vim-monster'
-"" Elixir
-Plug 'slashmili/alchemist.vim'
-"" javascript
-" Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
-Plug 'wokalski/autocomplete-flow'
-"" golang
-Plug 'zchee/deoplete-go', { 'do': 'make'}
+" YouCompleteMe
+" Plug 'Valloric/YouCompleteMe'
+" Plug 'tenfyzhong/CompleteParameter.vim'
 
-" denite
-" Plug 'Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
+" coc.vim
+Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
 
 " neoyank
 Plug 'Shougo/neoyank.vim'
-
-" neomru
-Plug 'Shougo/neomru.vim'
 
 " colorscheme jellybeans
 Plug 'nanotech/jellybeans.vim'
@@ -79,6 +68,8 @@ Plug 'romanvbabenko/rails.vim', { 'for': 'ruby' }
 
 " ruby_hl_lvar
 " Plug 'todesking/ruby_hl_lvar.vim', { 'for': 'ruby' }
+
+Plug 'ngmy/vim-rubocop', { 'for': 'ruby' }
 
 " match.zip
 Plug 'vim-scripts/matchit.zip'
@@ -184,6 +175,8 @@ Plug 'vim-erlang/vim-erlang-compiler'
 
 " elixir
 Plug 'elixir-lang/vim-elixir'
+Plug 'thinca/vim-ref'
+Plug 'awetzel/elixir.nvim', { 'do': 'yes \| ./install.sh' }
 Plug 'avdgaag/vim-phoenix'
 Plug 'mmorearty/elixir-ctags'
 Plug 'mattreduce/vim-mix'
@@ -286,7 +279,6 @@ source ~/.vim/rc/basic.vim
 source ~/.vim/rc/syntax.vim
 source ~/.vim/rc/map.vim
 
-
 " netrw
 " 上部に表示される情報を非表示
 let g:netrw_banner = 0
@@ -306,166 +298,16 @@ let g:netrw_sort_sequence = '[\/]$,*'
 let g:netrw_browse_split = 3
 
 
-" Use deoplete.
-set completeopt+=noinsert
-" set completeopt+=noselect
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#enable_camel_case = 1
-" Use smartcase.
-call deoplete#custom#option('smart_case', v:true)
-" <TAB>: completion.
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ deoplete#manual_complete()
-function! s:check_back_space() abort "{{{
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~ '\s'
-endfunction"}}}
-
-" <S-TAB>: completion back.
-inoremap <expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<C-h>"
-
-" <C-h>, <BS>: close popup and delete backword char.
-inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
-inoremap <expr><BS>  deoplete#smart_close_popup()."\<C-h>"
-
-" vim-mounster
-" gem install rcodetools
-" gem install fastri
-" or
-" gem install solorgraph
-" let g:monster#completion#backend = 'solargraph'
-" let g:monster#completion#rcodetools#backend = "async_rct_complete"
-" let g:monster#completion#solargraph#backend = "async_solargraph_suggest"
-" let g:deoplete#sources#omni#input_patterns = {
-" \   "ruby" : '[^. *\t]\.\w*\|\h\w*::',
-" \}
-
-" Use auto delimiter
-call deoplete#custom#source('_', 'converters', [
-      \ 'converter_remove_paren',
-      \ 'converter_remove_overlap',
-      \ 'converter_truncate_abbr',
-      \ 'converter_truncate_menu',
-      \ 'converter_auto_delimiter',
-\ ])
-
-" deoplete-go
-let deoplete#sources#go#gocode_binary='~/.go/bin/gocode'
-let g:deoplete#sources#go#package_dot = 1
-let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
-let g:deoplete#sources#go#pointer = 1
-
-" deoplete-ternjs
-" let g:deoplete#sources#ternjs#tern_bin = '~/.anyenv/envs/ndenv/shims/tern'
-" let g:deoplete#sources#ternjs#timeout = 1
-" let g:tern#command = ["tern"]
-" let g:tern#arguments = ["--persistent"]
-" let g:deoplete#sources#ternjs#types = 1
-" let g:deoplete#sources#ternjs#depths = 1
-" let g:deoplete#sources#ternjs#filter = 0
-" let g:deoplete#sources#ternjs#case_insensitive = 1
-" let g:deoplete#sources#ternjs#guess = 0
-" let g:deoplete#sources#ternjs#sort = 0
-" let g:deoplete#sources#ternjs#expand_word_forward = 0
-" let g:deoplete#sources#ternjs#omit_object_prototype = 0
-" let g:deoplete#sources#ternjs#include_keywords = 1
-" let g:deoplete#sources#ternjs#in_literal = 0
-" let g:deoplete#sources#ternjs#filetypes = [
-"                 \ 'jsx',
-"                 \ ]
-
-" deoplete-solargraph
-" let g:deoplete#sources#omni#functions.ruby = ['solar']
-" let g:deoplete#sources#omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
-
-" Use denite
-
-" if executable('ag')
-"   call denite#custom#var('file_rec', 'command', ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
-"   call denite#custom#var('grep', 'command', ['ag'])
-"   call denite#custom#var('grep', 'recursive_opts', [])
-"   call denite#custom#var('grep', 'pattern_opt', [])
-"   call denite#custom#var('grep', 'default_opts', ['--follow', '--no-group', '--no-color'])
-" endif
-
-" call denite#custom#source('file_old', 'converters',
-"       \ ['converter_relative_word'])
-" call denite#custom#source('buffer', 'converters', ['converter_file_directory'])
-
-" call denite#custom#map(
-"   \ 'insert',
-"   \ '<C-j>',
-"   \ '<denite:move_to_next_line>',
-"   \ 'noremap'
-"   \)
-"
-" call denite#custom#map(
-"   \ 'insert',
-"   \ '<C-k>',
-"   \ '<denite:move_to_previous_line>',
-"   \ 'noremap'
-"   \)
-
-" Define alias
-" call denite#custom#alias('source', 'file_rec/git', 'file_rec')
-" call denite#custom#var('file_rec/git', 'command',
-"       \ ['git', 'ls-files', '-co', '--exclude-standard'])
-
-" Change ignore_globs
-" call denite#custom#filter('matcher_ignore_globs', 'ignore_globs',
-"       \ [ '.git/', '.ropeproject/', '__pycache__/',
-"       \   'venv/', 'images/', '*.min.*', 'img/', 'fonts/',
-"       \   'vendor/bundle', '.bundle', '.sass-cache',
-"       \   'node_modules', 'bower_components'])
-
-
-" call denite#custom#option('default', {
-"       \ 'auto_accel': v:true,
-"       \ 'prompt': '>',
-"       \ 'source_names': 'short',
-"       \ })
-
-
-" ファイルタイプ
-" カラースキーマ
-" ディレクトリ
-" nmap <silent> <Leader>d :<C-u>Denite directory_rec<CR>
-" ファイル
-" nmap <silent> <Leader>f :<C-u>Denite file -highlight-mode-insert=Search<CR>
-" nmap <silent> <Leader>u :<C-u>DeniteBufferDir -buffer-name=files -highlight-mode-insert=Search file<CR>
-" nmap <silent> <Leader>p :<C-u>Denite -buffer-name=files -highlight-mode-insert=Search `finddir('.git', ';') != '' ? 'file_rec/git' : 'file_rec'`<CR>
-" ファイル（mru）
-" nmap <silent> <Leader>r :<C-u>Denite file_mru -highlight-mode-insert=Search<CR>
-
-" コマンド
-" grep
-" nmap <silent> <Leader>g :<C-u>Denite grep -highlight-mode-insert=Search<CR>
-
-" ヘルプ
-" nmap <silent> <Leader>h :<C-u>Denite help -highlight-mode-insert=Search<CR>
-
-" ヤンク
-" nmap <silent> <Leader>y :<C-u>Denite register -highlight-mode-insert=Search neoyank<CR>
-
-" バッファ
-" nmap <silent> <Leader>. :<C-u>Denite buffer -highlight-mode-insert=Search<CR>
-
-" アウトライン
-" nmap <silent> <Leader>o :<C-u>Denite outline -highlight-mode-insert=Search<CR>
-
-" ライン
-" nmap <silent> <Leader>/ :<C-u>Denite line -buffer-name=search%`bufnr('%')` -highlight-mode-insert=Search<CR>
-
-" Deniteでカーソル上のwordをBuffer内で検索
-" nmap <silent> <Leader>* :<C-u>DeniteCursorWord -buffer-name=search -auto-highlight -mode=normal -highlight-mode-insert=Search line<CR>
-
-" nmap <silent> <Leader>a :<C-u>Denite -buffer-name=files -highlight-mode-insert=Search buffer file_mru file<CR>
-
-" Use accelerated_jk
-" nmap j <Plug>(accelerated_jk_gj)
-" nmap k <Plug>(accelerated_jk_gk)
+" Use YouCompleteMe
+" let g:ycm_global_ycm_extra_conf = '${HOME}/.ycm_extra_conf.py'
+" let g:ycm_global_ycm_extra_conf = ''
+" let g:ycm_auto_trigger = 1
+" let g:ycm_min_num_of_chars_for_completion = 3
+" let g:ycm_complete_in_comments = 1
+" let g:ycm_collect_identifiers_from_comments_and_strings = 1
+" let g:ycm_seed_identifiers_with_syntax = 1
+" let g:ycm_autoclose_preview_window_after_insertion = 1
+" let g:ycm_key_list_stop_completion = ['<C-y>', '<CR>']
 
 " Use vim-ruby
 " let g:rubycomplete_buffer_loading = 1
@@ -486,7 +328,7 @@ let g:syntastic_mode_map = {
  \ 'active_filetypes' : [],
  \ 'passive_filetypes' : ['html','php','ruby', 'go', 'scss']
  \}
-let g:syntastic_javascript_checkers = ['jshint']
+let g:syntastic_javascript_checkers = ['eslint']
 let g:syntastic_eruby_ruby_quiet_messages =
     \ {'regex': 'possibly useless use of a variable in void context'}
 let g:syntastic_scss_sass_quiet_messages =
@@ -495,6 +337,7 @@ let g:syntastic_scss_sass_quiet_messages =
     " \ {'regex': 'Undefined \(mixin\|variable\)'}
 " let g:syntastic_phpcs_disable = 1
 let g:syntastic_go_checkers = ['go', 'golint']
+let g:syntastic_ruby_checkers = ['rubocop', 'mri']
 
 
 " vim-textmanip
@@ -694,11 +537,11 @@ let g:javascript_plugin_flow = 1
 " let g:tigris#delay = 300
 
 " Use neoterm
-let g:neoterm_autoscroll=1
-let g:neoterm_repl_ruby = 'pry'
-tnoremap <silent> <ESC> <C-\><C-n><C-w>
-nnoremap <silent> <space>r V:TREPLSendLine<cr>
-vnoremap <silent> <space>r V:TREPLSendSelection<cr>'>j$
+" let g:neoterm_autoscroll=1
+" let g:neoterm_repl_ruby = 'pry'
+" tnoremap <silent> <ESC> <C-\><C-n><C-w>
+" nnoremap <silent> <space>r V:TREPLSendLine<cr>
+" vnoremap <silent> <space>r V:TREPLSendSelection<cr>'>j$
 
 " Use previm
 let g:previm_open_cmd = 'open -a Google\ Chrome'
@@ -746,9 +589,11 @@ nnoremap <Leader>r :FZFMru<CR>
 " `:Rg` でカレントディレクトリ以下のgrep (ripgrep)、プレビュー付き
 if executable('rg')
   command! -bang -nargs=* Rg
-        \ call fzf#vim#grep(
-        \   'rg --line-number --no-heading '.shellescape(<q-args>), 0,
-        \   fzf#vim#with_preview({'options': '--exact --reverse --delimiter : --nth 3..'}, 'up:50%:wrap'))
+   \ call fzf#vim#grep(
+   \ 'rg --column --line-number --hidden --ignore-case --no-heading --color=always '.shellescape(<q-args>), 1,
+   \ <bang>0 ? fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'up:60%')
+   \ : fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'right:50%:hidden', '?'),
+   \ <bang>0)
 endif
 
 " NERDTree
@@ -828,3 +673,17 @@ let g:mix_format_on_save = 1
 " plantuml
 let g:plantuml_executable_script="~/dotfiles/plantuml"
 au FileType plantuml command! OpenUML :!open -a Vivaldi %
+
+" coc
+" Use tab for trigger completion with characters ahead and navigate.
+" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction

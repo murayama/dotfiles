@@ -46,6 +46,7 @@ set wrapscan                    " ファイルの最後に来たら最初から�
 set magic                       " 正規表現使用時に magic モードにする
 set list                        " タブや改行などを別の文字に区別する
 set inccommand=split
+set splitbelow
 " set listchars=tab:»-,trail:-,extends:»,precedes:«,nbsp:%,eol:↲
 if !has('multi_byte')
   set listchars=tab:^I,extends:>,precedes:<,nbsp:%,trail:.

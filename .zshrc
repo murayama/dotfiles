@@ -97,16 +97,18 @@ zstyle ":anyframe:selector:fzf:" command 'fzf --extended'
 
 
 # fzf
-if [ -e /usr/local/opt/fzf/shell/completion.zsh ]; then
-  source /usr/local/opt/fzf/shell/key-bindings.zsh
-  source /usr/local/opt/fzf/shell/completion.zsh
-fi
-export FZF_DEFAULT_COMMAND='ag --nocolor -g ""'
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# if [ -e /usr/local/opt/fzf/shell/completion.zsh ]; then
+#   source /usr/local/opt/fzf/shell/key-bindings.zsh
+#   source /usr/local/opt/fzf/shell/completion.zsh
+# fi
+export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git/*"'
 export FZF_DEFAULT_OPTS='
 --height 40%
 --color fg:188,bg:233,hl:103,fg+:222,bg+:234,hl+:104
 --color info:183,prompt:110,spinner:107,pointer:167,marker:215
 '
+export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"
 export FZF_TMUX=1
 
 fe() {
@@ -114,6 +116,16 @@ fe() {
   IFS=$'\n' files=($(fzf-tmux --query="$1" --multi --select-1 --exit-0))
   [[ -n "$files" ]] && ${EDITOR:-nvim} "${files[@]}"
 }
+
+function gadd() {
+    local selected
+    selected=$(unbuffer git status -s | fzf -m --ansi --preview="echo {} | awk '{print \$2}' | xargs git diff --color" | awk '{print $2}')
+    if [[ -n "$selected" ]]; then
+        selected=$(tr '\n' ' ' <<< "$selected")
+        git add `echo $selected | xargs`
+        echo "Completed: git add $selected"
+    fi
+  }
 
 #=============================
 # anyenv
@@ -133,6 +145,8 @@ if [ -d $HOME/.asdf ]; then
 
   . $HOME/.asdf/completions/asdf.bash
 fi
+
+eval "$(direnv hook zsh)"
 
 export EDITOR=nvim
 

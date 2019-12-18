@@ -402,12 +402,13 @@ let g:lightline = {
       \   'active': {
       \     'left': [
       \       ['mode', 'paste'],
-      \       ['fugitive', 'gitgutter', 'filename'],
+      \       ['fugitive', 'cocstatus', 'filename'],
       \     ],
       \     'right': [
       \       ['lineinfo', 'syntastic'],
       \       ['percent'],
       \       ['charcode', 'fileformat', 'fileencoding', 'filetype'],
+      \     [ 'blame' ]
       \     ]
       \   },
       \   'component_function': {
@@ -420,7 +421,8 @@ let g:lightline = {
       \     'fileencoding': 'MyFileencoding',
       \     'mode': 'MyMode',
       \     'syntastic': 'SyntasticStatuslineFlag',
-      \     'charcode': 'MyCharCode'
+      \     'charcode': 'MyCharCode',
+      \     'blame': 'LightlineGitBlame'
       \   },
       \ }
 
@@ -677,6 +679,7 @@ au FileType plantuml command! OpenUML :!open -a Vivaldi %
 " coc
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
+let g:coc_global_extensions = ['coc-solargraph']
 inoremap <silent><expr> <TAB>
       \ pumvisible() ? "\<C-n>" :
       \ <SID>check_back_space() ? "\<TAB>" :

@@ -1,4 +1,5 @@
 {
+  "git.enableGutters": false,
   "suggest.noselect":false,
   "suggest.preferCompleteThanJumpPlaceholder":true,
   "languageserver":{
@@ -9,7 +10,7 @@
         "gocodeCompletionEnabled": true,
         "diagnosticsEnabled": true,
         "lintTool": "golint"
-      } 
+      }
     },
     "efm": { //Markdown,vim,erbのLSP
       "command": "efm-langserver",
@@ -18,5 +19,6 @@
       // "args": ["-c", "/path/to/your/config.yaml"],
       "filetypes": ["vim", "eruby", "markdown"]
     }
-  }
+  },
+  "codeLens.enable": true
 }

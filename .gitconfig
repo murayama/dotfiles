@@ -8,6 +8,7 @@
 [color]
   ui = auto
 [pager]
+  branch = cat
   # log = diff-highlight | less
   # show = diff-highlight | less
   # diff = diff-highlight | less

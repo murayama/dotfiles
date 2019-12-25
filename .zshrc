@@ -166,3 +166,17 @@ alias ctags="`brew --prefix`/bin/ctags"
 export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
 
 ulimit -u 2048
+
+export GOPATH=$HOME/go
+export PATH="$GOPATH/bin:$PATH"
+
+# tabtab source for serverless package
+# uninstall by removing these lines or running `tabtab uninstall serverless`
+[[ -f /Users/murayama/.npm/_npx/90969/lib/node_modules/serverless/node_modules/tabtab/.completions/serverless.zsh ]] && . /Users/murayama/.npm/_npx/90969/lib/node_modules/serverless/node_modules/tabtab/.completions/serverless.zsh
+# tabtab source for sls package
+# uninstall by removing these lines or running `tabtab uninstall sls`
+[[ -f /Users/murayama/.npm/_npx/90969/lib/node_modules/serverless/node_modules/tabtab/.completions/sls.zsh ]] && . /Users/murayama/.npm/_npx/90969/lib/node_modules/serverless/node_modules/tabtab/.completions/sls.zsh
+# tabtab source for slss package
+# uninstall by removing these lines or running `tabtab uninstall slss`
+[[ -f /Users/murayama/.npm/_npx/90969/lib/node_modules/serverless/node_modules/tabtab/.completions/slss.zsh ]] && . /Users/murayama/.npm/_npx/90969/lib/node_modules/serverless/node_modules/tabtab/.completions/slss.zsh
+export PATH="/usr/local/opt/postgresql@10/bin:$PATH"

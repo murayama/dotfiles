@@ -7,7 +7,10 @@ call plug#begin('~/.local/share/nvim/plugged')
 " Plug 'tenfyzhong/CompleteParameter.vim'
 
 " coc.vim
-Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
+" Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
+
+" tabnine
+Plug 'zxqfl/tabnine-vim'
 
 " neoyank
 Plug 'Shougo/neoyank.vim'
@@ -267,17 +270,18 @@ set background=dark
 " colorscheme gotham256
 " colorscheme onedark
 " colorscheme janah
-" colorscheme spacegray
+colorscheme spacegray
 " colorscheme atom-dark-256
 " colorscheme dracula
 " colorscheme material-theme
-colorscheme tokyo-metro
+" colorscheme tokyo-metro
 
 source ~/.vim/rc/encoding.vim
 " source ~/.vim/rc/golang.vim
 source ~/.vim/rc/basic.vim
 source ~/.vim/rc/syntax.vim
 source ~/.vim/rc/map.vim
+set rtp+=~/tabnine-vim
 
 " netrw
 " 上部に表示される情報を非表示
@@ -633,7 +637,7 @@ let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol = ''
 let g:DevIconsDefaultFolderOpenSymbol = ''
 
 " vim-prettier
-let g:prettier#autoformat = 0
+" let g:prettier#autoformat = 0
 " autocmd BufWritePre,TextChanged,InsertLeave *.js,*.css,*.scss,*.less PrettierAsync
 autocmd BufWritePre *.js,*.css,*.scss,*.less PrettierAsync
 let g:prettier#exec_cmd_async = 1
@@ -679,14 +683,14 @@ au FileType plantuml command! OpenUML :!open -a Vivaldi %
 " coc
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
-let g:coc_global_extensions = ['coc-solargraph']
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
+" let g:coc_global_extensions = ['coc-solargraph']
+" inoremap <silent><expr> <TAB>
+"      \ pumvisible() ? "\<C-n>" :
+"      \ <SID>check_back_space() ? "\<TAB>" :
+"      \ coc#refresh()
+" inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+"
+" function! s:check_back_space() abort
+"   let col = col('.') - 1
+"   return !col || getline('.')[col - 1]  =~# '\s'
+" endfunction

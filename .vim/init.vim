@@ -7,10 +7,10 @@ call plug#begin('~/.local/share/nvim/plugged')
 " Plug 'tenfyzhong/CompleteParameter.vim'
 
 " coc.vim
-" Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
+Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
 
 " tabnine
-Plug 'zxqfl/tabnine-vim'
+" Plug 'zxqfl/tabnine-vim'
 
 " neoyank
 Plug 'Shougo/neoyank.vim'
@@ -305,13 +305,13 @@ let g:netrw_browse_split = 3
 " Use YouCompleteMe
 " let g:ycm_global_ycm_extra_conf = '${HOME}/.ycm_extra_conf.py'
 " let g:ycm_global_ycm_extra_conf = ''
-let g:ycm_auto_trigger = 1
-let g:ycm_min_num_of_chars_for_completion = 3
-let g:ycm_complete_in_comments = 1
-let g:ycm_collect_identifiers_from_comments_and_strings = 1
-let g:ycm_seed_identifiers_with_syntax = 1
-let g:ycm_autoclose_preview_window_after_insertion = 1
-let g:ycm_key_list_stop_completion = ['<C-y>', '<CR>', '<ESC>']
+" let g:ycm_auto_trigger = 1
+" let g:ycm_min_num_of_chars_for_completion = 3
+" let g:ycm_complete_in_comments = 1
+" let g:ycm_collect_identifiers_from_comments_and_strings = 1
+" let g:ycm_seed_identifiers_with_syntax = 1
+" let g:ycm_autoclose_preview_window_after_insertion = 1
+" let g:ycm_key_list_stop_completion = ['<C-y>', '<CR>', '<ESC>']
 
 " Use vim-ruby
 " let g:rubycomplete_buffer_loading = 1
@@ -328,15 +328,15 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_mode_map = {
- \ 'mode' : 'active',
- \ 'active_filetypes' : [],
- \ 'passive_filetypes' : ['html','php','ruby', 'go', 'scss']
- \}
+  \ 'mode' : 'active',
+  \ 'active_filetypes' : [],
+  \ 'passive_filetypes' : ['html','php','ruby', 'go', 'scss']
+  \}
 let g:syntastic_javascript_checkers = ['eslint']
 let g:syntastic_eruby_ruby_quiet_messages =
-    \ {'regex': 'possibly useless use of a variable in void context'}
+   \ {'regex': 'possibly useless use of a variable in void context'}
 let g:syntastic_scss_sass_quiet_messages =
-    \ {'regex': '\vUndefined (mixin|variable)|File to import not found or unreadable'}
+   \ {'regex': '\vUndefined (mixin|variable)|File to import not found or unreadable'}
     " \ {'regex': 'File to import not found or unreadable'}
     " \ {'regex': 'Undefined \(mixin\|variable\)'}
 " let g:syntastic_phpcs_disable = 1
@@ -636,6 +636,9 @@ let g:DevIconsEnableFoldersOpenClose = 1
 let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol = ''
 let g:DevIconsDefaultFolderOpenSymbol = ''
 
+" vim-flow
+let g:flow#autoclose = 1
+
 " vim-prettier
 " let g:prettier#autoformat = 0
 " autocmd BufWritePre,TextChanged,InsertLeave *.js,*.css,*.scss,*.less PrettierAsync
@@ -683,14 +686,14 @@ au FileType plantuml command! OpenUML :!open -a Vivaldi %
 " coc
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
-" let g:coc_global_extensions = ['coc-solargraph']
-" inoremap <silent><expr> <TAB>
-"      \ pumvisible() ? "\<C-n>" :
-"      \ <SID>check_back_space() ? "\<TAB>" :
-"      \ coc#refresh()
-" inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-"
-" function! s:check_back_space() abort
-"   let col = col('.') - 1
-"   return !col || getline('.')[col - 1]  =~# '\s'
-" endfunction
+let g:coc_global_extensions = ['coc-solargraph']
+inoremap <silent><expr> <TAB>
+     \ pumvisible() ? "\<C-n>" :
+     \ <SID>check_back_space() ? "\<TAB>" :
+     \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction

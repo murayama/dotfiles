@@ -151,6 +151,7 @@ eval "$(direnv hook zsh)"
 export EDITOR=nvim
 
 # alias
+alias ls='ls -G'
 alias vi=nvim
 alias g=anyframe-widget-cd-ghq-repository
 alias gb=anyframe-widget-checkout-git-branch
@@ -180,3 +181,9 @@ export PATH="$GOPATH/bin:$PATH"
 # uninstall by removing these lines or running `tabtab uninstall slss`
 [[ -f /Users/murayama/.npm/_npx/90969/lib/node_modules/serverless/node_modules/tabtab/.completions/slss.zsh ]] && . /Users/murayama/.npm/_npx/90969/lib/node_modules/serverless/node_modules/tabtab/.completions/slss.zsh
 export PATH="/usr/local/opt/postgresql@10/bin:$PATH"
+
+# tabtab source for packages
+# uninstall by removing these lines
+[[ -f ~/.config/tabtab/__tabtab.zsh ]] && . ~/.config/tabtab/__tabtab.zsh || true
+
+export PATH=/usr/local/Cellar/openssl/1.0.2t/bin:$PATH

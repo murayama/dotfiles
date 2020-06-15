@@ -48,6 +48,9 @@ Plug 'jdkanani/vim-material-theme'
 " colorscheme tokyo-moetro
 Plug 'koirand/tokyo-metro.vim'
 
+" colorscheme night-owl
+Plug 'haishanh/night-owl.vim'
+
 " neoterm
 Plug 'kassio/neoterm' " config
 
@@ -252,36 +255,12 @@ autocmd VimEnter *
   \|   PlugInstall --sync | q
   \| endif
 
-" If you have vim >=8.0 or Neovim >= 0.1.5
-if (has("termguicolors"))
- set termguicolors
- " let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
- " let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-endif
-if has('nvim')
-  let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-endif
-
-syntax enable
-" Theme
-set background=dark
-" colorscheme hybrid
-" colorscheme tender
-" colorscheme gotham256
-" colorscheme onedark
-" colorscheme janah
-colorscheme spacegray
-" colorscheme atom-dark-256
-" colorscheme dracula
-" colorscheme material-theme
-" colorscheme tokyo-metro
-
 source ~/.vim/rc/encoding.vim
 " source ~/.vim/rc/golang.vim
 source ~/.vim/rc/basic.vim
 source ~/.vim/rc/syntax.vim
 source ~/.vim/rc/map.vim
-set rtp+=~/tabnine-vim
+" set rtp+=~/tabnine-vim
 
 " netrw
 " 上部に表示される情報を非表示
@@ -401,7 +380,7 @@ map zg/ <Plug>(incsearch-easymotion-stay)
 
 " Use lightline
 let g:lightline = {
-      \ 'colorscheme': 'material',
+      \ 'colorscheme': 'nightowl',
       \ 'mode_map': {'c': 'NORMAL'},
       \   'active': {
       \     'left': [
@@ -642,7 +621,7 @@ let g:flow#autoclose = 1
 " vim-prettier
 " let g:prettier#autoformat = 0
 " autocmd BufWritePre,TextChanged,InsertLeave *.js,*.css,*.scss,*.less PrettierAsync
-autocmd BufWritePre *.js,*.css,*.scss,*.less PrettierAsync
+autocmd BufWritePre *.js,*.ts,*.css,*.scss,*.less PrettierAsync
 let g:prettier#exec_cmd_async = 1
 let g:prettier#quickfix_enabled = 1
 let g:prettier#config#print_width = 120

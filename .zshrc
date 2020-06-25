@@ -1,40 +1,90 @@
-#source ~/.zplug/init.zsh
-export ZPLUG_HOME=/usr/local/opt/zplug
-source $ZPLUG_HOME/init.zsh
-
-# zplug
-zplug 'zplug/zplug', hook-build:'zplug --self-manage'
-
-# git
-zplug "plugins/git", from:oh-my-zsh
-
-# syntax highlight
-zplug 'zsh-users/zsh-syntax-highlighting'
-
-# autocomplete
-zplug 'zsh-users/zsh-autosuggestions'
-zplug 'zsh-users/zsh-completions'
-zplug 'chrissicool/zsh-256color'
-
-zplug 'mollifier/anyframe'
-# async
-zplug "mafredri/zsh-async", from:github
-
-# history
-zplug 'zsh-users/zsh-history-substring-search'
-
-# theme
-#zplug "dracula/zsh", as:theme
-zplug "sindresorhus/pure", use:pure.zsh, from:github, as:theme
-
-# zplug check はインストールするものがないときに真を返す
-# ゆえにそうでないとき zplug install する
-if ! zplug check; then
-    zplug install
+### Added by Zinit's installer
+if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
+    print -P "%F{33}▓▒░ %F{220}Installing %F{33}DHARMA%F{220} Initiative Plugin Manager (%F{33}zdharma/zinit%F{220})…%f"
+    command mkdir -p "$HOME/.zinit" && command chmod g-rwX "$HOME/.zinit"
+    command git clone https://github.com/zdharma/zinit "$HOME/.zinit/bin" && \
+        print -P "%F{33}▓▒░ %F{34}Installation successful.%f%b" || \
+        print -P "%F{160}▓▒░ The clone has failed.%f%b"
 fi
 
-# プラグインを読み込み、コマンドを実行可能にする
-zplug load
+source "$HOME/.zinit/bin/zinit.zsh"
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
+
+# Load a few important annexes, without Turbo
+# (this is currently required for annexes)
+zinit light-mode for \
+    zinit-zsh/z-a-as-monitor \
+    zinit-zsh/z-a-patch-dl \
+    zinit-zsh/z-a-bin-gem-node
+
+### End of Zinit's installer chunk
+
+zinit snippet OMZL::git.zsh
+zinit snippet OMZP::git
+zinit cdclear -q
+
+# 補完
+zinit light zsh-users/zsh-autosuggestions
+
+# シンタックスハイライト
+zinit light zdharma/fast-syntax-highlighting
+
+# autocomplete
+zinit light zsh-users/zsh-autosuggestions
+zinit light zsh-users/zsh-completions
+
+# 256color
+zinit light chrissicool/zsh-256color
+
+# Ctrl+r でコマンド履歴を検索
+zinit light zdharma/history-search-multi-word
+
+# anyframe
+zinit light mollifier/anyframe
+
+# theme
+zinit ice compile'(pure|async).zsh' pick'async.zsh' src'pure.zsh'
+zinit light sindresorhus/pure
+zstyle :prompt:pure:git:stash show yes
+
+#source ~/.zplug/init.zsh
+# export ZPLUG_HOME=/usr/local/opt/zplug
+# source $ZPLUG_HOME/init.zsh
+# 
+# # zplug
+# zplug 'zplug/zplug', hook-build:'zplug --self-manage'
+# 
+# # git
+# zplug "plugins/git", from:oh-my-zsh
+# 
+# # syntax highlight
+# zplug 'zsh-users/zsh-syntax-highlighting'
+# 
+# # autocomplete
+# zplug 'zsh-users/zsh-autosuggestions'
+# zplug 'zsh-users/zsh-completions'
+# zplug 'chrissicool/zsh-256color'
+# 
+# zplug 'mollifier/anyframe'
+# # async
+# zplug "mafredri/zsh-async", from:github
+# 
+# # history
+# zplug 'zsh-users/zsh-history-substring-search'
+# 
+# # theme
+# #zplug "dracula/zsh", as:theme
+# zplug "sindresorhus/pure", use:pure.zsh, from:github, as:theme
+# 
+# # zplug check はインストールするものがないときに真を返す
+# # ゆえにそうでないとき zplug install する
+# if ! zplug check; then
+#     zplug install
+# fi
+# 
+# # プラグインを読み込み、コマンドを実行可能にする
+# zplug load
 
 ## Command history configuration
 #
@@ -109,6 +159,7 @@ export FZF_DEFAULT_OPTS='
 --color info:183,prompt:110,spinner:107,pointer:167,marker:215
 '
 export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"
+export FZF_CTRL_R_OPTS='--sort --exact'
 export FZF_TMUX=1
 
 fe() {

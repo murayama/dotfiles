@@ -7,7 +7,8 @@ call plug#begin('~/.local/share/nvim/plugged')
 " Plug 'tenfyzhong/CompleteParameter.vim'
 
 " coc.vim
-Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
+" Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " tabnine
 " Plug 'zxqfl/tabnine-vim'
@@ -161,9 +162,11 @@ Plug 'wavded/vim-stylus'
 Plug 'GutenYe/json5.vim', { 'for': 'json5' }
 Plug 'nicklasos/vim-jsx-riot'
 " post install (yarn install | npm install) then load plugin only for editing supported files
-Plug 'prettier/vim-prettier', {
-    \ 'do': 'yarn install',
-    \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss'] }
+" Plug 'prettier/vim-prettier', {
+"    \ 'do': 'yarn install',
+"    \ 'branch': 'release/1.x',
+"    \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss'] }
+Plug 'sbdchd/neoformat'
 
 " html/css plugins
 Plug 'mattn/emmet-vim'
@@ -621,15 +624,35 @@ let g:flow#autoclose = 1
 " vim-prettier
 " let g:prettier#autoformat = 0
 " autocmd BufWritePre,TextChanged,InsertLeave *.js,*.css,*.scss,*.less PrettierAsync
-autocmd BufWritePre *.js,*.ts,*.css,*.scss,*.less PrettierAsync
-let g:prettier#exec_cmd_async = 1
-let g:prettier#quickfix_enabled = 1
-let g:prettier#config#print_width = 120
-let g:prettier#config#semi = 'true'
-let g:prettier#config#bracket_spacing = 'false'
-let g:prettier#config#jsx_bracket_same_line = 'true'
-let g:prettier#config#trailing_comma = 'es5'
+" autocmd BufWritePre *.js,*.ts,*.css,*.scss,*.less PrettierAsync
+" let g:prettier#config#config_precedence = 'file-override'
+" let g:prettier#exec_cmd_async = 1
+" let g:prettier#quickfix_enabled = 1
+" let g:prettier#config#print_width = 120
+" let g:prettier#config#semi = 'true'
+" let g:prettier#config#bracket_spacing = 'false'
+" let g:prettier#config#jsx_bracket_same_line = 'true'
+" let g:prettier#config#trailing_comma = 'es5'
 
+" neoformat
+let g:neoformat_javascript_prettier = {
+      \ 'exe': './node_modules/.bin/prettier',
+      \ 'args': ['--stdin'],
+      \ 'stdin': 1,
+      \ }
+augroup fmt
+  autocmd!
+  autocmd BufWritePre *.js,*.jsx,*.ts,*.css,*.scss,*.less Neoformat
+augroup END
+let g:neoformat_enabled_javascript = ['prettier']
+
+" autocmd FileType javascript,javascript.jsx setlocal formatprg=prettier\
+"     \--stdin\
+"     \--single-quote\ 
+"     \--trailing-comma\ es5\
+"     \--print-width\ 120\
+"     \--arrow-parens\ avoid
+" let g:neoformat_try_formatprg = 1
 
 " tagbar
 " let g:tagbar_type_javascript = {

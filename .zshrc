@@ -7,6 +7,8 @@ if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
         print -P "%F{160}▓▒░ The clone has failed.%f%b"
 fi
 
+autoload -U promptinit; promptinit
+
 source "$HOME/.zinit/bin/zinit.zsh"
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
@@ -45,8 +47,9 @@ zinit light mollifier/anyframe
 
 # theme
 zinit ice compile'(pure|async).zsh' pick'async.zsh' src'pure.zsh'
-zinit light sindresorhus/pure
+PURE_CMD_MAX_EXEC_TIME=10
 zstyle :prompt:pure:git:stash show yes
+zinit light sindresorhus/pure
 
 #source ~/.zplug/init.zsh
 # export ZPLUG_HOME=/usr/local/opt/zplug

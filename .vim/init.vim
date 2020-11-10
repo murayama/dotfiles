@@ -224,9 +224,6 @@ Plug 'tpope/vim-markdown'
 Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
 
-" vim-devicons
-Plug 'ryanoasis/vim-devicons'
-
 " NERDTree
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
@@ -250,6 +247,11 @@ Plug 'lilydjwg/colorizer'
 Plug 'aklt/plantuml-syntax'
 
 " Plug 'yuttie/comfortable-motion.vim'
+
+
+" vim-devicons
+" Always load the vim-devicons as the very last one.
+Plug 'ryanoasis/vim-devicons'
 
 call plug#end()
 
@@ -637,7 +639,7 @@ let g:flow#autoclose = 1
 " neoformat
 let g:neoformat_javascript_prettier = {
       \ 'exe': './node_modules/.bin/prettier',
-      \ 'args': ['--stdin'],
+      \ 'args': ['--stdin', '--stdin-filepath', '%:p'],
       \ 'stdin': 1,
       \ }
 augroup fmt

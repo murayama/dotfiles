@@ -7,7 +7,8 @@ if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
         print -P "%F{160}▓▒░ The clone has failed.%f%b"
 fi
 
-autoload -U promptinit; promptinit
+autoload -Uz promptinit
+promptinit
 
 source "$HOME/.zinit/bin/zinit.zsh"
 autoload -Uz _zinit
@@ -40,7 +41,7 @@ zinit light zsh-users/zsh-completions
 zinit light chrissicool/zsh-256color
 
 # Ctrl+r でコマンド履歴を検索
-zinit light zdharma/history-search-multi-word
+# zinit light zdharma/history-search-multi-word
 
 # anyframe
 zinit light mollifier/anyframe
@@ -209,7 +210,7 @@ alias ls='ls -G'
 alias vi=nvim
 alias g=anyframe-widget-cd-ghq-repository
 alias gb=anyframe-widget-checkout-git-branch
-alias gh='hub browse $(ghq list | fzf | cut -d "/" -f 2,3)'
+# alias gh='hub browse $(ghq list | fzf | cut -d "/" -f 2,3)'
 alias ghe='GITHUB_HOST=github.logica.io hub'
 
 # git log and peco

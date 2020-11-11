@@ -224,11 +224,14 @@ Plug 'tpope/vim-markdown'
 Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
 
-" NERDTree
-Plug 'scrooloose/nerdtree'
-Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'jistr/vim-nerdtree-tabs'
-Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+" Fern
+Plug 'lambdalisue/fern.vim'
+Plug 'lambdalisue/fern-renderer-nerdfont.vim'
+Plug 'lambdalisue/nerdfont.vim'
+" Plug 'lambdalisue/fern-renderer-devicons.vim'
+Plug 'lambdalisue/fern-git-status.vim'
+Plug 'lambdalisue/fern-hijack.vim'
+Plug 'LumaKernel/fern-mapping-fzf.vim'
 
 " autoclose
 Plug 'Townk/vim-autoclose'
@@ -586,39 +589,20 @@ if executable('rg')
    \ <bang>0)
 endif
 
-" NERDTree
-" autocmd BufEnter * lcd %:p:h
-map <Space>t :NERDTreeTabsToggle<CR>
-map <Space>f :NERDTreeFind<CR>
-let g:NERDTreeShowHidden = 1
-let g:NERDTreeShowBookmarks=1
-let g:NERDTreeLimitedSyntax = 1
-" let g:NERDTreeFileExtensionHighlightFullName = 1
-" let g:nerdtree_tabs_open_on_console_startup = 1
-let g:nerdtree_tabs_autofind = 1
-let g:NERDTreeIndicatorMapCustom = {
-    \ "Modified"  : "✹",
-    \ "Staged"    : "✚",
-    \ "Untracked" : "✭",
-    \ "Renamed"   : "➜",
-    \ "Unmerged"  : "═",
-    \ "Deleted"   : "✖",
-    \ "Dirty"     : "✗",
-    \ "Clean"     : "✔︎",
-    \ 'Ignored'   : '☒',
-    \ "Unknown"   : "?"
-    \ }
+" Fern
+let g:fern#renderer = "nerdfont"
+map <Space>f :Fern . -reveal=%  -drawer -width=50 -stay -keep -toggle<CR>
+map <Space>t :Fern %:h -drawer -width=50 -stay -keep -toggle<CR>
 
-let g:webdevicons_enable_airline_tabline = 1
-let g:webdevicons_enable_airline_statusline = 1
-let g:WebDevIconsUnicodeGlyphDoubleWidth = 1
-let g:webdevicons_conceal_nerdtree_brackets = 1
-let g:WebDevIconsNerdTreeAfterGlyphPadding = ' '
+function! s:init_fern() abort
+  " Use 'select' instead of 'edit' for default 'open' action
+  nmap <buffer> <Plug>(fern-action-open) <Plug>(fern-action-open:select)
+endfunction
 
-let g:WebDevIconsUnicodeDecorateFolderNodes = 1
-let g:DevIconsEnableFoldersOpenClose = 1
-let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol = ''
-let g:DevIconsDefaultFolderOpenSymbol = ''
+augroup fern-custom
+  autocmd! *
+  autocmd FileType fern call s:init_fern()
+augroup END
 
 " vim-flow
 let g:flow#autoclose = 1

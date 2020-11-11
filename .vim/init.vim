@@ -597,6 +597,8 @@ map <Space>t :Fern %:h -drawer -width=50 -stay -keep -toggle<CR>
 function! s:init_fern() abort
   " Use 'select' instead of 'edit' for default 'open' action
   nmap <buffer> <Plug>(fern-action-open) <Plug>(fern-action-open:select)
+  nmap <buffer> s <Plug>(fern-action-open:split)
+  nmap <buffer> v <Plug>(fern-action-open:vsplit)
 endfunction
 
 augroup fern-custom

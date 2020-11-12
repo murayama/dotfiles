@@ -591,8 +591,9 @@ endif
 
 " Fern
 let g:fern#renderer = "nerdfont"
-map <Space>f :Fern . -reveal=%  -drawer -width=50 -stay -keep -toggle<CR>
-map <Space>t :Fern %:h -drawer -width=50 -stay -keep -toggle<CR>
+" Fernを開いた後にカラーシンタックスがうまく適用されないので:eを続けて入力させる
+map <Space>f :Fern . -reveal=%  -drawer -width=30 -keep -toggle<CR>:e<CR>
+map <Space>t :Fern %:h -drawer -width=30 -keep -toggle<CR>:e<CR>
 
 function! s:init_fern() abort
   " Use 'select' instead of 'edit' for default 'open' action
@@ -605,6 +606,9 @@ augroup fern-custom
   autocmd! *
   autocmd FileType fern call s:init_fern()
 augroup END
+
+" Disable listing ignored files/directories
+let g:fern_git_status#disable_ignored = 1
 
 " vim-flow
 let g:flow#autoclose = 1

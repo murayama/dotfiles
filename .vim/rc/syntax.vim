@@ -39,7 +39,9 @@ set background=dark
 " colorscheme dracula
 " colorscheme material-theme
 " colorscheme tokyo-metro
-colorscheme night-owl
+" colorscheme night-owl
+colorscheme edge
+let g:edge_style = 'neon'
 
 autocmd! BufRead,BufNewFile *.htmlt set filetype=smarty
 

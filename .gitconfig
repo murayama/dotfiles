@@ -60,8 +60,8 @@
   tool = nvimdiff
   conflictstyle = diff3
   ; ff = false
-; [pull]
-; 	rebase = true
+[pull]
+	rebase = false
 [ghq]
   root = ~/src
   # root = ~/.go/src

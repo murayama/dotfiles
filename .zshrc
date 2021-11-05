@@ -182,6 +182,8 @@ function gadd() {
     fi
   }
 
+export PATH=$PATH:/usr/local/bin
+
 #=============================
 # anyenv
 #=============================

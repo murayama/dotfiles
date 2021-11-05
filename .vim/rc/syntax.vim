@@ -29,19 +29,7 @@ endif
 syntax enable
 " Theme
 set background=dark
-" colorscheme hybrid
-" colorscheme tender
-" colorscheme gotham256
-" colorscheme onedark
-" colorscheme janah
-" colorscheme spacegray
-" colorscheme atom-dark-256
-" colorscheme dracula
-" colorscheme material-theme
-" colorscheme tokyo-metro
-" colorscheme night-owl
-colorscheme edge
-let g:edge_style = 'neon'
+colorscheme tokyonight
 
 autocmd! BufRead,BufNewFile *.htmlt set filetype=smarty
 

@@ -30,50 +30,13 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " neoyank
 Plug 'Shougo/neoyank.vim'
 
-" colorscheme jellybeans
-Plug 'nanotech/jellybeans.vim'
+" treesitter
+Plug 'nvim-treesitter/nvim-treesitter'
 
-" colorscheme hybrid
-Plug 'w0ng/vim-hybrid'
-
-" colorscheme tender
-Plug 'jacoborus/tender.vim'
-
-" colorscheme gotham
-Plug 'whatyouhide/vim-gotham'
-
-" colorscheme ondark
-Plug 'joshdick/onedark.vim'
-
-" colorscheme janaha
-Plug 'mhinz/vim-janah'
-
-" colorscheme spacegrey
-Plug 'ajh17/Spacegray.vim'
-
-" colorscheme atom-dark
-Plug 'gosukiwi/vim-atom-dark'
-
-" colorscheme doracula
-Plug 'dracula/vim', {'as':'dracula'}
-
-" colorscheme material
-Plug 'jdkanani/vim-material-theme'
-
-" colorscheme tokyo-moetro
-Plug 'koirand/tokyo-metro.vim'
-
-" colorscheme night-owl
-Plug 'haishanh/night-owl.vim'
-
-" colorscheme edge
-Plug 'sainnhe/edge'
+Plug 'folke/tokyonight.nvim'
 
 " neoterm
 Plug 'kassio/neoterm' " config
-
-" accelerated-jk
-" Plug 'rhysd/accelerated-jk'
 
 " vim-ruby
 Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
@@ -136,9 +99,6 @@ Plug 'terryma/vim-expand-region'
 Plug 'kana/vim-textobj-entire'
 Plug 'vim-scripts/camelcasemotion'
 
-" ag
-Plug 'rking/ag.vim'
-
 " lightline
 Plug 'itchyny/lightline.vim'
 
@@ -150,6 +110,9 @@ Plug 'tpope/vim-fugitive'
 
 " gitv
 Plug 'vim-scripts/gitv'
+
+" git-messenger
+Plug 'rhysd/git-messenger.vim'
 
 " extradite
 Plug 'vim-scripts/extradite.vim'
@@ -163,36 +126,11 @@ Plug 'mhinz/vim-signify'
 " committia
 Plug 'rhysd/committia.vim'
 
-" javascript plugins
-" Plug 'neovim/node-host', { 'do': 'npm install' }
-" Plug 'billyvg/tigris.nvim', { 'do': './install.sh', 'for': ['javascript', 'javascript.jsx'] }
-Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'javascript.jsx'] }
-Plug 'othree/yajs.vim', { 'for': ['javascript', 'javascript.jsx'] }
-Plug 'maxmellon/vim-jsx-pretty', { 'for': ['javascript', 'javascript.jsx'] }
-Plug 'othree/javascript-libraries-syntax.vim', { 'for': ['javascript', 'javascript.jsx'] }
-Plug 'othree/es.next.syntax.vim', { 'for': ['javascript', 'javascript.jsx'] }
-Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
-Plug 'digitaltoad/vim-jade'
-Plug 'briancollins/vim-jst', { 'for': ['javascript', 'javascript.jsx'] }
-Plug 'flowtype/vim-flow', { 'for': ['javascript', 'javascript.jsx'] }
-Plug 'wavded/vim-stylus'
-Plug 'GutenYe/json5.vim', { 'for': 'json5' }
-Plug 'nicklasos/vim-jsx-riot'
-Plug 'elzr/vim-json'
-Plug 'leafgarland/typescript-vim'
-Plug 'peitalin/vim-jsx-typescript'
-Plug 'jparise/vim-graphql'
-" post install (yarn install | npm install) then load plugin only for editing supported files
-" Plug 'prettier/vim-prettier', {
-"    \ 'do': 'yarn install',
-"    \ 'branch': 'release/1.x',
-"    \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss'] }
-" Plug 'sbdchd/neoformat'
+" vim-fold-cycle
+Plug 'arecarn/vim-fold-cycle'
 
 " html/css plugins
 Plug 'mattn/emmet-vim'
-Plug 'hail2u/vim-css3-syntax'
-Plug 'cakebaker/scss-syntax.vim'
 
 " go
 Plug 'fatih/vim-go'
@@ -225,8 +163,8 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'jeroenbourgois/vim-actionscript'
 
 " ansible
-Plug 'chase/vim-ansible-yaml'
 Plug 'Glench/Vim-Jinja2-Syntax'
+Plug 'pearofducks/ansible-vim'
 
 " neco-look
 Plug 'ujihisa/neco-look'
@@ -238,6 +176,12 @@ Plug 'tyru/caw.vim'
 " markdown
 Plug 'tpope/vim-markdown'
 
+" glow.nvim
+Plug 'ellisonleao/glow.nvim'
+
+" capture.vim
+Plug 'tyru/capture.vim'
+
 " dirvish
 " Plug 'justinmk/vim-dirvish'
 
@@ -246,6 +190,7 @@ Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
 
 " Fern
+" tree viewer
 Plug 'lambdalisue/fern.vim'
 Plug 'lambdalisue/fern-renderer-nerdfont.vim'
 Plug 'lambdalisue/nerdfont.vim'
@@ -414,7 +359,7 @@ map zg/ <Plug>(incsearch-easymotion-stay)
 
 " Use lightline
 let g:lightline = {
-      \ 'colorscheme': 'edge',
+      \ 'colorscheme': 'tokyonight',
       \ 'mode_map': {'c': 'NORMAL'},
       \   'active': {
       \     'left': [
@@ -609,7 +554,7 @@ nnoremap <Leader>r :FZFMru<CR>
 if executable('rg')
   command! -bang -nargs=* Rg
    \ call fzf#vim#grep(
-   \ 'rg --column --line-number --hidden --ignore-case --no-heading --color=always '.shellescape(<q-args>), 1,
+   \ 'rg --column --line-number --ignore-case --no-heading --color=always '.shellescape(<q-args>), 1,
    \ <bang>0 ? fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'up:60%')
    \ : fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'right:50%:hidden', '?'),
    \ <bang>0)
@@ -841,3 +786,14 @@ augroup fmt
   autocmd!
   autocmd BufWritePre *.js,*.jsx,*.ts,*.tsx,*.css,*.scss,*.less Format
 augroup END
+
+" treesitter configure
+lua << EOF
+require'nvim-treesitter.configs'.setup {
+  highlight = {
+    enable = true,              -- false will disable the whole extension
+    disable = { "c", "rust" },  -- list of language that will be disabled
+  },
+  -- ensure_installed = 'maintained'
+}
+EOF

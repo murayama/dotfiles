@@ -22,6 +22,9 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " coc-solargraph
 " coc-tsserver
 " coc-yaml/
+" coc-webview
+" coc-markdown-preview-enhanced
+" coc-yank
 
 
 " tabnine
@@ -31,12 +34,12 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'Shougo/neoyank.vim'
 
 " treesitter
-Plug 'nvim-treesitter/nvim-treesitter'
+Plug 'nvim-treesitter/nvim-treesitter', { 'do': 'TSUpdate' }
 
-Plug 'folke/tokyonight.nvim'
+Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
 
 " neoterm
-Plug 'kassio/neoterm' " config
+Plug 'kassio/neoterm'
 
 " vim-ruby
 Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
@@ -177,7 +180,7 @@ Plug 'tyru/caw.vim'
 Plug 'tpope/vim-markdown'
 
 " glow.nvim
-Plug 'ellisonleao/glow.nvim'
+Plug 'ellisonleao/glow.nvim', { 'branch': 'main' }
 
 " capture.vim
 Plug 'tyru/capture.vim'
@@ -223,6 +226,12 @@ Plug 'ryanoasis/vim-devicons'
 
 " vim-prisma
 Plug 'pantharshit00/vim-prisma'
+
+" jsdoc
+Plug 'heavenshell/vim-jsdoc', {
+ \ 'for': ['javascript', 'javascript.jsx','typescript'],
+ \ 'do': 'make install'
+\}
 
 call plug#end()
 
@@ -476,13 +485,13 @@ endfunction
 
 
 " Use fugitive
-nmap <silent> <Leader>gd :<C-u>Gdiff<CR>
-nmap <silent> <Leader>gD :<C-u>Gdiff HEAD<CR>
-nmap <silent> <Leader>gs :<C-u>Gstatus<CR>
+nmap <silent> <Leader>gd :<C-u>Gdiffsplit<CR>
+nmap <silent> <Leader>gD :<C-u>Gdiffsplit HEAD<CR>
+nmap <silent> <Leader>gs :<C-u>Git<CR>
 nmap <silent> <Leader>ga :<C-u>Gwrite<CR>
-nmap <silent> <Leader>gc :<C-u>Gcommit<CR>
-nmap <silent> <Leader>gb :<C-u>Gblame<CR>
-nmap <silent> <Leader>gl :<C-u>Glog<CR>
+nmap <silent> <Leader>gc :<C-u>Git commit<CR>
+nmap <silent> <Leader>gb :<C-u>Git blame<CR>
+nmap <silent> <Leader>gl :<C-u>Gclog<CR>
 " extradite
 nmap <silent> <Leader>ge :<C-u>Extradite<CR>
 
@@ -503,7 +512,10 @@ let g:javascript_plugin_flow = 1
 " Use neoterm
 " let g:neoterm_autoscroll=1
 " let g:neoterm_repl_ruby = 'pry'
-" tnoremap <silent> <ESC> <C-\><C-n><C-w>
+let g:neoterm_default_mod = 'belowright'
+tnoremap <silent> <ESC> <C-\><C-n>
+" autocmd TermOpen * startinsert
+nmap <silent> <Leader>tt :Ttoggle<CR>
 " nnoremap <silent> <space>r V:TREPLSendLine<cr>
 " vnoremap <silent> <space>r V:TREPLSendSelection<cr>'>j$
 
@@ -781,6 +793,8 @@ nnoremap <silent> <space>j  :<C-u>CocNext<CR>
 nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list
 nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+" Yank list"
+nnoremap <silent> <space>y  :<C-u>CocList -A --normal yank<CR>
 
 augroup fmt
   autocmd!
@@ -791,8 +805,8 @@ augroup END
 lua << EOF
 require'nvim-treesitter.configs'.setup {
   highlight = {
-    enable = true,              -- false will disable the whole extension
-    disable = { "c", "rust" },  -- list of language that will be disabled
+    enable = true,
+    disable = { "c", "rust" },
   },
   -- ensure_installed = 'maintained'
 }

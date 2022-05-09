@@ -3,7 +3,7 @@
   editor = nvim -c \"set fenc=utf-8\"
   attributesfile = ~/.gitattributes_global
 [user]
-	name = murayama
+	name = nmurayama
 	email = norichika.murayama@play.jp
 [color]
   ui = auto
@@ -76,3 +76,8 @@
 	allowed = wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
 [init]
 	templatedir = ~/.git-templates/git-secrets
+[filter "lfs"]
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process

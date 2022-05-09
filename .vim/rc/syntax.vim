@@ -29,6 +29,8 @@ endif
 syntax enable
 " Theme
 set background=dark
+" Example config in VimScript
+" let g:tokyonight_style = "night"
 colorscheme tokyonight
 
 autocmd! BufRead,BufNewFile *.htmlt set filetype=smarty

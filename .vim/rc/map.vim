@@ -235,4 +235,5 @@ function! ToggleRelativenumber() abort
 endfunction
 nnoremap <silent> <Space>n :call ToggleRelativenumber()<cr>
 " }}}
+
 "}}}

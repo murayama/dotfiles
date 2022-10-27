@@ -2,9 +2,11 @@
   pager = lv -c
   editor = nvim -c \"set fenc=utf-8\"
   attributesfile = ~/.gitattributes_global
+[interactive]
+  diffFilter = delta --color-only
 [user]
-	name = nmurayama
-	email = norichika.murayama@play.jp
+  name = nmurayama
+  email = norichika.murayama@play.jp
 [color]
   ui = auto
 [pager]
@@ -12,6 +14,10 @@
   # log = diff-highlight | less
   # show = diff-highlight | less
   # diff = diff-highlight | less
+  diff = delta
+  log = delta
+  reflog = delta
+  show = delta
 
 #[diff]
 #  external = git_diff_wrapper
@@ -20,10 +26,12 @@
 [alias]
   graph = log --graph --all --pretty=format:'%Cgreen%h%Creset %cn %s %Cred%d%Creset'
   co = checkout
+  sw = switch
   br = branch -v
   sb = show-branch
   ci = commit --allow-empty
   cia = commit --amend
+  fixup = commit --fixup
   s = status
   st = !git status -s -b && echo --- branch && git branch -v && echo --- stash && git stash list | cat
   logp = log -p
@@ -33,19 +41,21 @@
   stash = stash -u -k
   stashpop = stash pop --index
   remotes = remote -v
-  newbrunch = checkout -b
+  newbrunch = switch -c
   delbrunch = branch -d
   pruneremote = remote prune
   ag = !git ls-files | xargs ag
   fetchp = fetch -p
+  pushf = push --force-with-lease
 [i18n]
   commitencoding = utf-8
   logoutputencoding = utf-8
 [http]
   sslVerify = true
 [diff]
-  tool = nvimdiff
-  algorithm = histogram
+  # tool = nvimdiff
+  # algorithm = histogram
+  colorMoved = default
 [difftool "nvimdiff"]
   cmd = "nvim -R -d -c \"wincmd l\" -d \"$LOCAL\" \"$REMOTE\""
 [mergetool "nvimdiff"]
@@ -56,12 +66,27 @@
 # [mergetool "sourcetree"]
 #   cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 #   trustExitCode = true
+[delta]
+  # navigate = true  # use n and N to move between diff sections
+  # light = false    # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
+  # side-by-side = true
+  # line-numbers = true
+  # line-numbers-left-format = ""
+  # line-numbers-right-format = "│ "
+  # syntax-theme = Monokai Extended
+  # sybtax-theme = Visual Studio Dark+
+  features = side-by-side line-numbers decorations
+  whitespace-error-style = 22 reverse
+  syntax-theme = Solarized (dark)
+
 [merge]
-  tool = nvimdiff
+  # tool = nvimdiff
   conflictstyle = diff3
   ; ff = false
 [pull]
 	rebase = false
+[rebase]
+  autosquash = true
 [ghq]
   root = ~/src
   # root = ~/.go/src

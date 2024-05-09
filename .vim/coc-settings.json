@@ -19,5 +19,8 @@
       // "args": ["-c", "/path/to/your/config.yaml"],
       "filetypes": ["vim", "eruby", "markdown"]
     }
-  }
+  },
+  "vetur.validation.script": false,
+  "javascript.suggest.autoImports": true,
+  "typescript.suggest.autoImports": true
 }

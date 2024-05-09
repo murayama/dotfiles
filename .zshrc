@@ -28,7 +28,7 @@ zinit snippet OMZP::git
 zinit cdclear -q
 
 # 補完
-zinit light zsh-users/zsh-autosuggestions
+# zinit light zsh-users/zsh-autosuggestions
 
 # シンタックスハイライト
 zinit light zdharma-continuum/fast-syntax-highlighting
@@ -172,17 +172,21 @@ fe() {
   [[ -n "$files" ]] && ${EDITOR:-nvim} "${files[@]}"
 }
 
-function gadd() {
-    local selected
-    selected=$(unbuffer git status -s | fzf -m --ansi --preview="echo {} | awk '{print \$2}' | xargs git diff --color" | awk '{print $2}')
-    if [[ -n "$selected" ]]; then
-        selected=$(tr '\n' ' ' <<< "$selected")
-        git add `echo $selected | xargs`
-        echo "Completed: git add $selected"
-    fi
-  }
+# function gadd() {
+#     local selected
+#     selected=$(unbuffer git status -s | fzf -m --ansi --preview="echo {} | awk '{print \$2}' | xargs git diff --color" | awk '{print $2}')
+#     if [[ -n "$selected" ]]; then
+#         selected=$(tr '\n' ' ' <<< "$selected")
+#         git add `echo $selected | xargs`
+#         echo "Completed: git add $selected"
+#     fi
+#   }
 
 export PATH=$PATH:/usr/local/bin
+
+# homebrew
+export PATH="/opt/homebrew/bin:$PATH"
+eval "$(/opt/homebrew/bin/brew shellenv)"
 
 #=============================
 # anyenv
@@ -244,3 +248,7 @@ export PATH="/usr/local/opt/postgresql@10/bin:$PATH"
 [[ -f ~/.config/tabtab/__tabtab.zsh ]] && . ~/.config/tabtab/__tabtab.zsh || true
 
 export PATH=/usr/local/Cellar/openssl/1.0.2t/bin:$PATH
+export PATH="$PATH:/Applications/WezTerm.app/Contents/MacOS"
+export AWS_DEFAULT_REGION=ap-northeast-1
+export AWS_PROFILE=localstack
+# export AWS_PROFILE=ulizadev

@@ -25,6 +25,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " coc-webview
 " coc-markdown-preview-enhanced
 " coc-yank
+" coc-vetur
 
 
 " tabnine
@@ -117,6 +118,9 @@ Plug 'vim-scripts/gitv'
 " git-messenger
 Plug 'rhysd/git-messenger.vim'
 
+" git commit prefix
+Plug 'gotchane/vim-git-commit-prefix'
+
 " extradite
 Plug 'vim-scripts/extradite.vim'
 
@@ -174,7 +178,8 @@ Plug 'ujihisa/neco-look'
 Plug 'Shougo/neco-syntax'
 
 " commentout
-Plug 'tyru/caw.vim'
+" Plug 'tyru/caw.vim'
+Plug 'preservim/nerdcommenter'
 
 " markdown
 Plug 'tpope/vim-markdown'
@@ -194,16 +199,18 @@ Plug 'junegunn/fzf.vim'
 
 " Fern
 " tree viewer
-Plug 'lambdalisue/fern.vim'
-Plug 'lambdalisue/fern-renderer-nerdfont.vim'
+Plug 'lambdalisue/fern.vim', { 'branch': 'main' }
+" Plug 'lambdalisue/fern-renderer-nerdfont.vim'
 Plug 'lambdalisue/nerdfont.vim'
 " Plug 'lambdalisue/fern-renderer-devicons.vim'
-Plug 'lambdalisue/fern-git-status.vim'
+" Plug 'lambdalisue/fern-git-status.vim'
 Plug 'lambdalisue/fern-hijack.vim'
-Plug 'LumaKernel/fern-mapping-fzf.vim'
+" Plug 'LumaKernel/fern-mapping-fzf.vim'
 
 " autoclose
-Plug 'Townk/vim-autoclose'
+" Plug 'Townk/vim-autoclose'
+" Plug 'm4xshen/autoclose.nvim'
+Plug 'jiangmiao/auto-pairs'
 
 " trailing-whitespace
 Plug 'bronson/vim-trailing-whitespace'
@@ -232,6 +239,12 @@ Plug 'heavenshell/vim-jsdoc', {
  \ 'for': ['javascript', 'javascript.jsx','typescript'],
  \ 'do': 'make install'
 \}
+
+" vue syntax
+Plug 'posva/vim-vue'
+
+" json
+Plug 'elzr/vim-json'
 
 call plug#end()
 
@@ -574,7 +587,7 @@ endif
 
 " Fern
 let g:fern#default_hidden = 1
-let g:fern#renderer = "nerdfont"
+" let g:fern#renderer = "nerdfont"
 " Fernを開いた後にカラーシンタックスがうまく適用されないので:eを続けて入力させる
 map <Space>f :Fern . -reveal=%  -drawer -width=30 -keep -toggle<CR>:e<CR>
 map <Space>t :Fern %:h -drawer -width=30 -keep -toggle<CR>:e<CR>
@@ -592,7 +605,7 @@ augroup fern-custom
 augroup END
 
 " Disable listing ignored files/directories
-let g:fern_git_status#disable_ignored = 1
+" let g:fern_git_status#disable_ignored = 1
 
 " vim-flow
 let g:flow#autoclose = 1
@@ -686,10 +699,15 @@ set signcolumn=yes
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
 let g:coc_global_extensions = ['coc-solargraph']
 inoremap <silent><expr> <TAB>
-     \ pumvisible() ? "\<C-n>" :
+     \ coc#pum#visible() ? coc#pum#next(1) :
      \ <SID>check_back_space() ? "\<TAB>" :
      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+inoremap <silent><expr> <S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+inoremap <silent><expr> <cr> coc#pum#visible() ? coc#_select_confirm() : "\<CR>"
+inoremap <silent><expr> <C-j> coc#pum#visible() ? coc#pum#next(1) : "\<C-j>"
+inoremap <silent><expr> <C-k> coc#pum#visible() ? coc#pum#prev(1) : "\<C-k>"
+inoremap <silent><expr> <down> coc#pum#visible() ? coc#pum#next(0) : "\<down>"
+inoremap <silent><expr> <up> coc#pum#visible() ? coc#pum#prev(0) : "\<up>"
 
 function! s:check_back_space() abort
   let col = col('.') - 1
@@ -803,12 +821,12 @@ inoremap <nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(
 
 augroup fmt
   autocmd!
-  autocmd BufWritePre *.js,*.jsx,*.ts,*.tsx,*.css,*.scss,*.less Format
+  autocmd BufWritePre *.js,*.jsx,*.ts,*.tsx,*.css,*.scss,*.less,*.vue Format
 augroup END
 
 " treesitter configure
 lua << EOF
-require'nvim-treesitter.configs'.setup {
+require('nvim-treesitter.configs').setup {
   highlight = {
     enable = true,
     disable = { "c", "rust" },
@@ -816,3 +834,30 @@ require'nvim-treesitter.configs'.setup {
   -- ensure_installed = 'maintained'
 }
 EOF
+
+"git commit prefix
+let g:git_commit_prefix_lang='ja'
+
+" NerdCommenter
+let g:NERDSpaceDelims=1
+let g:NERDDefaultAlign='left'
+let g:ft = ''
+function! NERDCommenter_before()
+  if &ft == 'vue'
+    let g:ft = 'vue'
+    let stack = synstack(line('.'), col('.'))
+    if len(stack) > 0
+      let syn = synIDattr((stack)[0], 'name')
+      if len(syn) > 0
+        exe 'setf ' . substitute(tolower(syn), '^vue_', '', '')
+      endif
+    endif
+  endif
+endfunction
+function! NERDCommenter_after()
+  if g:ft == 'vue'
+    setf vue
+    let g:ft = ''
+  endif
+endfunction
+

@@ -60,6 +60,8 @@ autocmd! BufNewFile,BufRead *.scss set filetype=scss.css fdm=indent
 
 autocmd! BufNewFile,BufRead *.tag set ft=javascript fdm=indent
 
+autocmd! BufNewFile,BufRead *.mdx set ft=markdown.mdx fdm=indent
+
 " vim fold
 let vim_folding=1
 au Syntax vim set fdm=marker foldlevel=0

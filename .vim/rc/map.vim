@@ -65,13 +65,13 @@ endfunction
 " 行の最初に移動 {{{
 " noremap 1 ^
 " noremap <C-a> ^
-inoremap <C-a> <home>
+inoremap <C-a> <C-o>^
 "}}}
 
 " 行末に移動 {{{
 " noremap 9 $
 " noremap <C-e> $
-inoremap <C-e> <end>
+inoremap <C-e> <C-o>$
 vnoremap $ $h
 "}}}
 
